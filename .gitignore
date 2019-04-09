@@ -1,0 +1,8 @@
+admin-core/target/*
+admin-console/target/*
+.*
+/.idea/workspace.xml
+/.idea/
+/admin-core/target/classes/codeTemplate/java/service.java
+/admin-console/target/
+/admin-core/target/
