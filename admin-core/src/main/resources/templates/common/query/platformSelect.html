@@ -1,0 +1,18 @@
+<div class="${style!'layui-inline'}">
+    <label class="layui-form-label">${label}</label>
+    <div class="layui-input-inline">
+        <select name="${name}">
+            <option  value="">请选择</option>
+    <!--#
+        var platforms = [];
+        var queryList = platform.all();
+        if(queryList != null){
+            platforms = queryList;
+        }
+          for(obj in platforms){
+     -->
+        <option value="${obj.platformCode}">${obj.remarks}</option>
+    <!--#}-->
+        </select>
+    </div>
+</div>

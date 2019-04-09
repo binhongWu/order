@@ -1,0 +1,16 @@
+<div class="${style!'layui-input-inline'}">
+    <select  lay-filter='_bankSelect'  name="${name}"
+             ${isNotEmpty(layVerify)?('lay-verify="'+layVerify+'"'):''} ${isNotEmpty(id)?('id="'+id+'"'):''} >
+    <option  value="">请选择</option>
+    <!--#
+        var queryList = bankInfo.all();
+        if(queryList != null){
+            bankInfos = queryList;
+        }
+          var expected = value!"";
+          for(obj in bankInfos){
+     -->
+    <option value="${obj.id}" ${obj.id==(expected+"")?'selected'}>${obj.name}</option>
+    <!--#}-->
+    </select>
+</div>

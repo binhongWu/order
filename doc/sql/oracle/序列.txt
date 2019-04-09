@@ -1,0 +1,7 @@
+-- Create sequence 
+create sequence CORE_SEQ
+minvalue 10001
+maxvalue 9999999999999999999999999999
+start with 10042
+increment by 1
+cache 20;
