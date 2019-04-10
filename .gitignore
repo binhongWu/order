@@ -1,6 +1,7 @@
 admin-core/target/*
 admin-console/target/*
 .*
+*.iml
 /.idea/workspace.xml
 /.idea/
 /admin-core/target/classes/codeTemplate/java/service.java
