@@ -23,129 +23,118 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 cols : [ [ // 表头
                 {
                 type : 'checkbox',
-                fixed:'left',
+                fixed:'left'
                 }, 
                 {
                 field : 'code', 
                 title : '绘本编码',
-                fixed:'left',
-                    width : 100
+                fixed:'left'
                 }, 
                 {
                 field : 'name', 
-                title : '绘本名称（奖项+名称）',
-                    width : 100
+                title : '绘本名称（奖项+名称）'
                 }, 
                 {
                 field : 'foreignName', 
-                title : '外文名字',
-                    width : 100
+                title : '外文名字'
                 }, 
                 {
                 field : 'kinds', 
-                title : '读者对象',
-                    width : 100
+                title : '读者对象'
                 }, 
-                {
-                field : 'format', 
-                title : '开本',
-                    width : 100
-                }, 
-                {
-                field : 'pages', 
-                title : '页数',
-                    width : 100
-                }, 
-                {
-                field : 'size', 
-                title : '商品尺寸',
-                    width : 100
-                }, 
-                {
-                field : 'weight', 
-                title : '商品重量',
-                    width : 100
-                }, 
+                // {
+                // field : 'format',
+                // title : '开本',
+                //     width : 100
+                // },
+                // {
+                // field : 'pages',
+                // title : '页数',
+                //     width : 100
+                // },
+                // {
+                // field : 'size',
+                // title : '商品尺寸',
+                //     width : 100
+                // },
+                // {
+                // field : 'weight',
+                // title : '商品重量',
+                //     width : 100
+                // },
                 {
                 field : 'brand', 
-                title : '品牌',
-                    width : 100
+                title : '品牌'
                 }, 
                 {
                 field : 'score', 
-                title : '用户评分',
-                    width : 100
+                title : '用户评分'
                 }, 
                 {
                 field : 'rank', 
-                title : '热销商品排名',
-                    width : 100
+                title : '热销商品排名'
                 }, 
-                {
-                field : 'wareId', 
-                title : '仓库系统编码',
-                    width : 100
-                }, 
-                {
-                field : 'supplierId', 
-                title : '供应商编码',
-                    width : 100
-                }, 
+                // {
+                // field : 'wareId',
+                // title : '仓库系统编码',
+                //     width : 100
+                // },
+                // {
+                // field : 'supplierId',
+                // title : '供应商编码',
+                //     width : 100
+                // },
                 {
                 field : 'inPrice', 
-                title : '入库单价',
-                    width : 100
+                title : '入库单价'
                 }, 
                 {
                 field : 'outPrice', 
-                title : '出库单价',
-                    width : 100
+                title : '出库单价'
                 }, 
                 {
                 field : 'existStocks', 
-                title : '现有库存',
-                    width : 100
+                title : '现有库存'
                 }, 
-                {
-                field : 'minStocks', 
-                title : '最小库存',
-                    width : 100
-                }, 
-                {
-                field : 'maxStocks', 
-                title : '最大库存',
-                    width : 100
-                }, 
+                // {
+                // field : 'minStocks',
+                // title : '最小库存'
+                // },
+                // {
+                // field : 'maxStocks',
+                // title : '最大库存',
+                //     width : 100
+                // },
                 {
                 field : 'publishHouse', 
                 title : '出版社',
                     width : 100
                 }, 
-                {
-                field : 'createdBy', 
-                title : '创建人',
-                    width : 100
-                }, 
-                {
-                field : 'createdTime', 
-                title : '创建时间',
-                    width : 100
-                }, 
-                {
-                field : 'updatedBy', 
-                title : '修改人',
-                    width : 100
-                }, 
-                {
-                field : 'updatedTime', 
-                title : '修改时间',
-                    width : 100
-                }, 
-                {
-                field : 'del', 
-                title : '删除标志位（0：存在 1：删除）',
-                    width : 100
-                }, 
+                // {
+                // field : 'createdBy',
+                // title : '创建人',
+                //     width : 100
+                // },
+                // {
+                // field : 'createdTime',
+                // title : '创建时间',
+                //     width : 100
+                // },
+                // {
+                // field : 'updatedBy',
+                // title : '修改人',
+                //     width : 100
+                // },
+                // {
+                // field : 'updatedTime',
+                // title : '修改时间',
+                //     width : 100
+                // },
+                // {
+                // field : 'del',
+                // title : '删除标志位（0：存在 1：删除）',
+                //     width : 100
+                // },
                 {
                 field : 'remarks', 
                 title : '备注',
