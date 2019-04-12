@@ -22,7 +22,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'checkbox',
+                type : 'radio',
                 fixed:'left',
                 }, 
                 @for(attr in entity.list){
