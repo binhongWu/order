@@ -32,7 +32,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 }, 
                 {
                 field : 'name', 
-                title : '绘本名称（奖项+名称）'
+                title : '绘本名称'
                 }, 
                 {
                 field : 'foreignName', 
