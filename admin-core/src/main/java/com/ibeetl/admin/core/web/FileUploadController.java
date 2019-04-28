@@ -108,15 +108,6 @@ public class FileUploadController {
         OutputStream os = fileItem.openOutpuStream();
         FileUtil.copy(file.getInputStream(), os);
         fileItem.setBizId(bizId);
-        /*额外保存一份文件信息到library_file*/
-        LibraryFile libraryFile = new LibraryFile();
-        libraryFile.setId(batchFileID);
-        libraryFile.setName(fileItem.getName());
-        libraryFile.setCategory("image");
-        libraryFile.setPath(fileItem.getPath());
-        libraryFile.setStatus(1L);
-        libraryFile.setCreateTime(new java.util.Date());
-        sqlManager.insert(libraryFile,false);
         return JsonResult.success(fileItem);
     }
     public class LibraryFile {
