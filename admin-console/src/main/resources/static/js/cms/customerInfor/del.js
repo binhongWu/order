@@ -9,7 +9,7 @@ layui.define(['table', 'customerInforApi'], function(exports) {
             if(data==null){
                 return ;
             }
-            Common.openConfirm("确认要删除这些CustomerInfor?",function(){
+            Common.openConfirm("确认要删除这些客户信息数据吗?",function(){
             var ids =Common.concatBatchId(data,"clientId");
             customerInforApi.del(ids,function(){
                 Common.info("删除成功");

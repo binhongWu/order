@@ -99,7 +99,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 exportDocument : function() {
                     layui.use([ 'customerInforApi' ], function() {
                         var customerInforApi = layui.customerInforApi
-                        Common.openConfirm("确认要导出这些CustomerInfor数据?", function() {
+                        Common.openConfirm("确认要导出这些客户信息数据?", function() {
                             customerInforApi.exportExcel($("#searchForm"), function(fileId) {
                                 Lib.download(fileId);
                             })

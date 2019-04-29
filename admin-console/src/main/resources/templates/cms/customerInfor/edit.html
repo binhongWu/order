@@ -6,7 +6,7 @@
             <div class="layui-inline">
             <label class="layui-form-label" title="客户编号">客户编号</label>
             <div class="layui-input-inline">
-                <input type="text" id="clientCode" name="clientCode"  value="${customerInfor.clientCode}"   class="layui-input" >
+                <input type="text" id="clientCode" name=""  value="${customerInfor.clientCode}"   class="layui-input" disabled="disabled"style="background-color: #F6F6F6">
             </div>
             </div>
             <div class="layui-inline">
@@ -20,7 +20,7 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="性别（0:男；1：女；2：未知）">性别（0:男；1：女；2：未知）</label>
+            <label class="layui-form-label" title="性别（0:男；1：女；2：未知）">性别</label>
             <div class="layui-input-inline">
                 <layui:simpleDictSelect style='layui-input-inline' type="customer_infor_sex" 
 					id="sex" name="sex" value="${customerInfor.sex}" layVerify="" />
@@ -45,7 +45,7 @@
             <div class="layui-inline">
             <label class="layui-form-label" title="积分">积分</label>
             <div class="layui-input-inline">
-                <input type="text" id="intergral" name="intergral"  value="${customerInfor.intergral}"   class="layui-input" >
+                <input type="text" id="intergral" name=""  value="${customerInfor.intergral}"   class="layui-input" disabled="disabled"style="background-color: #F6F6F6">
             </div>
             </div>
         </div>
@@ -53,64 +53,33 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="级别（0：初；1：中；2；高）">级别（0：初；1：中；2；高）</label>
+            <label class="layui-form-label" title="级别（0：初；1：中；2；高）">级别</label>
             <div class="layui-input-inline">
-                <layui:simpleDictSelect style='layui-input-inline' type="customer_infor_level" 
-					id="level" name="level" value="${customerInfor.level}" layVerify="" />
+                <layui:simpleDictSelect style='layui-input-inline' type="customer_infor_level"
+					id="level" name="" value="${customerInfor.level}" layVerify=""/>
+                <!--#if(customerInfor.level == 0){ -->
+                    <input type="text" id="level" name=""  value="初级"   class="layui-input" disabled="disabled"style="background-color: #F6F6F6">
+                <!--#} -->
             </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="创建人">创建人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdBy" name="createdBy"  value="${customerInfor.createdBy}"   class="layui-input" >
-            </div>
+                <label class="layui-form-label" title="备注">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="remarks" name="remarks"  value="${customerInfor.remarks}"   class="layui-input" >
+                </div>
             </div>
         </div>
     </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建时间">创建时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdTime" name="createdTime"  value="${customerInfor.createdTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新人">更新人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedBy" name="updatedBy"  value="${customerInfor.updatedBy}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新时间">更新时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedTime" name="updatedTime"  value="${customerInfor.updatedTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="删除标记{0:正常,1:已删除}">删除标记{0:正常,1:已删除}</label>
-            <div class="layui-input-inline">
-                <input type="text" id="del" name="del"  value="${customerInfor.del}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="备注">备注</label>
-            <div class="layui-input-inline">
-                <input type="text" id="remarks" name="remarks"  value="${customerInfor.remarks}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-	
+
     <input type="hidden" name="clientId" value=${customerInfor.clientId} />
+    <input type="hidden" name="del" value=${customerInfor.del} />
+    <input type="hidden" name="clientCode" value="${customerInfor.clientCode}"/>
+    <input type="hidden" name="intergral" value="${customerInfor.intergral}"/>
+    <input type="hidden" name="level" value="${customerInfor.level}"/>
+    <input type="hidden" name="updatedBy" value="${customerInfor.updatedBy}"/>
+    <input type="hidden" name="createdBy" value="${customerInfor.createdBy}"/>
+    <input type="hidden" name="updatedTime" value="${customerInfor.updatedTime,"yyyy-MM-dd"}"/>
+    <input type="hidden" name="createdTime" value="${customerInfor.createdTime,"yyyy-MM-dd"}"/>
     <layui:submitButtons id="updateButton" />
 </form>
 <!--#} -->
