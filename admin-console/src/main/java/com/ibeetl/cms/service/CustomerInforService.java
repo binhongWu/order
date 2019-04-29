@@ -71,6 +71,13 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
 
     @Override
     public boolean save(CustomerInfor model) {
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setCreatedTime(new Date());
+        //随机数生成7位随机数 客户编号
+        String code = String.valueOf(Math.random()).replace(".", "").substring(1, 7);
+        model.setClientCode("C"+code);
+        model.setIntergral("0");
+        model.setLevel("0");
         return sqlManager.insertTemplate(model, true) > 0;
     }
 

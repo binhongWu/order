@@ -8,8 +8,8 @@ queryByCondition
     @}
     from customer_infor t
     where t.del = '0'  
-    @if(!isEmpty(clientId)){
-        and  t.client_id =#clientId#
+    @if(!isEmpty(clientCode)){
+        and  t.client_code =#clientCode#
     @}
     @if(!isEmpty(name)){
         and  t.name =#name#
@@ -51,6 +51,7 @@ updateCustom
         updated_time = #updatedTime#
         ,updated_by = #updatedBy#
                 ,client_id = #clientId#
+                ,client_code = #clientCode#
                 ,name = #name#
                 ,sex = #sex#
                 ,tel = #tel#
@@ -76,6 +77,9 @@ findListByCustom
     where t.del = '0'  
     @if(!isEmpty(clientId)){
         and  t.client_id =#clientId#
+    @}
+    @if(!isEmpty(clientCode)){
+        and  t.client_code =#clientCode#
     @}
     @if(!isEmpty(name)){
         and  t.name =#name#

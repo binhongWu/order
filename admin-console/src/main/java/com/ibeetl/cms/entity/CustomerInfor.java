@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-12
+ * @date 2019-04-29
  */
 @Data
 @Builder
@@ -34,14 +34,19 @@ import lombok.*;
 public class CustomerInfor extends BaseEntity{
 
 	/**
-	 * 客户编号
+	 * 系统编号
 	 */
     @NotNull(message = "ID不能为空", groups =ValidateConfig.UPDATE.class)
 	@JsonSerialize(using=ToStringSerializer.class)
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String clientId ;
+    private Long clientId ;
+
+	/**
+	 * 客户编号
+	 */
+    private String clientCode ;
 
 	/**
 	 * 客户名称
@@ -98,7 +103,7 @@ public class CustomerInfor extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

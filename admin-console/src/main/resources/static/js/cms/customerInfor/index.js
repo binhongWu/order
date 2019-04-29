@@ -22,13 +22,12 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
+                type : 'checkbox',
                 fixed:'left',
                 }, 
                 {
-                field : 'clientId', 
+                field : 'clientCode', 
                 title : '客户编号',
-                fixed:'left',
                 }, 
                 {
                 field : 'name', 

@@ -11,16 +11,16 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class CustomerInforQuery extends PageParam {
     @Query(name = "客户编号", display = true)        
-    private String clientId;
+    private String clientCode;
     @Query(name = "客户名称", display = true)        
     private String name;
     @Query(name = "级别（0：初；1：中；2；高）", display = true,type=Query.TYPE_DICT,dict="customer_infor_level")
     private String level;
-    public String getClientId(){
-        return  clientId;
+    public String getClientCode(){
+        return  clientCode;
     }
-    public void setClientId(String clientId ){
-        this.clientId = clientId;
+    public void setClientCode(String clientCode ){
+        this.clientCode = clientCode;
     }
     public String getName(){
         return  name;

@@ -75,7 +75,7 @@ public class CustomerInforController{
     @GetMapping(MODEL + "/edit.do")
     @Function("customerInfor.edit")
     @ResponseBody
-    public ModelAndView edit(String clientId) {
+    public ModelAndView edit(Long clientId) {
         ModelAndView view = new ModelAndView("/cms/customerInfor/edit.html");
         CustomerInfor customerInfor = customerInforService.queryById(clientId);
         view.addObject("customerInfor", customerInfor);
@@ -139,7 +139,7 @@ public class CustomerInforController{
     @GetMapping(MODEL + "/view.json")
     @Function("customerInfor.query")
     @ResponseBody
-    public JsonResult<CustomerInfor>queryInfo(String clientId) {
+    public JsonResult<CustomerInfor>queryInfo(Long clientId) {
         CustomerInfor customerInfor = customerInforService.queryById( clientId);
         return  JsonResult.success(customerInfor);
     }
