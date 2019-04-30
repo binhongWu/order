@@ -11,17 +11,17 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class SalesOrderQuery extends PageParam {
     @Query(name = "订单单号", display = true)        
-    private String salesId;
+    private Long salesId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    @Query(name = "订单日期", display = true)        
-    private Date orderDate;
-    @Query(name = "销售日期", display = true)        
-    private Date salesDate;
-    public String getSalesId(){
+    @Query(name = "付款方式（0：支付宝 1：微信 2：银行卡）", display = true,type=Query.TYPE_DICT,dict="sales_order_paymentmethod")
+    private String paymentMethod;
+    @Query(name = "完成状态（0：完成 1：未完成）", display = true,type=Query.TYPE_DICT,dict="sales_order_finishedstatus")
+    private String finishedStatus;
+    public Long getSalesId(){
         return  salesId;
     }
-    public void setSalesId(String salesId ){
+    public void setSalesId(Long salesId ){
         this.salesId = salesId;
     }
     public String getCode(){
@@ -30,17 +30,17 @@ public class SalesOrderQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
-    public Date getOrderDate(){
-        return  orderDate;
+    public String getPaymentMethod(){
+        return  paymentMethod;
     }
-    public void setOrderDate(Date orderDate ){
-        this.orderDate = orderDate;
+    public void setPaymentMethod(String paymentMethod ){
+        this.paymentMethod = paymentMethod;
     }
-    public Date getSalesDate(){
-        return  salesDate;
+    public String getFinishedStatus(){
+        return  finishedStatus;
     }
-    public void setSalesDate(Date salesDate ){
-        this.salesDate = salesDate;
+    public void setFinishedStatus(String finishedStatus ){
+        this.finishedStatus = finishedStatus;
     }
  
 }

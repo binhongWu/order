@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-12
+ * @date 2019-05-01
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class SalesOrder extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String salesId ;
+    private Long salesId ;
 
 	/**
 	 * 绘本编码
@@ -57,11 +57,6 @@ public class SalesOrder extends BaseEntity{
 	 * 绘本单价
 	 */
     private String price ;
-
-	/**
-	 * 订单日期
-	 */
-    private Date orderDate ;
 
 	/**
 	 * 客户编码
@@ -95,6 +90,12 @@ public class SalesOrder extends BaseEntity{
     private String tradeLocations ;
 
 	/**
+	 * 0:直销 1：代销
+	 */
+    @Dict(type="sales_order_orderfor")
+    private String orderFor ;
+
+	/**
 	 * 完成状态（0：完成 1：未完成）
 	 */
     @Dict(type="sales_order_finishedstatus")
@@ -103,11 +104,12 @@ public class SalesOrder extends BaseEntity{
 	/**
 	 * 审核人
 	 */
-    private String checkBy ;
+    private Long checkBy ;
 
 	/**
 	 * 审核状态
 	 */
+    @Dict(type="sales_order_checkstatus")
     private String checkStatus ;
 
 	/**
@@ -138,7 +140,7 @@ public class SalesOrder extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

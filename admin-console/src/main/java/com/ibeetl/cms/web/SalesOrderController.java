@@ -75,7 +75,7 @@ public class SalesOrderController{
     @GetMapping(MODEL + "/edit.do")
     @Function("salesOrder.edit")
     @ResponseBody
-    public ModelAndView edit(String salesId) {
+    public ModelAndView edit(Long salesId) {
         ModelAndView view = new ModelAndView("/cms/salesOrder/edit.html");
         SalesOrder salesOrder = salesOrderService.queryById(salesId);
         view.addObject("salesOrder", salesOrder);
@@ -139,7 +139,7 @@ public class SalesOrderController{
     @GetMapping(MODEL + "/view.json")
     @Function("salesOrder.query")
     @ResponseBody
-    public JsonResult<SalesOrder>queryInfo(String salesId) {
+    public JsonResult<SalesOrder>queryInfo(Long salesId) {
         SalesOrder salesOrder = salesOrderService.queryById( salesId);
         return  JsonResult.success(salesOrder);
     }
@@ -166,7 +166,7 @@ public class SalesOrderController{
          * 2)通常excel导出需要关联更多数据，因此salesOrderService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/salesOrder/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/salesOrder/sales_order_export.xls";
         PageQuery<SalesOrder> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
@@ -178,7 +178,7 @@ public class SalesOrderController{
             if(is==null) {
                 throw new PlatformException("模板资源不存在："+excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("SalesOrder_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            FileItem item = fileService.createFileTemp("销售订单_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);

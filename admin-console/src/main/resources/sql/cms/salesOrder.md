@@ -14,11 +14,11 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
-    @if(!isEmpty(orderDate)){
-        and  t.order_date =#orderDate#
+    @if(!isEmpty(paymentMethod)){
+        and  t.payment_method =#paymentMethod#
     @}
-    @if(!isEmpty(salesDate)){
-        and  t.sales_date =#salesDate#
+    @if(!isEmpty(finishedStatus)){
+        and  t.finished_status =#finishedStatus#
     @}
     order by t.created_time desc
     
@@ -57,13 +57,13 @@ updateCustom
                 ,code = #code#
                 ,number = #number#
                 ,price = #price#
-                ,order_date = #orderDate#
                 ,client_id = #clientId#
                 ,sales_date = #salesDate#
                 ,payment_amount = #paymentAmount#
                 ,sales_by = #salesBy#
                 ,payment_method = #paymentMethod#
                 ,trade_locations = #tradeLocations#
+                ,order_for = #orderFor#
                 ,finished_status = #finishedStatus#
                 ,check_by = #checkBy#
                 ,check_status = #checkStatus#
@@ -97,9 +97,6 @@ findListByCustom
     @if(!isEmpty(price)){
         and  t.price =#price#
     @}
-    @if(!isEmpty(orderDate)){
-        and  t.order_date =#orderDate#
-    @}
     @if(!isEmpty(clientId)){
         and  t.client_id =#clientId#
     @}
@@ -117,6 +114,9 @@ findListByCustom
     @}
     @if(!isEmpty(tradeLocations)){
         and  t.trade_locations =#tradeLocations#
+    @}
+    @if(!isEmpty(orderFor)){
+        and  t.order_for =#orderFor#
     @}
     @if(!isEmpty(finishedStatus)){
         and  t.finished_status =#finishedStatus#
