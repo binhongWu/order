@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<workbook>
+	<worksheet name="Template">
+		<section startRow="0" endRow="2">
+		</section>
+		<loop startRow="4" endRow="4" items="list" var="data"
+			varType="com.ibeetl.cms.web.dto.CustomerInforData">
+			<section startRow="4" endRow="4">
+				<mapping row="4" col="0">data.clientCode</mapping>
+				<mapping row="4" col="1">data.name</mapping>
+				<mapping row="4" col="2">data.sex</mapping>
+				<mapping row="4" col="3">data.tel</mapping>
+				<mapping row="4" col="4">data.email</mapping>
+				<mapping row="4" col="5">data.intergral</mapping>
+				<mapping row="4" col="6">data.level</mapping>
+				<mapping row="4" col="7">data.remarks</mapping>
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="0">
+					<cellcheck offset="1"></cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>

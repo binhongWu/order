@@ -3,6 +3,7 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.cms.web.dto.CustomerInforData;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,5 +91,9 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
      */
     public List<CustomerInfor> findListByCustom(CustomerInfor model) {
         return customerInforDao.findListByCustom(model);
+    }
+
+    public void saveImport(List<CustomerInforData> datas) {
+
     }
 }
