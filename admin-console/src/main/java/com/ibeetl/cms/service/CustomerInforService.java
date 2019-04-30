@@ -74,6 +74,8 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
     public boolean save(CustomerInfor model) {
         model.setCreatedBy(platformService.getCurrentUser().getId());
         model.setCreatedTime(new Date());
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         //随机数生成7位随机数 客户编号
         String code = String.valueOf(Math.random()).replace(".", "").substring(1, 7);
         model.setClientCode("C"+code);
@@ -94,6 +96,20 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
     }
 
     public void saveImport(List<CustomerInforData> datas) {
-
+        for(CustomerInforData customerInforData:datas){
+            CustomerInfor customerInfor = new CustomerInfor();
+            customerInfor.setClientCode("C"+String.valueOf(Math.random()).replace(".", "").substring(1, 7));
+            customerInfor.setName(customerInforData.getName());
+            customerInfor.setSex(customerInforData.getSex().equals("女")?"1":"0");
+            customerInfor.setTel(customerInforData.getTel());
+            customerInfor.setEmail(customerInforData.getEmail());
+            customerInfor.setIntergral("0");
+            customerInfor.setLevel("0");
+            customerInfor.setCreatedBy(platformService.getCurrentUser().getId());
+            customerInfor.setCreatedTime(new Date());
+            customerInfor.setUpdatedTime(new Date());
+            customerInfor.setUpdatedBy(platformService.getCurrentUser().getId());
+            save(customerInfor);
+        }
     }
 }
