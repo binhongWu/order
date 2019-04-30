@@ -22,20 +22,36 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'code', 
-                title : '仓库编号'
+                title : '仓库编号',
                 }, 
                 {
                 field : 'name', 
-                title : '仓库名称'
-                },
+                title : '仓库名称',
+                }, 
+                {
+                field : 'createdBy', 
+                title : '创建人',
+                }, 
+                {
+                field : 'createdTime', 
+                title : '创建时间',
+                }, 
+                {
+                field : 'updatedBy', 
+                title : '更新人',
+                }, 
+                {
+                field : 'updatedTime', 
+                title : '更新时间',
+                }, 
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]

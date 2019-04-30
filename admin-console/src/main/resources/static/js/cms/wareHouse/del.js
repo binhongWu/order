@@ -9,7 +9,7 @@ layui.define(['table', 'wareHouseApi'], function(exports) {
             if(data==null){
                 return ;
             }
-            Common.openConfirm("确认要删除这些WareHouse?",function(){
+            Common.openConfirm("确认要删除这些仓库信息?",function(){
             var ids =Common.concatBatchId(data,"id");
             wareHouseApi.del(ids,function(){
                 Common.info("删除成功");

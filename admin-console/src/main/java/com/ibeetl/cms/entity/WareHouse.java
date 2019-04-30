@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-13
+ * @date 2019-04-30
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class WareHouse extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String id ;
+    private Long id ;
 
 	/**
 	 * 仓库编号
@@ -76,7 +76,7 @@ public class WareHouse extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

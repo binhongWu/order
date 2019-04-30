@@ -75,7 +75,7 @@ public class WareHouseController{
     @GetMapping(MODEL + "/edit.do")
     @Function("wareHouse.edit")
     @ResponseBody
-    public ModelAndView edit(String id) {
+    public ModelAndView edit(Long id) {
         ModelAndView view = new ModelAndView("/cms/wareHouse/edit.html");
         WareHouse wareHouse = wareHouseService.queryById(id);
         view.addObject("wareHouse", wareHouse);
@@ -139,7 +139,7 @@ public class WareHouseController{
     @GetMapping(MODEL + "/view.json")
     @Function("wareHouse.query")
     @ResponseBody
-    public JsonResult<WareHouse>queryInfo(String id) {
+    public JsonResult<WareHouse>queryInfo(Long id) {
         WareHouse wareHouse = wareHouseService.queryById( id);
         return  JsonResult.success(wareHouse);
     }
