@@ -45,8 +45,8 @@ public class ProductInforService extends BaseService<ProductInfor>{
      */
     @Override
     public boolean updateTemplate(ProductInfor model) {
-//        model.setUpdatedTime(new Date());
-//        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateTemplateById(model) > 0;
     }
 
@@ -55,8 +55,8 @@ public class ProductInforService extends BaseService<ProductInfor>{
       */
     @Override
     public boolean update(ProductInfor model) {
-//        model.setUpdatedTime(new Date());
-//        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
      }
 
@@ -64,8 +64,8 @@ public class ProductInforService extends BaseService<ProductInfor>{
      * 自定义更新
       */
     public boolean updateCustom(ProductInfor model) {
-//        model.setUpdatedTime(new Date());
-//        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return productInforDao.updateCustom(model) > 0;
     }
 
@@ -83,5 +83,39 @@ public class ProductInforService extends BaseService<ProductInfor>{
      */
     public List<ProductInfor> findListByCustom(ProductInfor model) {
         return productInforDao.findListByCustom(model);
+    }
+
+    public void saveImport(List<ProductInfor> datas) {
+        for (ProductInfor model : datas) {
+            switch (model.getLanguage()){
+                case "中文":
+                    model.setLanguage("0");
+                    break;
+                case "英文":
+                    model.setLanguage("1");
+                    break;
+                default:
+                    model.setLanguage("2");
+            }
+            switch (model.getKinds()){
+                case "0-3岁":
+                    model.setKinds("0");
+                    break;
+                case "4-6岁":
+                    model.setKinds("1");
+                    break;
+                case "7-12岁":
+                    model.setKinds("2");
+                    break;
+                default:
+                    model.setKinds("3");
+            }
+            model.setScore("是".equals(model.getScore()) ?"0":"1");
+            model.setCreatedBy(platformService.getCurrentUser().getId());
+            model.setCreatedTime(new Date());
+            model.setUpdatedTime(new Date());
+            model.setUpdatedBy(platformService.getCurrentUser().getId());
+            save(model);
+        }
     }
 }

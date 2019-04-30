@@ -1,27 +1,22 @@
 package com.ibeetl.cms.web;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.ibeetl.admin.core.annotation.Function;
+import com.ibeetl.admin.core.file.FileItem;
+import com.ibeetl.admin.core.file.FileService;
+import com.ibeetl.admin.core.util.ConvertUtil;
+import com.ibeetl.admin.core.util.DateUtil;
+import com.ibeetl.admin.core.util.PlatformException;
+import com.ibeetl.admin.core.util.ValidateConfig;
+import com.ibeetl.admin.core.web.JsonResult;
+import com.ibeetl.cms.entity.ProductInfor;
+import com.ibeetl.cms.service.ProductInforService;
+import com.ibeetl.cms.web.query.ProductInforQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.beetl.sql.core.engine.PageQuery;
 import org.jxls.common.Context;
-import org.jxls.reader.ReaderBuilder;
-import org.jxls.reader.ReaderConfig;
-import org.jxls.reader.XLSReadMessage;
-import org.jxls.reader.XLSReadStatus;
-import org.jxls.reader.XLSReader;
+import org.jxls.reader.*;
 import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,32 +28,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ibeetl.admin.console.web.dto.DictExcelImportData;
-import com.ibeetl.admin.console.web.query.UserQuery;
-import com.ibeetl.admin.core.annotation.Function;
-import com.ibeetl.admin.core.annotation.Query;
-import com.ibeetl.admin.core.entity.CoreDict;
-import com.ibeetl.admin.core.entity.CoreUser;
-import com.ibeetl.admin.core.file.FileItem;
-import com.ibeetl.admin.core.file.FileService;
-import com.ibeetl.admin.core.web.JsonResult;
-import com.ibeetl.admin.core.util.*;
-import com.ibeetl.cms.entity.*;
-import com.ibeetl.cms.service.*;
-import com.ibeetl.cms.web.query.*;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ProductInfor 接口
  */
 @Controller
-public class ProductInforController{
+public class ProductInforController {
 
     private final Log log = LogFactory.getLog(this.getClass());
     private static final String MODEL = "/cms/productInfor";
 
 
-    @Autowired private ProductInforService productInforService;
-    
+    @Autowired
+    private ProductInforService productInforService;
+
     @Autowired
     FileService fileService;
     /* 页面 */
@@ -67,7 +58,7 @@ public class ProductInforController{
     @Function("productInfor.query")
     @ResponseBody
     public ModelAndView index() {
-        ModelAndView view = new ModelAndView("/cms/productInfor/index.html") ;
+        ModelAndView view = new ModelAndView("/cms/productInfor/index.html");
         view.addObject("search", ProductInforQuery.class.getName());
         return view;
     }
@@ -75,9 +66,9 @@ public class ProductInforController{
     @GetMapping(MODEL + "/edit.do")
     @Function("productInfor.edit")
     @ResponseBody
-    public ModelAndView edit(String code) {
+    public ModelAndView edit(Long id) {
         ModelAndView view = new ModelAndView("/cms/productInfor/edit.html");
-        ProductInfor productInfor = productInforService.queryById(code);
+        ProductInfor productInfor = productInforService.queryById(id);
         view.addObject("productInfor", productInfor);
         return view;
     }
@@ -95,20 +86,19 @@ public class ProductInforController{
     @PostMapping(MODEL + "/list.json")
     @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<PageQuery> list(ProductInforQuery condtion)
-    {
+    public JsonResult<PageQuery> list(ProductInforQuery condtion) {
         PageQuery page = condtion.getPageQuery();
         productInforService.queryByCondition(page);
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
+    /**
+     * 根据ID查找
+     */
     @PostMapping(MODEL + "/queryById.json")
     @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<ProductInfor> queryById(Object id){
+    public JsonResult<ProductInfor> queryById(Object id) {
         ProductInfor data = productInforService.queryById(id);
         return JsonResult.success(data);
     }
@@ -116,8 +106,7 @@ public class ProductInforController{
     @PostMapping(MODEL + "/add.json")
     @Function("productInfor.add")
     @ResponseBody
-    public JsonResult add(@Validated(ValidateConfig.ADD.class)ProductInfor productInfor)
-    {
+    public JsonResult add(@Validated(ValidateConfig.ADD.class) ProductInfor productInfor) {
         productInforService.save(productInfor);
         return JsonResult.success();
     }
@@ -125,7 +114,7 @@ public class ProductInforController{
     @PostMapping(MODEL + "/update.json")
     @Function("productInfor.update")
     @ResponseBody
-    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class)  ProductInfor productInfor) {
+    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class) ProductInfor productInfor) {
         boolean success = productInforService.update(productInfor);
         if (success) {
             return JsonResult.success();
@@ -135,13 +124,12 @@ public class ProductInforController{
     }
 
 
-   
     @GetMapping(MODEL + "/view.json")
     @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<ProductInfor>queryInfo(String code) {
-        ProductInfor productInfor = productInforService.queryById( code);
-        return  JsonResult.success(productInfor);
+    public JsonResult<ProductInfor> queryInfo(Long id) {
+        ProductInfor productInfor = productInforService.queryById(id);
+        return JsonResult.success(productInfor);
     }
 
     @PostMapping(MODEL + "/delete.json")
@@ -155,56 +143,82 @@ public class ProductInforController{
         productInforService.batchDelProductInfor(idList);
         return JsonResult.success();
     }
-    
-    
+
+
     @PostMapping(MODEL + "/excel/export.json")
     @Function("productInfor.exportDocument")
     @ResponseBody
-    public JsonResult<String> export(HttpServletResponse response,ProductInforQuery condtion) {
+    public JsonResult<String> export(HttpServletResponse response, ProductInforQuery condtion) {
         /**
          * 1)需要用你自己编写一个的excel模板
          * 2)通常excel导出需要关联更多数据，因此productInforService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/productInfor/你的excel模板文件名字.xls";
+        String excelTemplate = "excelTemplates/cms/productInfor/product_info_export.xls";
         PageQuery<ProductInfor> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
         page.setPageNumber(1);
         page.setTotalRow(Integer.MAX_VALUE);
         //本次导出需要的数据
-        List<ProductInfor> list =productInforService.queryByCondition(page).getList();
-        try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
-            if(is==null) {
-                throw new PlatformException("模板资源不存在："+excelTemplate);
+        List<ProductInfor> list = productInforService.queryByCondition(page).getList();
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
+            if (is == null) {
+                throw new PlatformException("模板资源不存在：" + excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("ProductInfor_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            FileItem item = fileService.createFileTemp("绘本信息_" + DateUtil.now("yyyyMMddHHmmss") + ".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);
             JxlsHelper.getInstance().processTemplate(is, os, context);
             os.close();
             //下载参考FileSystemContorller
-            return  JsonResult.success(item.getPath());
+            return JsonResult.success(item.getPath());
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
-    
+
     @PostMapping(MODEL + "/excel/import.do")
     @Function("productInfor.importDocument")
     @ResponseBody
     public JsonResult importExcel(@RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-           return JsonResult.fail();
+            return JsonResult.fail();
         }
         InputStream ins = file.getInputStream();
-        /*解析模板并导入到数据库里,参考DictConsoleContorller，使用jxls reader读取excel数据*/
-        ins.close();
-        return JsonResult.success();
+        InputStream inputXML = Thread.currentThread().getContextClassLoader().getResourceAsStream("excelTemplates/cms/productInfor/product_info_import.xml");
+        XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
+        InputStream inputXLS = ins;
+        List<ProductInfor> datas = new ArrayList<>();
+        Map beans = new HashMap();
+        beans.put("list", datas);
+        ReaderConfig.getInstance().setSkipErrors(true);
+        XLSReadStatus readStatus = mainReader.read(inputXLS, beans);
+        List<XLSReadMessage> errors = readStatus.getReadMessages();
+        if (!errors.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (XLSReadMessage msg : errors) {
+                sb.append(parseXLSReadMessage(msg));
+                sb.append(",");
+            }
+            sb.setLength(sb.length() - 1);
+            return JsonResult.failMessage("解析excel出错:" + sb.toString());
+        }
+        try {
+            this.productInforService.saveImport(datas);
+            return JsonResult.success();
+        } catch (Exception ex) {
+            return JsonResult.failMessage(ex.getMessage());
+        }
     }
-    
-    
+
+    private String parseXLSReadMessage(XLSReadMessage msg) {
+        String str = msg.getMessage();
+        int start = "Can't read cell ".length();
+        int end = str.indexOf("on");
+        return str.substring(start, end);
+    }
 
 }

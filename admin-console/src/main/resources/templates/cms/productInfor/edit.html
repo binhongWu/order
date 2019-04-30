@@ -4,15 +4,32 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="绘本名称（奖项+名称）">绘本名称（奖项+名称）</label>
+            <label class="layui-form-label" title="绘本编码isbn">绘本编码isbn</label>
+            <div class="layui-input-inline">
+                <input type="text" id="code" name="code"  value="${productInfor.code}"   class="layui-input" disabled="disabled"style="background-color: #F6F6F6">
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本名称">绘本名称</label>
             <div class="layui-input-inline">
                 <input type="text" id="name" name="name"  value="${productInfor.name}"   class="layui-input" >
             </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="外文名字">外文名字</label>
+            <label class="layui-form-label" title="作者">作者</label>
             <div class="layui-input-inline">
-                <input type="text" id="foreignName" name="foreignName"  value="${productInfor.foreignName}"   class="layui-input" >
+                <input type="text" id="author" name="author"  value="${productInfor.author}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="语种">语种</label>
+            <div class="layui-input-inline">
+                <layui:simpleDictSelect style='layui-input-inline' type="product_infor_language" 
+					id="language" name="language" value="${productInfor.language}" layVerify="" />
             </div>
             </div>
         </div>
@@ -22,13 +39,14 @@
             <div class="layui-inline">
             <label class="layui-form-label" title="读者对象">读者对象</label>
             <div class="layui-input-inline">
-                <input type="text" id="kinds" name="kinds"  value="${productInfor.kinds}"   class="layui-input" >
+                <layui:simpleDictSelect style='layui-input-inline' type="product_infor_kinds" 
+					id="kinds" name="kinds" value="${productInfor.kinds}" layVerify="" />
             </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="开本">开本</label>
+            <label class="layui-form-label" title="出版社">出版社</label>
             <div class="layui-input-inline">
-                <input type="text" id="format" name="format"  value="${productInfor.format}"   class="layui-input" >
+                <input type="text" id="publishHouse" name="publishHouse"  value="${productInfor.publishHouse}"   class="layui-input" >
             </div>
             </div>
         </div>
@@ -36,25 +54,9 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="页数">页数</label>
+            <label class="layui-form-label" title="出版日期">出版日期</label>
             <div class="layui-input-inline">
-                <input type="text" id="pages" name="pages"  value="${productInfor.pages}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="商品尺寸">商品尺寸</label>
-            <div class="layui-input-inline">
-                <input type="text" id="size" name="size"  value="${productInfor.size}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="商品重量">商品重量</label>
-            <div class="layui-input-inline">
-                <input type="text" id="weight" name="weight"  value="${productInfor.weight}"   class="layui-input" >
+                <input type="text" id="publishDate" name="publishDate"  value="${productInfor.publishDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
             </div>
             </div>
             <div class="layui-inline">
@@ -68,10 +70,17 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="用户评分">用户评分</label>
+            <label class="layui-form-label" title="是否是套装">是否是套装</label>
             <div class="layui-input-inline">
-                <input type="text" id="score" name="score"  value="${productInfor.score}"   class="layui-input" >
+                <layui:simpleDictSelect style='layui-input-inline' type="product_infor_score" 
+					id="score" name="score" value="${productInfor.score}" layVerify="" />
             </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="套装册数">套装册数</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="productNum" name="productNum"  value="${productInfor.productNum}"   class="layui-input" >
+                </div>
             </div>
             <div class="layui-inline">
             <label class="layui-form-label" title="热销商品排名">热销商品排名</label>
@@ -138,63 +147,20 @@
             </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="出版社">出版社</label>
-            <div class="layui-input-inline">
-                <input type="text" id="publishHouse" name="publishHouse"  value="${productInfor.publishHouse}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建人">创建人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdBy" name="createdBy"  value="${productInfor.createdBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建时间">创建时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdTime" name="createdTime"  value="${productInfor.createdTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
+                <label class="layui-form-label" title="备注">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="remarks" name="remarks"  value="${productInfor.remarks}"   class="layui-input" >
+                </div>
             </div>
         </div>
     </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="修改人">修改人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedBy" name="updatedBy"  value="${productInfor.updatedBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="修改时间">修改时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedTime" name="updatedTime"  value="${productInfor.updatedTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="删除标志位（0：存在 1：删除）">删除标志位（0：存在 1：删除）</label>
-            <div class="layui-input-inline">
-                <input type="text" id="del" name="del"  value="${productInfor.del}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="备注">备注</label>
-            <div class="layui-input-inline">
-                <input type="text" id="remarks" name="remarks"  value="${productInfor.remarks}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-	
-    <input type="hidden" name="code" value=${productInfor.code} />
+
+    <input type="hidden" name="id" value=${productInfor.id} />
+    <input type="hidden" name="del" value=${productInfor.del} />
+    <input type="hidden" name="updatedBy" value="${productInfor.updatedBy}"/>
+    <input type="hidden" name="createdBy" value="${productInfor.createdBy}"/>
+    <input type="hidden" name="updatedTime" value="${productInfor.updatedTime,"yyyy-MM-dd"}"/>
+    <input type="hidden" name="createdTime" value="${productInfor.createdTime,"yyyy-MM-dd"}"/>
     <layui:submitButtons id="updateButton" />
 </form>
 <!--#} -->

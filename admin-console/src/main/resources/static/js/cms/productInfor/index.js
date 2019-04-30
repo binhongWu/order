@@ -22,124 +22,87 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码',
-                fixed:'left'
-                }, 
+                title : '绘本编码isbn',
+                },
                 {
                 field : 'name', 
-                title : '绘本名称'
+                title : '绘本名称',
+
                 }, 
                 {
-                field : 'foreignName', 
-                title : '外文名字'
+                field : 'author', 
+                title : '作者',
+
                 }, 
                 {
-                field : 'kinds', 
-                title : '读者对象'
-                }, 
-                // {
-                // field : 'format',
-                // title : '开本',
-                //     width : 100
-                // },
-                // {
-                // field : 'pages',
-                // title : '页数',
-                //     width : 100
-                // },
-                // {
-                // field : 'size',
-                // title : '商品尺寸',
-                //     width : 100
-                // },
-                // {
-                // field : 'weight',
-                // title : '商品重量',
-                //     width : 100
-                // },
+                field : 'languageText', //数据字典类型为 product_infor_language
+                title : '语种',
+                },
                 {
-                field : 'brand', 
-                title : '品牌'
-                }, 
-                {
-                field : 'score', 
-                title : '用户评分'
-                }, 
-                {
-                field : 'rank', 
-                title : '热销商品排名'
-                }, 
-                // {
-                // field : 'wareId',
-                // title : '仓库系统编码',
-                //     width : 100
-                // },
-                // {
-                // field : 'supplierId',
-                // title : '供应商编码',
-                //     width : 100
-                // },
-                {
-                field : 'inPrice', 
-                title : '入库单价'
-                }, 
-                {
-                field : 'outPrice', 
-                title : '出库单价'
-                }, 
-                {
-                field : 'existStocks', 
-                title : '现有库存'
-                }, 
-                // {
-                // field : 'minStocks',
-                // title : '最小库存'
-                // },
-                // {
-                // field : 'maxStocks',
-                // title : '最大库存',
-                //     width : 100
-                // },
+                field : 'kindsText', //数据字典类型为 product_infor_kinds
+                title : '读者对象',
+                },
                 {
                 field : 'publishHouse', 
                 title : '出版社',
-                    width : 100
-                }, 
-                // {
-                // field : 'createdBy',
-                // title : '创建人',
-                //     width : 100
-                // },
-                // {
-                // field : 'createdTime',
-                // title : '创建时间',
-                //     width : 100
-                // },
-                // {
-                // field : 'updatedBy',
-                // title : '修改人',
-                //     width : 100
-                // },
-                // {
-                // field : 'updatedTime',
-                // title : '修改时间',
-                //     width : 100
-                // },
-                // {
-                // field : 'del',
-                // title : '删除标志位（0：存在 1：删除）',
-                //     width : 100
-                // },
+                },
+                {
+                field : 'publishDate', 
+                title : '出版日期',
+                },
+                {
+                field : 'brand', 
+                title : '品牌',
+                },
+                {
+                field : 'scoreText', //数据字典类型为 product_infor_score
+                title : '是否是套装',
+                },
+                {
+                field : 'productNum',
+                title : '套装册数',
+                },
+                {
+                field : 'rank', 
+                title : '热销商品排名',
+                },
+                {
+                field : 'wareId', 
+                title : '仓库系统编码',
+                },
+                {
+                field : 'supplierId', 
+                title : '供应商编码',
+                },
+                {
+                field : 'inPrice', 
+                title : '入库单价',
+                },
+                {
+                field : 'outPrice', 
+                title : '出库单价',
+                },
+                {
+                field : 'existStocks', 
+                title : '现有库存',
+                },
+                {
+                field : 'minStocks', 
+                title : '最小库存',
+                },
+                {
+                field : 'maxStocks', 
+                title : '最大库存',
+                },
                 {
                 field : 'remarks', 
                 title : '备注',
-                    width : 100
-                } 
+                }
         
                 ] ]
         
@@ -169,8 +132,8 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                     if(data==null){
                         return ;
                     }
-                    var url = "/cms/productInfor/edit.do?code="+data.code;
-                    Common.openDlg(url,"ProductInfor管理>"+data.code+">编辑");
+                    var url = "/cms/productInfor/edit.do?id="+data.id;
+                    Common.openDlg(url,"ProductInfor管理>"+data.id+">编辑");
                 },
                 del : function() { 
                     layui.use(['del'], function(){
@@ -182,7 +145,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 exportDocument : function() {
                     layui.use([ 'productInforApi' ], function() {
                         var productInforApi = layui.productInforApi
-                        Common.openConfirm("确认要导出这些ProductInfor数据?", function() {
+                        Common.openConfirm("确认要导出这些绘本信息数据?", function() {
                             productInforApi.exportExcel($("#searchForm"), function(fileId) {
                                 Lib.download(fileId);
                             })

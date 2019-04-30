@@ -14,8 +14,17 @@ queryByCondition
     @if(!isEmpty(name)){
         and  t.name =#name#
     @}
-    @if(!isEmpty(rank)){
-        and  t.rank =#rank#
+    @if(!isEmpty(language)){
+        and  t.language =#language#
+    @}
+    @if(!isEmpty(kinds)){
+        and  t.kinds =#kinds#
+    @}
+    @if(!isEmpty(score)){
+        and  t.score =#score#
+    @}
+    @if(!isEmpty(supplierId)){
+        and  t.supplier_id =#supplierId#
     @}
     order by t.created_time desc
     
@@ -37,7 +46,7 @@ batchDelProductInforByIds
 
 * 批量逻辑删除
 
-    update product_infor set del = 1 where code  in( #join(ids)#)
+    update product_infor set del = 1 where id  in( #join(ids)#)
     
 
 
@@ -52,14 +61,14 @@ updateCustom
         ,updated_by = #updatedBy#
                 ,code = #code#
                 ,name = #name#
-                ,foreign_name = #foreignName#
+                ,author = #author#
+                ,language = #language#
                 ,kinds = #kinds#
-                ,format = #format#
-                ,pages = #pages#
-                ,size = #size#
-                ,weight = #weight#
+                ,publish_house = #publishHouse#
+                ,publish_date = #publishDate#
                 ,brand = #brand#
                 ,score = #score#
+                ,product_num = #productNum#
                 ,rank = #rank#
                 ,ware_id = #wareId#
                 ,supplier_id = #supplierId#
@@ -68,7 +77,6 @@ updateCustom
                 ,exist_stocks = #existStocks#
                 ,min_stocks = #minStocks#
                 ,max_stocks = #maxStocks#
-                ,publish_house = #publishHouse#
                 ,created_by = #createdBy#
                 ,created_time = #createdTime#
                 ,remarks = #remarks#
@@ -92,23 +100,20 @@ findListByCustom
     @if(!isEmpty(name)){
         and  t.name =#name#
     @}
-    @if(!isEmpty(foreignName)){
-        and  t.foreign_name =#foreignName#
+    @if(!isEmpty(author)){
+        and  t.author =#author#
+    @}
+    @if(!isEmpty(language)){
+        and  t.language =#language#
     @}
     @if(!isEmpty(kinds)){
         and  t.kinds =#kinds#
     @}
-    @if(!isEmpty(format)){
-        and  t.format =#format#
+    @if(!isEmpty(publishHouse)){
+        and  t.publish_house =#publishHouse#
     @}
-    @if(!isEmpty(pages)){
-        and  t.pages =#pages#
-    @}
-    @if(!isEmpty(size)){
-        and  t.size =#size#
-    @}
-    @if(!isEmpty(weight)){
-        and  t.weight =#weight#
+    @if(!isEmpty(publishDate)){
+        and  t.publish_date =#publishDate#
     @}
     @if(!isEmpty(brand)){
         and  t.brand =#brand#
@@ -139,9 +144,6 @@ findListByCustom
     @}
     @if(!isEmpty(maxStocks)){
         and  t.max_stocks =#maxStocks#
-    @}
-    @if(!isEmpty(publishHouse)){
-        and  t.publish_house =#publishHouse#
     @}
     @if(!isEmpty(remarks)){
         and  t.remarks =#remarks#

@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-10
+ * @date 2019-04-30
  */
 @Data
 @Builder
@@ -34,13 +34,18 @@ import lombok.*;
 public class ProductInfor extends BaseEntity{
 
 	/**
-	 * 绘本编码
+	 * 系统编号
 	 */
     @NotNull(message = "ID不能为空", groups =ValidateConfig.UPDATE.class)
 	@JsonSerialize(using=ToStringSerializer.class)
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
+    private Long id ;
+
+	/**
+	 * 绘本编码isbn
+	 */
     private String code ;
 
 	/**
@@ -49,34 +54,31 @@ public class ProductInfor extends BaseEntity{
     private String name ;
 
 	/**
-	 * 外文名字
+	 * 作者
 	 */
-    private String foreignName ;
+    private String author ;
+
+	/**
+	 * 语种
+	 */
+    @Dict(type="product_infor_language")
+    private String language ;
 
 	/**
 	 * 读者对象
 	 */
+    @Dict(type="product_infor_kinds")
     private String kinds ;
 
 	/**
-	 * 开本
+	 * 出版社
 	 */
-    private String format ;
+    private String publishHouse ;
 
 	/**
-	 * 页数
+	 * 出版日期
 	 */
-	private String pages ;
-
-	/**
-	 * 商品尺寸
-	 */
-    private String size ;
-
-	/**
-	 * 商品重量
-	 */
-    private String weight ;
+    private Date publishDate ;
 
 	/**
 	 * 品牌
@@ -84,9 +86,12 @@ public class ProductInfor extends BaseEntity{
     private String brand ;
 
 	/**
-	 * 用户评分
+	 * 是否是套装
 	 */
+    @Dict(type="product_infor_score")
     private String score ;
+
+    private String productNum;
 
 	/**
 	 * 热销商品排名
@@ -129,14 +134,9 @@ public class ProductInfor extends BaseEntity{
     private String maxStocks ;
 
 	/**
-	 * 出版社
-	 */
-    private String publishHouse ;
-
-	/**
 	 * 创建人
 	 */
-    private String createdBy ;
+    private Long createdBy ;
 
 	/**
 	 * 创建时间
@@ -146,7 +146,7 @@ public class ProductInfor extends BaseEntity{
 	/**
 	 * 修改人
 	 */
-    private String updatedBy ;
+    private Long updatedBy ;
 
 	/**
 	 * 修改时间

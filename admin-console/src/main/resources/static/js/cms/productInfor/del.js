@@ -9,8 +9,8 @@ layui.define(['table', 'productInforApi'], function(exports) {
             if(data==null){
                 return ;
             }
-            Common.openConfirm("确认要删除这些ProductInfor?",function(){
-            var ids =Common.concatBatchId(data,"code");
+            Common.openConfirm("确认要删除这些绘本信息?",function(){
+            var ids =Common.concatBatchId(data,"id");
             productInforApi.del(ids,function(){
                 Common.info("删除成功");
                     dataReload();
