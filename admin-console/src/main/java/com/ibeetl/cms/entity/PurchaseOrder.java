@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-12
+ * @date 2019-04-30
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class PurchaseOrder extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String orderId ;
+    private Long orderId ;
 
 	/**
 	 * 绘本编码
@@ -74,11 +74,6 @@ public class PurchaseOrder extends BaseEntity{
     private Date deliverDate ;
 
 	/**
-	 * 采购日期
-	 */
-    private String buyerBy ;
-
-	/**
 	 * 付款方式（0：支付宝 1：微信 2：银行卡）
 	 */
     @Dict(type="purchase_order_paymentmethod")
@@ -107,6 +102,7 @@ public class PurchaseOrder extends BaseEntity{
 	/**
 	 * 审核状态
 	 */
+	@Dict(type="purchase_warehouse_checkstatus")
     private String chenkStatus ;
 
 	/**
@@ -138,7 +134,7 @@ public class PurchaseOrder extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

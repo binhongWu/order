@@ -9,7 +9,7 @@ layui.define(['table', 'purchaseOrderApi'], function(exports) {
             if(data==null){
                 return ;
             }
-            Common.openConfirm("确认要删除这些PurchaseOrder?",function(){
+            Common.openConfirm("确认要删除这些采购订单?",function(){
             var ids =Common.concatBatchId(data,"orderId");
             purchaseOrderApi.del(ids,function(){
                 Common.info("删除成功");

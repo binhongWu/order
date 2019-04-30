@@ -3,6 +3,8 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.cms.entity.ProductInfor;
+import com.ibeetl.utils.StringUtils;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +73,10 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
 
     @Override
     public boolean save(PurchaseOrder model) {
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setCreatedTime(new Date());
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
@@ -83,5 +89,31 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
      */
     public List<PurchaseOrder> findListByCustom(PurchaseOrder model) {
         return purchaseOrderDao.findListByCustom(model);
+    }
+
+    public void saveImport(List<PurchaseOrder> datas) {
+        for (PurchaseOrder model : datas) {
+            model.setOrderId(null);
+            model.setCreatedBy(platformService.getCurrentUser().getId());
+            model.setCreatedTime(new Date());
+            model.setUpdatedTime(new Date());
+            model.setUpdatedBy(platformService.getCurrentUser().getId());
+            save(model);
+        }
+    }
+
+    /**
+     * 更新订单状态  记录到订单入库表  检索出剩下的，默认为未完成记录到退回表
+     * @param datas
+     */
+    public void saveImport2(List<PurchaseOrder> datas) {
+        for (PurchaseOrder model : datas) {
+            model.setUpdatedTime(new Date());
+            model.setUpdatedBy(platformService.getCurrentUser().getId());
+            model.setDel("0");
+            model.setFinishCondition("1");
+            sqlManager.updateById(model);
+
+        }
     }
 }

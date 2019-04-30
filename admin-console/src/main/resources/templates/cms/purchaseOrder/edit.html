@@ -52,60 +52,55 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="采购日期">采购日期</label>
-            <div class="layui-input-inline">
-                <input type="text" id="buyerBy" name="buyerBy"  value="${purchaseOrder.buyerBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
             <label class="layui-form-label" title="付款方式（0：支付宝 1：微信 2：银行卡）">付款方式（0：支付宝 1：微信 2：银行卡）</label>
             <div class="layui-input-inline">
                 <layui:simpleDictSelect style='layui-input-inline' type="purchase_order_paymentmethod" 
 					id="paymentMethod" name="paymentMethod" value="${purchaseOrder.paymentMethod}" layVerify="" />
             </div>
             </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="付款金额">付款金额</label>
             <div class="layui-input-inline">
                 <input type="text" id="paymentAmount" name="paymentAmount"  value="${purchaseOrder.paymentAmount}"   class="layui-input" >
             </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="交货地点">交货地点</label>
             <div class="layui-input-inline">
                 <input type="text" id="tradeLocal" name="tradeLocal"  value="${purchaseOrder.tradeLocal}"   class="layui-input" >
             </div>
             </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="审核人">审核人</label>
             <div class="layui-input-inline">
                 <input type="text" id="checkBy" name="checkBy"  value="${purchaseOrder.checkBy}"   class="layui-input" >
             </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="审核时间">审核时间</label>
             <div class="layui-input-inline">
                 <input type="text" id="checkDate" name="checkDate"  value="${purchaseOrder.checkDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
             </div>
             </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="审核状态">审核状态</label>
+            <div class="layui-input-inline">
+                <layui:simpleDictSelect style='layui-input-inline' type="purchase_warehouse_checkstatus" layVerify=""
+                                        id="chenkStatus" name="chenkStatus" value="${purchaseOrder.chenkStatus}" />
+            </div>
+            </div>
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="审核状态">审核状态</label>
-            <div class="layui-input-inline">
-                <input type="text" id="chenkStatus" name="chenkStatus"  value="${purchaseOrder.chenkStatus}"   class="layui-input" >
-            </div>
-            </div>
             <div class="layui-inline">
             <label class="layui-form-label" title="完成状态（0：完成 1：未完成）">完成状态（0：完成 1：未完成）</label>
             <div class="layui-input-inline">
@@ -113,58 +108,21 @@
 					id="finishCondition" name="finishCondition" value="${purchaseOrder.finishCondition}" layVerify="" />
             </div>
             </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="创建人">创建人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdBy" name="createdBy"  value="${purchaseOrder.createdBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建时间">创建时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdTime" name="createdTime"  value="${purchaseOrder.createdTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
+                <label class="layui-form-label" title="备注">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="remarks" name="remarks"  value="${purchaseOrder.remarks}"   class="layui-input" >
+                </div>
             </div>
         </div>
     </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新人">更新人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedBy" name="updatedBy"  value="${purchaseOrder.updatedBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新时间">更新时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedTime" name="updatedTime"  value="${purchaseOrder.updatedTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="删除标记{0:正常,1:已删除}">删除标记{0:正常,1:已删除}</label>
-            <div class="layui-input-inline">
-                <input type="text" id="del" name="del"  value="${purchaseOrder.del}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="备注">备注</label>
-            <div class="layui-input-inline">
-                <input type="text" id="remarks" name="remarks"  value="${purchaseOrder.remarks}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-	
+
     <input type="hidden" name="orderId" value=${purchaseOrder.orderId} />
+    <input type="hidden" name="del" value=${purchaseOrder.del} />
+    <input type="hidden" name="updatedBy" value="${purchaseOrder.updatedBy}"/>
+    <input type="hidden" name="createdBy" value="${purchaseOrder.createdBy}"/>
+    <input type="hidden" name="updatedTime" value="${purchaseOrder.updatedTime,"yyyy-MM-dd"}"/>
+    <input type="hidden" name="createdTime" value="${purchaseOrder.createdTime,"yyyy-MM-dd"}"/>
     <layui:submitButtons id="updateButton" />
 </form>
 <!--#} -->

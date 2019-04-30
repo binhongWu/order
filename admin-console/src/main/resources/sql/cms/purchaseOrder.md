@@ -14,20 +14,11 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
-    @if(!isEmpty(supplierId)){
-        and  t.supplier_id =#supplierId#
-    @}
     @if(!isEmpty(orderDate)){
         and  t.order_date =#orderDate#
     @}
-    @if(!isEmpty(deliverDate)){
-        and  t.deliver_date =#deliverDate#
-    @}
-    @if(!isEmpty(buyerBy)){
-        and  t.buyer_by =#buyerBy#
-    @}
-    @if(!isEmpty(chenkStatus)){
-        and  t.chenk_status =#chenkStatus#
+    @if(!isEmpty(paymentMethod)){
+        and  t.payment_method =#paymentMethod#
     @}
     @if(!isEmpty(finishCondition)){
         and  t.finish_condition =#finishCondition#
@@ -72,7 +63,6 @@ updateCustom
                 ,supplier_id = #supplierId#
                 ,order_date = #orderDate#
                 ,deliver_date = #deliverDate#
-                ,buyer_by = #buyerBy#
                 ,payment_method = #paymentMethod#
                 ,payment_amount = #paymentAmount#
                 ,trade_local = #tradeLocal#
@@ -117,9 +107,6 @@ findListByCustom
     @}
     @if(!isEmpty(deliverDate)){
         and  t.deliver_date =#deliverDate#
-    @}
-    @if(!isEmpty(buyerBy)){
-        and  t.buyer_by =#buyerBy#
     @}
     @if(!isEmpty(paymentMethod)){
         and  t.payment_method =#paymentMethod#

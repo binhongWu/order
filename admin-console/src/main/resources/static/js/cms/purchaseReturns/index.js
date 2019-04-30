@@ -22,73 +22,85 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'returnedId', 
                 title : '退回单号',
-                fixed:'left'
+                fixed:'left',
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码'
+                title : '绘本编码',
                 }, 
                 {
                 field : 'number', 
-                title : '绘本数量'
+                title : '绘本数量',
                 }, 
                 {
                 field : 'price', 
-                title : '绘本单价'
+                title : '绘本单价',
                 }, 
                 {
                 field : 'supplierId', 
-                title : '供货商编号'
+                title : '供货商编号',
                 }, 
                 {
                 field : 'orderId', 
-                title : '采购订单单号'
+                title : '采购订单单号',
                 }, 
                 {
                 field : 'refundMethodText', //数据字典类型为 purchase_returns_refundmethod
-                title : '退款方式'
+                title : '退款方式（0：支付宝 1：微信 2：银行卡）',
                 }, 
                 {
                 field : 'refundAmount', 
-                title : '退款金额'
-                }, 
-                {
-                field : 'billId', 
-                title : '发票号'
+                title : '退款金额',
                 }, 
                 {
                 field : 'returnedDate', 
-                title : '退货日期'
+                title : '退货日期',
                 }, 
                 {
                 field : 'sender', 
-                title : '发货人'
-                }, 
-                {
-                field : 'entryDate', 
-                title : '录入日期'
+                title : '发货人',
                 }, 
                 {
                 field : 'checkBy', 
-                title : '审查人'
+                title : '审查人',
                 }, 
                 {
                 field : 'checkDate', 
-                title : '审查日期'
+                title : '审查日期',
                 }, 
                 {
                 field : 'checkStatusText', //数据字典类型为 purchase_returns_checkstatus
-                title : '审核状态'
-                },
+                title : '审核状态（0：待审核 1：通过 2：拒绝）',
+                }, 
+                // {
+                // field : 'createdBy',
+                // title : '创建人',
+                // },
+                // {
+                // field : 'createdTime',
+                // title : '创建时间',
+                // },
+                // {
+                // field : 'updatedBy',
+                // title : '更新人',
+                // },
+                // {
+                // field : 'updatedTime',
+                // title : '更新时间',
+                // },
+                // {
+                // field : 'del',
+                // title : '删除标记{0:正常,1:已删除}',
+                // },
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]

@@ -11,20 +11,24 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class PurchaseReturnsQuery extends PageParam {
     @Query(name = "退回单号", display = true)        
-    private String returnedId;
+    private Long returnedId;
+    @Query(name = "绘本编码", display = true)        
+    private String code;
     @Query(name = "采购订单单号", display = true)        
     private String orderId;
     @Query(name = "退货日期", display = true)        
     private Date returnedDate;
-    @Query(name = "审查日期", display = true)        
-    private Date checkDate;
-    @Query(name = "审核状态（0：待审核 1：通过 2：拒绝）", display = true,type=Query.TYPE_DICT,dict="purchase_returns_checkstatus")
-    private String checkStatus;
-    public String getReturnedId(){
+    public Long getReturnedId(){
         return  returnedId;
     }
-    public void setReturnedId(String returnedId ){
+    public void setReturnedId(Long returnedId ){
         this.returnedId = returnedId;
+    }
+    public String getCode(){
+        return  code;
+    }
+    public void setCode(String code ){
+        this.code = code;
     }
     public String getOrderId(){
         return  orderId;
@@ -37,18 +41,6 @@ public class PurchaseReturnsQuery extends PageParam {
     }
     public void setReturnedDate(Date returnedDate ){
         this.returnedDate = returnedDate;
-    }
-    public Date getCheckDate(){
-        return  checkDate;
-    }
-    public void setCheckDate(Date checkDate ){
-        this.checkDate = checkDate;
-    }
-    public String getCheckStatus(){
-        return  checkStatus;
-    }
-    public void setCheckStatus(String checkStatus ){
-        this.checkStatus = checkStatus;
     }
  
 }

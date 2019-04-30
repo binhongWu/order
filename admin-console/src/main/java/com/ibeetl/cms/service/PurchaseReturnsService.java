@@ -71,6 +71,10 @@ public class PurchaseReturnsService extends BaseService<PurchaseReturns>{
 
     @Override
     public boolean save(PurchaseReturns model) {
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setCreatedTime(new Date());
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 

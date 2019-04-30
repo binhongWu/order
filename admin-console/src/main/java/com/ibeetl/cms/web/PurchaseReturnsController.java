@@ -75,7 +75,7 @@ public class PurchaseReturnsController{
     @GetMapping(MODEL + "/edit.do")
     @Function("purchaseReturns.edit")
     @ResponseBody
-    public ModelAndView edit(String returnedId) {
+    public ModelAndView edit(Long returnedId) {
         ModelAndView view = new ModelAndView("/cms/purchaseReturns/edit.html");
         PurchaseReturns purchaseReturns = purchaseReturnsService.queryById(returnedId);
         view.addObject("purchaseReturns", purchaseReturns);
@@ -139,7 +139,7 @@ public class PurchaseReturnsController{
     @GetMapping(MODEL + "/view.json")
     @Function("purchaseReturns.query")
     @ResponseBody
-    public JsonResult<PurchaseReturns>queryInfo(String returnedId) {
+    public JsonResult<PurchaseReturns>queryInfo(Long returnedId) {
         PurchaseReturns purchaseReturns = purchaseReturnsService.queryById( returnedId);
         return  JsonResult.success(purchaseReturns);
     }
@@ -178,7 +178,7 @@ public class PurchaseReturnsController{
             if(is==null) {
                 throw new PlatformException("模板资源不存在："+excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("PurchaseReturns_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            FileItem item = fileService.createFileTemp("采购退回_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);

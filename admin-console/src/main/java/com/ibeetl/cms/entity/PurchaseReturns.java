@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-12
+ * @date 2019-04-30
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class PurchaseReturns extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String returnedId ;
+    private Long returnedId ;
 
 	/**
 	 * 绘本编码
@@ -80,11 +80,6 @@ public class PurchaseReturns extends BaseEntity{
     private String refundAmount ;
 
 	/**
-	 * 发票号
-	 */
-    private String billId ;
-
-	/**
 	 * 退货日期
 	 */
     private Date returnedDate ;
@@ -93,11 +88,6 @@ public class PurchaseReturns extends BaseEntity{
 	 * 发货人
 	 */
     private String sender ;
-
-	/**
-	 * 录入日期
-	 */
-    private Date entryDate ;
 
 	/**
 	 * 审查人
@@ -138,7 +128,7 @@ public class PurchaseReturns extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

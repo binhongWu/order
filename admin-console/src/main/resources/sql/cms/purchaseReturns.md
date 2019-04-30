@@ -11,17 +11,14 @@ queryByCondition
     @if(!isEmpty(returnedId)){
         and  t.returned_id =#returnedId#
     @}
+    @if(!isEmpty(code)){
+        and  t.code =#code#
+    @}
     @if(!isEmpty(orderId)){
         and  t.order_id =#orderId#
     @}
     @if(!isEmpty(returnedDate)){
         and  t.returned_date =#returnedDate#
-    @}
-    @if(!isEmpty(checkDate)){
-        and  t.check_date =#checkDate#
-    @}
-    @if(!isEmpty(checkStatus)){
-        and  t.check_status =#checkStatus#
     @}
     order by t.created_time desc
     
@@ -64,10 +61,8 @@ updateCustom
                 ,order_id = #orderId#
                 ,refund_method = #refundMethod#
                 ,refund_amount = #refundAmount#
-                ,bill_id = #billId#
                 ,returned_date = #returnedDate#
                 ,sender = #sender#
-                ,entry_date = #entryDate#
                 ,check_by = #checkBy#
                 ,check_date = #checkDate#
                 ,check_status = #checkStatus#
@@ -112,17 +107,11 @@ findListByCustom
     @if(!isEmpty(refundAmount)){
         and  t.refund_amount =#refundAmount#
     @}
-    @if(!isEmpty(billId)){
-        and  t.bill_id =#billId#
-    @}
     @if(!isEmpty(returnedDate)){
         and  t.returned_date =#returnedDate#
     @}
     @if(!isEmpty(sender)){
         and  t.sender =#sender#
-    @}
-    @if(!isEmpty(entryDate)){
-        and  t.entry_date =#entryDate#
     @}
     @if(!isEmpty(checkBy)){
         and  t.check_by =#checkBy#

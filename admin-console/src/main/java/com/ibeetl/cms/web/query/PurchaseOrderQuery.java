@@ -11,25 +11,19 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class PurchaseOrderQuery extends PageParam {
     @Query(name = "订单单号", display = true)        
-    private String orderId;
+    private Long orderId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    @Query(name = "供应商编号", display = true)        
-    private String supplierId;
     @Query(name = "订单日期", display = true)        
     private Date orderDate;
-    @Query(name = "交货日期", display = true)        
-    private Date deliverDate;
-    @Query(name = "采购日期", display = true)        
-    private String buyerBy;
-    @Query(name = "审核状态", display = true)        
-    private String chenkStatus;
+    @Query(name = "付款方式（0：支付宝 1：微信 2：银行卡）", display = true,type=Query.TYPE_DICT,dict="purchase_order_paymentmethod")
+    private String paymentMethod;
     @Query(name = "完成状态（0：完成 1：未完成）", display = true,type=Query.TYPE_DICT,dict="purchase_order_finishcondition")
     private String finishCondition;
-    public String getOrderId(){
+    public Long getOrderId(){
         return  orderId;
     }
-    public void setOrderId(String orderId ){
+    public void setOrderId(Long orderId ){
         this.orderId = orderId;
     }
     public String getCode(){
@@ -38,35 +32,17 @@ public class PurchaseOrderQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
-    public String getSupplierId(){
-        return  supplierId;
-    }
-    public void setSupplierId(String supplierId ){
-        this.supplierId = supplierId;
-    }
     public Date getOrderDate(){
         return  orderDate;
     }
     public void setOrderDate(Date orderDate ){
         this.orderDate = orderDate;
     }
-    public Date getDeliverDate(){
-        return  deliverDate;
+    public String getPaymentMethod(){
+        return  paymentMethod;
     }
-    public void setDeliverDate(Date deliverDate ){
-        this.deliverDate = deliverDate;
-    }
-    public String getBuyerBy(){
-        return  buyerBy;
-    }
-    public void setBuyerBy(String buyerBy ){
-        this.buyerBy = buyerBy;
-    }
-    public String getChenkStatus(){
-        return  chenkStatus;
-    }
-    public void setChenkStatus(String chenkStatus ){
-        this.chenkStatus = chenkStatus;
+    public void setPaymentMethod(String paymentMethod ){
+        this.paymentMethod = paymentMethod;
     }
     public String getFinishCondition(){
         return  finishCondition;
