@@ -20,11 +20,11 @@ queryByCondition
     @if(!isEmpty(kinds)){
         and  t.kinds =#kinds#
     @}
+    @if(!isEmpty(bookKind)){
+        and  t.book_kind =#bookKind#
+    @}
     @if(!isEmpty(score)){
         and  t.score =#score#
-    @}
-    @if(!isEmpty(supplierId)){
-        and  t.supplier_id =#supplierId#
     @}
     order by t.created_time desc
     
@@ -61,11 +61,14 @@ updateCustom
         ,updated_by = #updatedBy#
                 ,code = #code#
                 ,name = #name#
+                ,picture = #picture#
                 ,author = #author#
                 ,language = #language#
                 ,kinds = #kinds#
+                ,book_kind = #bookKind#
                 ,publish_house = #publishHouse#
                 ,publish_date = #publishDate#
+                ,introduction = #introduction#
                 ,brand = #brand#
                 ,score = #score#
                 ,product_num = #productNum#
@@ -100,6 +103,9 @@ findListByCustom
     @if(!isEmpty(name)){
         and  t.name =#name#
     @}
+    @if(!isEmpty(picture)){
+        and  t.picture =#picture#
+    @}
     @if(!isEmpty(author)){
         and  t.author =#author#
     @}
@@ -109,17 +115,26 @@ findListByCustom
     @if(!isEmpty(kinds)){
         and  t.kinds =#kinds#
     @}
+    @if(!isEmpty(bookKind)){
+        and  t.book_kind =#bookKind#
+    @}
     @if(!isEmpty(publishHouse)){
         and  t.publish_house =#publishHouse#
     @}
     @if(!isEmpty(publishDate)){
         and  t.publish_date =#publishDate#
     @}
+    @if(!isEmpty(introduction)){
+        and  t.introduction =#introduction#
+    @}
     @if(!isEmpty(brand)){
         and  t.brand =#brand#
     @}
     @if(!isEmpty(score)){
         and  t.score =#score#
+    @}
+    @if(!isEmpty(productNum)){
+        and  t.product_num =#productNum#
     @}
     @if(!isEmpty(rank)){
         and  t.rank =#rank#

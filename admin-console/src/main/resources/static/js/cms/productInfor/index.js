@@ -28,81 +28,113 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'code', 
                 title : '绘本编码isbn',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'name', 
                 title : '绘本名称',
-
+                    width : 100
                 }, 
+                // {
+                // field : 'picture',
+                // title : '图片',
+                //     width : 100
+                // },
                 {
                 field : 'author', 
                 title : '作者',
-
+                    width : 100
                 }, 
                 {
                 field : 'languageText', //数据字典类型为 product_infor_language
                 title : '语种',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'kindsText', //数据字典类型为 product_infor_kinds
                 title : '读者对象',
-                },
+                    width : 100
+                }, 
+                {
+                field : 'bookKind', 
+                title : '图书分类',
+                    width : 100
+                }, 
                 {
                 field : 'publishHouse', 
                 title : '出版社',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'publishDate', 
                 title : '出版日期',
-                },
+                    width : 100
+                }, 
+                {
+                field : 'introduction', 
+                title : '简介',
+                    width : 100
+                }, 
                 {
                 field : 'brand', 
                 title : '品牌',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'scoreText', //数据字典类型为 product_infor_score
                 title : '是否是套装',
-                },
+                    width : 100
+                }, 
                 {
-                field : 'productNum',
+                field : 'productNum', 
                 title : '套装册数',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'rank', 
                 title : '热销商品排名',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'wareId', 
                 title : '仓库系统编码',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'supplierId', 
                 title : '供应商编码',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'inPrice', 
                 title : '入库单价',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'outPrice', 
                 title : '出库单价',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'existStocks', 
                 title : '现有库存',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'minStocks', 
                 title : '最小库存',
-                },
+                    width : 100
+                }, 
                 {
                 field : 'maxStocks', 
                 title : '最大库存',
+                    width : 100
                 },
                 {
                 field : 'remarks', 
                 title : '备注',
-                }
+                    width : 100
+                } 
         
                 ] ]
         

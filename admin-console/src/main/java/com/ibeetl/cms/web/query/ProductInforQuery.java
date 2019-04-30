@@ -18,10 +18,10 @@ public class ProductInforQuery extends PageParam {
     private String language;
     @Query(name = "读者对象", display = true,type=Query.TYPE_DICT,dict="product_infor_kinds")
     private String kinds;
+    @Query(name = "图书分类", display = true)        
+    private String bookKind;
     @Query(name = "是否是套装", display = true,type=Query.TYPE_DICT,dict="product_infor_score")
     private String score;
-    @Query(name = "供应商编码", display = true)        
-    private String supplierId;
     public String getCode(){
         return  code;
     }
@@ -46,17 +46,17 @@ public class ProductInforQuery extends PageParam {
     public void setKinds(String kinds ){
         this.kinds = kinds;
     }
+    public String getBookKind(){
+        return  bookKind;
+    }
+    public void setBookKind(String bookKind ){
+        this.bookKind = bookKind;
+    }
     public String getScore(){
         return  score;
     }
     public void setScore(String score ){
         this.score = score;
-    }
-    public String getSupplierId(){
-        return  supplierId;
-    }
-    public void setSupplierId(String supplierId ){
-        this.supplierId = supplierId;
     }
  
 }

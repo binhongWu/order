@@ -3,6 +3,7 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.admin.core.util.DateUtils;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,10 @@ public class ProductInforService extends BaseService<ProductInfor>{
 
     @Override
     public boolean save(ProductInfor model) {
+        model.setCreatedTime(new Date());
+        model.setUpdatedTime(new Date());
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
@@ -115,6 +120,7 @@ public class ProductInforService extends BaseService<ProductInfor>{
             model.setCreatedTime(new Date());
             model.setUpdatedTime(new Date());
             model.setUpdatedBy(platformService.getCurrentUser().getId());
+            model.setPublishDate(DateUtils.parseDate(model.getPublishDate()));
             save(model);
         }
     }

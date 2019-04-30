@@ -41,15 +41,14 @@ import java.util.Map;
  * ProductInfor 接口
  */
 @Controller
-public class ProductInforController {
+public class ProductInforController{
 
     private final Log log = LogFactory.getLog(this.getClass());
     private static final String MODEL = "/cms/productInfor";
 
 
-    @Autowired
-    private ProductInforService productInforService;
-
+    @Autowired private ProductInforService productInforService;
+    
     @Autowired
     FileService fileService;
     /* 页面 */
@@ -58,7 +57,7 @@ public class ProductInforController {
     @Function("productInfor.query")
     @ResponseBody
     public ModelAndView index() {
-        ModelAndView view = new ModelAndView("/cms/productInfor/index.html");
+        ModelAndView view = new ModelAndView("/cms/productInfor/index.html") ;
         view.addObject("search", ProductInforQuery.class.getName());
         return view;
     }
@@ -86,19 +85,20 @@ public class ProductInforController {
     @PostMapping(MODEL + "/list.json")
     @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<PageQuery> list(ProductInforQuery condtion) {
+    public JsonResult<PageQuery> list(ProductInforQuery condtion)
+    {
         PageQuery page = condtion.getPageQuery();
         productInforService.queryByCondition(page);
         return JsonResult.success(page);
     }
 
-    /**
-     * 根据ID查找
-     */
+        /**
+         * 根据ID查找
+         */
     @PostMapping(MODEL + "/queryById.json")
     @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<ProductInfor> queryById(Object id) {
+    public JsonResult<ProductInfor> queryById(Object id){
         ProductInfor data = productInforService.queryById(id);
         return JsonResult.success(data);
     }
@@ -106,7 +106,8 @@ public class ProductInforController {
     @PostMapping(MODEL + "/add.json")
     @Function("productInfor.add")
     @ResponseBody
-    public JsonResult add(@Validated(ValidateConfig.ADD.class) ProductInfor productInfor) {
+    public JsonResult add(@Validated(ValidateConfig.ADD.class)ProductInfor productInfor)
+    {
         productInforService.save(productInfor);
         return JsonResult.success();
     }
@@ -114,7 +115,7 @@ public class ProductInforController {
     @PostMapping(MODEL + "/update.json")
     @Function("productInfor.update")
     @ResponseBody
-    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class) ProductInfor productInfor) {
+    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class)  ProductInfor productInfor) {
         boolean success = productInforService.update(productInfor);
         if (success) {
             return JsonResult.success();
@@ -124,12 +125,13 @@ public class ProductInforController {
     }
 
 
+   
     @GetMapping(MODEL + "/view.json")
     @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<ProductInfor> queryInfo(Long id) {
-        ProductInfor productInfor = productInforService.queryById(id);
-        return JsonResult.success(productInfor);
+    public JsonResult<ProductInfor>queryInfo(Long id) {
+        ProductInfor productInfor = productInforService.queryById( id);
+        return  JsonResult.success(productInfor);
     }
 
     @PostMapping(MODEL + "/delete.json")
@@ -143,43 +145,43 @@ public class ProductInforController {
         productInforService.batchDelProductInfor(idList);
         return JsonResult.success();
     }
-
-
+    
+    
     @PostMapping(MODEL + "/excel/export.json")
     @Function("productInfor.exportDocument")
     @ResponseBody
-    public JsonResult<String> export(HttpServletResponse response, ProductInforQuery condtion) {
+    public JsonResult<String> export(HttpServletResponse response,ProductInforQuery condtion) {
         /**
          * 1)需要用你自己编写一个的excel模板
          * 2)通常excel导出需要关联更多数据，因此productInforService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate = "excelTemplates/cms/productInfor/product_info_export.xls";
+        String excelTemplate ="excelTemplates/cms/productInfor/product_info_export.xls";
         PageQuery<ProductInfor> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
         page.setPageNumber(1);
         page.setTotalRow(Integer.MAX_VALUE);
         //本次导出需要的数据
-        List<ProductInfor> list = productInforService.queryByCondition(page).getList();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
-            if (is == null) {
-                throw new PlatformException("模板资源不存在：" + excelTemplate);
+        List<ProductInfor> list =productInforService.queryByCondition(page).getList();
+        try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
+            if(is==null) {
+                throw new PlatformException("模板资源不存在："+excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("绘本信息_" + DateUtil.now("yyyyMMddHHmmss") + ".xls");
+            FileItem item = fileService.createFileTemp("绘本信息_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);
             JxlsHelper.getInstance().processTemplate(is, os, context);
             os.close();
             //下载参考FileSystemContorller
-            return JsonResult.success(item.getPath());
+            return  JsonResult.success(item.getPath());
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-
+        
     }
-
+    
     @PostMapping(MODEL + "/excel/import.do")
     @Function("productInfor.importDocument")
     @ResponseBody
@@ -220,5 +222,7 @@ public class ProductInforController {
         int end = str.indexOf("on");
         return str.substring(start, end);
     }
+    
+    
 
 }

@@ -11,8 +11,10 @@
 				<mapping row="4" col="2">data.author</mapping>
 				<mapping row="4" col="3">data.language</mapping>
 				<mapping row="4" col="4">data.kinds</mapping>
+				<mapping row="4" col="5">data.bookKind</mapping>
 				<mapping row="4" col="5">data.publishHouse</mapping>
 				<mapping row="4" col="6">data.publishDate</mapping>
+				<mapping row="4" col="7">data.introduction</mapping>
 				<mapping row="4" col="7">data.brand</mapping>
 				<mapping row="4" col="8">data.score</mapping>
 				<mapping row="4" col="9">data.productNum</mapping>

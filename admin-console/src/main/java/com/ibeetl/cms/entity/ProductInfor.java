@@ -54,6 +54,11 @@ public class ProductInfor extends BaseEntity{
     private String name ;
 
 	/**
+	 * 图片
+	 */
+    private String picture ;
+
+	/**
 	 * 作者
 	 */
     private String author ;
@@ -71,6 +76,11 @@ public class ProductInfor extends BaseEntity{
     private String kinds ;
 
 	/**
+	 * 图书分类
+	 */
+    private String bookKind ;
+
+	/**
 	 * 出版社
 	 */
     private String publishHouse ;
@@ -79,6 +89,11 @@ public class ProductInfor extends BaseEntity{
 	 * 出版日期
 	 */
     private Date publishDate ;
+
+	/**
+	 * 简介
+	 */
+    private String introduction ;
 
 	/**
 	 * 品牌
@@ -91,7 +106,10 @@ public class ProductInfor extends BaseEntity{
     @Dict(type="product_infor_score")
     private String score ;
 
-    private String productNum;
+	/**
+	 * 套装册数
+	 */
+    private String productNum ;
 
 	/**
 	 * 热销商品排名
