@@ -11,15 +11,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class SupplieInforQuery extends PageParam {
     @Query(name = "供货商编号", display = true)        
-    private String supplierId;
+    private Long supplierId;
     @Query(name = "供货商名称", display = true)        
     private String supplierName;
     @Query(name = "供应图书种类", display = true)        
     private String books;
-    public String getSupplierId(){
+    public Long getSupplierId(){
         return  supplierId;
     }
-    public void setSupplierId(String supplierId ){
+    public void setSupplierId(Long supplierId ){
         this.supplierId = supplierId;
     }
     public String getSupplierName(){

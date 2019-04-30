@@ -9,7 +9,7 @@ layui.define(['table', 'supplieInforApi'], function(exports) {
             if(data==null){
                 return ;
             }
-            Common.openConfirm("确认要删除这些SupplieInfor?",function(){
+            Common.openConfirm("确认要删除这些供应商信息?",function(){
             var ids =Common.concatBatchId(data,"supplierId");
             supplieInforApi.del(ids,function(){
                 Common.info("删除成功");

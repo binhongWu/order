@@ -22,14 +22,14 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
+                type : 'checkbox',
                 fixed:'left',
                 }, 
                 {
-                field : 'supplierId', 
+                field : 'supplierId',
                 title : '供货商编号',
                 fixed:'left',
-                }, 
+                },
                 {
                 field : 'supplierName', 
                 title : '供货商名称',
@@ -38,10 +38,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'books', 
                 title : '供应图书种类',
                 }, 
-                // {
-                // field : 'position',
-                // title : '职务',
-                // },
+                {
+                field : 'position', 
+                title : '职务',
+                }, 
                 {
                 field : 'address', 
                 title : '地址',
@@ -50,14 +50,14 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'city', 
                 title : '城市',
                 }, 
-                // {
-                // field : 'postcode',
-                // title : '邮编',
-                // },
-                // {
-                // field : 'couty',
-                // title : '国家',
-                // },
+                {
+                field : 'postcode', 
+                title : '邮编',
+                }, 
+                {
+                field : 'couty', 
+                title : '省份',
+                }, 
                 {
                 field : 'tel', 
                 title : '电话',
@@ -73,27 +73,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'email', 
                 title : '邮箱',
-                }, 
-                // {
-                // field : 'createdBy',
-                // title : '创建人',
-                // },
-                // {
-                // field : 'createdTime',
-                // title : '创建时间',
-                // },
-                // {
-                // field : 'updatedBy',
-                // title : '更新人',
-                // },
-                // {
-                // field : 'updatedTime',
-                // title : '更新时间',
-                // },
-                // {
-                // field : 'del',
-                // title : '删除标记{0:正常,1:已删除}',
-                // },
+                },
                 {
                 field : 'remarks', 
                 title : '备注',
@@ -140,7 +120,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 exportDocument : function() {
                     layui.use([ 'supplieInforApi' ], function() {
                         var supplieInforApi = layui.supplieInforApi
-                        Common.openConfirm("确认要导出这些SupplieInfor数据?", function() {
+                        Common.openConfirm("确认要导出这些供应商信息数据?", function() {
                             supplieInforApi.exportExcel($("#searchForm"), function(fileId) {
                                 Lib.download(fileId);
                             })

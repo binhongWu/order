@@ -75,7 +75,7 @@ public class SupplieInforController{
     @GetMapping(MODEL + "/edit.do")
     @Function("supplieInfor.edit")
     @ResponseBody
-    public ModelAndView edit(String supplierId) {
+    public ModelAndView edit(Long supplierId) {
         ModelAndView view = new ModelAndView("/cms/supplieInfor/edit.html");
         SupplieInfor supplieInfor = supplieInforService.queryById(supplierId);
         view.addObject("supplieInfor", supplieInfor);
@@ -139,7 +139,7 @@ public class SupplieInforController{
     @GetMapping(MODEL + "/view.json")
     @Function("supplieInfor.query")
     @ResponseBody
-    public JsonResult<SupplieInfor>queryInfo(String supplierId) {
+    public JsonResult<SupplieInfor>queryInfo(Long supplierId) {
         SupplieInfor supplieInfor = supplieInforService.queryById( supplierId);
         return  JsonResult.success(supplieInfor);
     }
@@ -166,7 +166,7 @@ public class SupplieInforController{
          * 2)通常excel导出需要关联更多数据，因此supplieInforService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/supplieInfor/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/supplieInfor/supplie_Info_export.xls";
         PageQuery<SupplieInfor> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
