@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-12
+ * @date 2019-04-30
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class PurchaseWarehouse extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String enterId ;
+    private Long enterId ;
 
 	/**
 	 * 订单单号
@@ -74,11 +74,6 @@ public class PurchaseWarehouse extends BaseEntity{
     private String paymentAmount ;
 
 	/**
-	 * 发票号
-	 */
-    private String billId ;
-
-	/**
 	 * 采购日期
 	 */
     private Date purchaseDate ;
@@ -87,11 +82,6 @@ public class PurchaseWarehouse extends BaseEntity{
 	 * 采购人
 	 */
     private String buyerBy ;
-
-	/**
-	 * 录入时间
-	 */
-    private Date entryDate ;
 
 	/**
 	 * 审核人
@@ -132,7 +122,7 @@ public class PurchaseWarehouse extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

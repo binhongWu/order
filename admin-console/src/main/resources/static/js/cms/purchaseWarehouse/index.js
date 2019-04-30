@@ -22,69 +22,81 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'enterId', 
                 title : '入库单号',
-                fixed:'left'
+                fixed:'left',
                 }, 
                 {
                 field : 'orderId', 
-                title : '订单单号'
+                title : '订单单号',
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码'
+                title : '绘本编码',
                 }, 
                 {
                 field : 'number', 
-                title : '绘本数量'
+                title : '绘本数量',
                 }, 
                 {
                 field : 'price', 
-                title : '绘本单价'
+                title : '绘本单价',
                 }, 
                 {
                 field : 'supplierId', 
-                title : '供应商编号'
+                title : '供应商编号',
                 }, 
                 {
                 field : 'paymentAmount', 
-                title : '付款金额'
-                }, 
-                {
-                field : 'billId', 
-                title : '发票号'
+                title : '付款金额',
                 }, 
                 {
                 field : 'purchaseDate', 
-                title : '采购日期'
+                title : '采购日期',
                 }, 
                 {
                 field : 'buyerBy', 
-                title : '采购人'
-                }, 
-                {
-                field : 'entryDate', 
-                title : '录入时间'
+                title : '采购人',
                 }, 
                 {
                 field : 'checkBy', 
-                title : '审核人'
+                title : '审核人',
                 }, 
                 {
                 field : 'checkDate', 
-                title : '审核时间'
+                title : '审核时间',
                 }, 
                 {
                 field : 'checkStatusText', //数据字典类型为 purchase_warehouse_checkstatus
-                title : '审核状态'
-                },
+                title : '审核状态（0：待审核 1：通过 2：拒绝）',
+                }, 
+                {
+                field : 'createdBy', 
+                title : '创建人',
+                }, 
+                {
+                field : 'createdTime', 
+                title : '创建时间',
+                }, 
+                {
+                field : 'updatedBy', 
+                title : '更新人',
+                }, 
+                {
+                field : 'updatedTime', 
+                title : '更新时间',
+                }, 
+                {
+                field : 'del', 
+                title : '删除标记{0:正常,1:已删除}',
+                }, 
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]

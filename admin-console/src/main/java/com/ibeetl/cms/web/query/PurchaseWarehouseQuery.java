@@ -11,21 +11,19 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class PurchaseWarehouseQuery extends PageParam {
     @Query(name = "入库单号", display = true)        
-    private String enterId;
+    private Long enterId;
     @Query(name = "订单单号", display = true)        
     private String orderId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    @Query(name = "录入时间", display = true)        
-    private Date entryDate;
-    @Query(name = "审核时间", display = true)        
-    private Date checkDate;
-    @Query(name = "审核状态（0：待审核 1：通过 2：拒绝）", display = true,type=Query.TYPE_DICT,dict="purchase_warehouse_checkstatus")
-    private String checkStatus;
-    public String getEnterId(){
+    @Query(name = "供应商编号", display = true)        
+    private String supplierId;
+    @Query(name = "采购日期", display = true)        
+    private Date purchaseDate;
+    public Long getEnterId(){
         return  enterId;
     }
-    public void setEnterId(String enterId ){
+    public void setEnterId(Long enterId ){
         this.enterId = enterId;
     }
     public String getOrderId(){
@@ -40,23 +38,17 @@ public class PurchaseWarehouseQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
-    public Date getEntryDate(){
-        return  entryDate;
+    public String getSupplierId(){
+        return  supplierId;
     }
-    public void setEntryDate(Date entryDate ){
-        this.entryDate = entryDate;
+    public void setSupplierId(String supplierId ){
+        this.supplierId = supplierId;
     }
-    public Date getCheckDate(){
-        return  checkDate;
+    public Date getPurchaseDate(){
+        return  purchaseDate;
     }
-    public void setCheckDate(Date checkDate ){
-        this.checkDate = checkDate;
-    }
-    public String getCheckStatus(){
-        return  checkStatus;
-    }
-    public void setCheckStatus(String checkStatus ){
-        this.checkStatus = checkStatus;
+    public void setPurchaseDate(Date purchaseDate ){
+        this.purchaseDate = purchaseDate;
     }
  
 }

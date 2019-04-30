@@ -17,14 +17,11 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
-    @if(!isEmpty(entryDate)){
-        and  t.entry_date =#entryDate#
+    @if(!isEmpty(supplierId)){
+        and  t.supplier_id =#supplierId#
     @}
-    @if(!isEmpty(checkDate)){
-        and  t.check_date =#checkDate#
-    @}
-    @if(!isEmpty(checkStatus)){
-        and  t.check_status =#checkStatus#
+    @if(!isEmpty(purchaseDate)){
+        and  t.purchase_date =#purchaseDate#
     @}
     order by t.created_time desc
     
@@ -66,10 +63,8 @@ updateCustom
                 ,price = #price#
                 ,supplier_id = #supplierId#
                 ,payment_amount = #paymentAmount#
-                ,bill_id = #billId#
                 ,purchase_date = #purchaseDate#
                 ,buyer_by = #buyerBy#
-                ,entry_date = #entryDate#
                 ,check_by = #checkBy#
                 ,check_date = #checkDate#
                 ,check_status = #checkStatus#
@@ -111,17 +106,11 @@ findListByCustom
     @if(!isEmpty(paymentAmount)){
         and  t.payment_amount =#paymentAmount#
     @}
-    @if(!isEmpty(billId)){
-        and  t.bill_id =#billId#
-    @}
     @if(!isEmpty(purchaseDate)){
         and  t.purchase_date =#purchaseDate#
     @}
     @if(!isEmpty(buyerBy)){
         and  t.buyer_by =#buyerBy#
-    @}
-    @if(!isEmpty(entryDate)){
-        and  t.entry_date =#entryDate#
     @}
     @if(!isEmpty(checkBy)){
         and  t.check_by =#checkBy#
