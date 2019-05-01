@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<workbook>
+	<worksheet name="Template">
+		<section startRow="0" endRow="2">
+		</section>
+		<loop startRow="4" endRow="4" items="list" var="data"
+			varType="com.ibeetl.cms.entity.SalesOrder">
+			<section startRow="4" endRow="4">
+				<mapping row="4" col="0">data.salesId</mapping>
+				<mapping row="4" col="1">data.code</mapping>
+				<mapping row="4" col="2">data.number</mapping>
+				<mapping row="4" col="3">data.price</mapping>
+				<mapping row="4" col="4">data.clientId</mapping>
+				<mapping row="4" col="5">data.salesDate</mapping>
+				<mapping row="4" col="6">data.paymentAmount</mapping>
+				<mapping row="4" col="7">data.salesBy</mapping>
+				<mapping row="4" col="8">data.paymentMethod</mapping>
+				<mapping row="4" col="9">data.tradeLocations</mapping>
+				<mapping row="4" col="10">data.orderFor</mapping>
+				<mapping row="4" col="11">data.finishedStatus</mapping>
+				<mapping row="4" col="12">data.remarks</mapping>
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="0">
+					<cellcheck offset="1"></cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>

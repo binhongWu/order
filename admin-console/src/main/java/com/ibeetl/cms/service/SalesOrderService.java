@@ -84,4 +84,19 @@ public class SalesOrderService extends BaseService<SalesOrder>{
     public List<SalesOrder> findListByCustom(SalesOrder model) {
         return salesOrderDao.findListByCustom(model);
     }
+
+    /**
+     * 导入数据  存储到数据库
+     * @param datas
+     */
+    public void saveImport(List<SalesOrder> datas) {
+        for (SalesOrder model : datas) {
+            model.setSalesId(null);
+            model.setCreatedBy(platformService.getCurrentUser().getId());
+            model.setCreatedTime(new Date());
+            model.setUpdatedTime(new Date());
+            model.setUpdatedBy(platformService.getCurrentUser().getId());
+            save(model);
+        }
+    }
 }

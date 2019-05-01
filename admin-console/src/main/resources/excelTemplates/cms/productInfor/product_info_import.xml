@@ -12,20 +12,20 @@
 				<mapping row="4" col="3">data.language</mapping>
 				<mapping row="4" col="4">data.kinds</mapping>
 				<mapping row="4" col="5">data.bookKind</mapping>
-				<mapping row="4" col="5">data.publishHouse</mapping>
-				<mapping row="4" col="6">data.publishDate</mapping>
-				<mapping row="4" col="7">data.introduction</mapping>
-				<mapping row="4" col="7">data.brand</mapping>
-				<mapping row="4" col="8">data.score</mapping>
-				<mapping row="4" col="9">data.productNum</mapping>
-				<mapping row="4" col="10">data.rank</mapping>
-				<mapping row="4" col="11">data.wareId</mapping>
-				<mapping row="4" col="12">data.supplierId</mapping>
-				<mapping row="4" col="13">data.inPrice</mapping>
-				<mapping row="4" col="14">data.outPrice</mapping>
-				<mapping row="4" col="15">data.existStocks</mapping>
-				<mapping row="4" col="16">data.minStocks</mapping>
-				<mapping row="4" col="17">data.maxStocks</mapping>
+				<mapping row="4" col="6">data.publishHouse</mapping>
+				<mapping row="4" col="7">data.publishDate</mapping>
+				<mapping row="4" col="8">data.introduction</mapping>
+				<mapping row="4" col="9">data.brand</mapping>
+				<mapping row="4" col="10">data.score</mapping>
+				<mapping row="4" col="11">data.productNum</mapping>
+				<mapping row="4" col="12">data.rank</mapping>
+				<mapping row="4" col="13">data.wareId</mapping>
+				<mapping row="4" col="14">data.supplierId</mapping>
+				<mapping row="4" col="15">data.inPrice</mapping>
+				<mapping row="4" col="16">data.outPrice</mapping>
+				<mapping row="4" col="17">data.existStocks</mapping>
+				<mapping row="4" col="18">data.minStocks</mapping>
+				<mapping row="4" col="19">data.maxStocks</mapping>
 			</section>
 			<loopbreakcondition>
 				<rowcheck offset="0">

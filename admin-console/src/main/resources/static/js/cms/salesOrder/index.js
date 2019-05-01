@@ -29,103 +29,91 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'salesId', 
                 title : '订单单号',
                 fixed:'left',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'code', 
                 title : '绘本编码',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'number', 
                 title : '绘本数量',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'price', 
                 title : '绘本单价',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'clientId', 
                 title : '客户编码',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'salesDate', 
                 title : '销售日期',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'paymentAmount', 
                 title : '付款金额',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'salesBy', 
                 title : '销售人',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'paymentMethodText', //数据字典类型为 sales_order_paymentmethod
                 title : '付款方式（0：支付宝 1：微信 2：银行卡）',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'tradeLocations', 
                 title : '交货地点',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'orderForText', //数据字典类型为 sales_order_orderfor
                 title : '销售方式',
-                    width : 100
-                }, 
+                },
                 {
                 field : 'finishedStatusText', //数据字典类型为 sales_order_finishedstatus
                 title : '完成状态（0：完成 1：未完成）',
-                    width : 100
-                }, 
-                {
-                field : 'checkBy', 
-                title : '审核人',
-                    width : 100
-                }, 
-                {
-                field : 'checkStatusText', //数据字典类型为 sales_order_checkstatus
-                title : '审核状态',
-                    width : 100
-                }, 
-                {
-                field : 'checkDate', 
-                title : '审核日期',
-                    width : 100
-                }, 
-                {
-                field : 'createdBy', 
-                title : '创建人',
-                    width : 100
-                }, 
-                {
-                field : 'createdTime', 
-                title : '创建时间',
-                    width : 100
-                }, 
-                {
-                field : 'updatedBy', 
-                title : '更新人',
-                    width : 100
-                }, 
-                {
-                field : 'updatedTime', 
-                title : '更新时间',
-                    width : 100
-                }, 
-                {
-                field : 'del', 
-                title : '删除标记{0:正常,1:已删除}',
-                    width : 100
-                }, 
+                },
+                // {
+                // field : 'checkBy',
+                // title : '审核人',
+                //     width : 100
+                // },
+                // {
+                // field : 'checkStatusText', //数据字典类型为 sales_order_checkstatus
+                // title : '审核状态',
+                //     width : 100
+                // },
+                // {
+                // field : 'checkDate',
+                // title : '审核日期',
+                //     width : 100
+                // },
+                // {
+                // field : 'createdBy',
+                // title : '创建人',
+                //     width : 100
+                // },
+                // {
+                // field : 'createdTime',
+                // title : '创建时间',
+                //     width : 100
+                // },
+                // {
+                // field : 'updatedBy',
+                // title : '更新人',
+                //     width : 100
+                // },
+                // {
+                // field : 'updatedTime',
+                // title : '更新时间',
+                //     width : 100
+                // },
+                // {
+                // field : 'del',
+                // title : '删除标记{0:正常,1:已删除}',
+                //     width : 100
+                // },
                 {
                 field : 'remarks', 
                 title : '备注',

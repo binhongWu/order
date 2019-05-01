@@ -197,12 +197,40 @@ public class SalesOrderController{
     @ResponseBody
     public JsonResult importExcel(@RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-           return JsonResult.fail();
+            return JsonResult.fail();
         }
         InputStream ins = file.getInputStream();
-        /*解析模板并导入到数据库里,参考DictConsoleContorller，使用jxls reader读取excel数据*/
-        ins.close();
-        return JsonResult.success();
+        InputStream inputXML = Thread.currentThread().getContextClassLoader().getResourceAsStream("excelTemplates/cms/salesOrder/sales_order_import.xml");
+        XLSReader mainReader = ReaderBuilder.buildFromXML( inputXML );
+        InputStream inputXLS = ins;
+        List<SalesOrder> datas = new ArrayList<>();
+        Map beans = new HashMap();
+        beans.put("list", datas);
+        ReaderConfig.getInstance().setSkipErrors( true );
+        XLSReadStatus readStatus = mainReader.read( inputXLS, beans);
+        List<XLSReadMessage>  errors = readStatus.getReadMessages();
+        if(!errors.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for(XLSReadMessage msg:errors) {
+                sb.append(parseXLSReadMessage(msg));
+                sb.append(",");
+            }
+            sb.setLength(sb.length()-1);
+            return JsonResult.failMessage("解析excel出错:"+sb.toString());
+        }
+        try {
+            this.salesOrderService.saveImport(datas);
+            return JsonResult.success();
+        }catch(Exception ex) {
+            return JsonResult.failMessage(ex.getMessage());
+        }
+    }
+
+    private String parseXLSReadMessage(XLSReadMessage msg) {
+        String str = msg.getMessage();
+        int start = "Can't read cell ".length();
+        int end = str.indexOf("on");
+        return str.substring(start,end);
     }
     
     
