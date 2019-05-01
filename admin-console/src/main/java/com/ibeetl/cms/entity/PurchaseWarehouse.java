@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-30
+ * @date 2019-05-01
  */
 @Data
 @Builder
@@ -96,7 +96,6 @@ public class PurchaseWarehouse extends BaseEntity{
 	/**
 	 * 审核状态（0：待审核 1：通过 2：拒绝）
 	 */
-    @Dict(type="purchase_warehouse_checkstatus")
     private String checkStatus ;
 
 	/**

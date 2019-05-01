@@ -166,7 +166,7 @@ public class PurchaseWarehouseController{
          * 2)通常excel导出需要关联更多数据，因此purchaseWarehouseService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/purchaseWarehouse/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/purchaseWarehouse/purchase_warehouse_export.xls";
         PageQuery<PurchaseWarehouse> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);

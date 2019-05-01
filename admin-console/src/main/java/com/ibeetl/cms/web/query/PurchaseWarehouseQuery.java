@@ -16,8 +16,6 @@ public class PurchaseWarehouseQuery extends PageParam {
     private String orderId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    @Query(name = "供应商编号", display = true)        
-    private String supplierId;
     @Query(name = "采购日期", display = true)        
     private Date purchaseDate;
     public Long getEnterId(){
@@ -37,12 +35,6 @@ public class PurchaseWarehouseQuery extends PageParam {
     }
     public void setCode(String code ){
         this.code = code;
-    }
-    public String getSupplierId(){
-        return  supplierId;
-    }
-    public void setSupplierId(String supplierId ){
-        this.supplierId = supplierId;
     }
     public Date getPurchaseDate(){
         return  purchaseDate;

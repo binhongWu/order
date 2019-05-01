@@ -17,9 +17,6 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
-    @if(!isEmpty(supplierId)){
-        and  t.supplier_id =#supplierId#
-    @}
     @if(!isEmpty(purchaseDate)){
         and  t.purchase_date =#purchaseDate#
     @}

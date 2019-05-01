@@ -71,29 +71,9 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 title : '审核时间',
                 }, 
                 {
-                field : 'checkStatusText', //数据字典类型为 purchase_warehouse_checkstatus
+                field : 'checkStatus', 
                 title : '审核状态（0：待审核 1：通过 2：拒绝）',
-                }, 
-                {
-                field : 'createdBy', 
-                title : '创建人',
-                }, 
-                {
-                field : 'createdTime', 
-                title : '创建时间',
-                }, 
-                {
-                field : 'updatedBy', 
-                title : '更新人',
-                }, 
-                {
-                field : 'updatedTime', 
-                title : '更新时间',
-                }, 
-                {
-                field : 'del', 
-                title : '删除标记{0:正常,1:已删除}',
-                }, 
+                },
                 {
                 field : 'remarks', 
                 title : '备注',
@@ -140,7 +120,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 exportDocument : function() {
                     layui.use([ 'purchaseWarehouseApi' ], function() {
                         var purchaseWarehouseApi = layui.purchaseWarehouseApi
-                        Common.openConfirm("确认要导出这些PurchaseWarehouse数据?", function() {
+                        Common.openConfirm("确认要导出这些采购入库数据?", function() {
                             purchaseWarehouseApi.exportExcel($("#searchForm"), function(fileId) {
                                 Lib.download(fileId);
                             })
