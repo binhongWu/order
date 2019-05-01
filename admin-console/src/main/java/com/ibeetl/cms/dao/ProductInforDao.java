@@ -20,4 +20,6 @@ public interface ProductInforDao extends BaseMapper<ProductInfor>{
     public List<ProductInfor> findListByCustom(ProductInfor model);
 
     ProductInfor findByCode(String code);
+
+    List<ProductInfor> queryWarehouseWarn();
 }

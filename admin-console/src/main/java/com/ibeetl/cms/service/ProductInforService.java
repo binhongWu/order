@@ -133,4 +133,12 @@ public class ProductInforService extends BaseService<ProductInfor>{
     public ProductInfor findByCode(String code) {
         return productInforDao.findByCode(code);
     }
+
+    /**
+     * 检索现有库存 < 最小库存
+     * @return
+     */
+    public List<ProductInfor> queryWarehouseWarn() {
+        return productInforDao.queryWarehouseWarn();
+    }
 }

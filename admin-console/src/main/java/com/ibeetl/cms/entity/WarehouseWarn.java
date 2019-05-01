@@ -100,4 +100,5 @@ public class WarehouseWarn extends BaseEntity{
     private String remarks ;
 
 
+
 }

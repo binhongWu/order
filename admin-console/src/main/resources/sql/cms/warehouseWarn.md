@@ -19,7 +19,14 @@ queryByCondition
     @}
     order by t.created_time desc
     
-    
+findByCode
+===
+
+    select
+    * 
+    from warehouse_warn t
+    where t.del = '0'  
+    and  t.code =#code#
     
 getById
 ===

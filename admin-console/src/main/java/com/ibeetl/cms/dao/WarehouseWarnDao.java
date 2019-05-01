@@ -18,4 +18,6 @@ public interface WarehouseWarnDao extends BaseMapper<WarehouseWarn>{
     public WarehouseWarn getById(Object id);
     public Integer updateCustom(WarehouseWarn model);
     public List<WarehouseWarn> findListByCustom(WarehouseWarn model);
+
+    WarehouseWarn findByCode(String code);
 }
