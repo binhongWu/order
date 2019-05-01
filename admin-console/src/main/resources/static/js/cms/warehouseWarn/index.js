@@ -22,37 +22,37 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'warningId', 
                 title : '预警单号',
-                fixed:'left'
+                fixed:'left',
                 }, 
                 {
                 field : 'alarmt', 
-                title : '预警时间'
+                title : '预警时间',
                 }, 
                 {
                 field : 'nextAlarmt', 
-                title : '下一次预警时间'
+                title : '下一次预警时间',
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码'
+                title : '绘本编码',
                 }, 
                 {
                 field : 'stock', 
-                title : '现有库存'
+                title : '现有库存',
                 }, 
                 {
                 field : 'checkText', //数据字典类型为 warehouse_warn_check
-                title : '预警状态'
+                title : '0:解决 1：未解决',
                 },
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]

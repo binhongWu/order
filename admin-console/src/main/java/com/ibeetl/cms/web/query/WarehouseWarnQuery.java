@@ -11,17 +11,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class WarehouseWarnQuery extends PageParam {
     @Query(name = "预警单号", display = true)        
-    private String warningId;
+    private Long warningId;
     @Query(name = "预警时间", display = true)        
     private Date alarmt;
-    @Query(name = "下一次预警时间", display = true)        
-    private Date nextAlarmt;
-    @Query(name = "预警状态", display = true,type=Query.TYPE_DICT,dict="warehouse_warn_check")
-    private String check;
-    public String getWarningId(){
+    @Query(name = "绘本编码", display = true)        
+    private String code;
+    public Long getWarningId(){
         return  warningId;
     }
-    public void setWarningId(String warningId ){
+    public void setWarningId(Long warningId ){
         this.warningId = warningId;
     }
     public Date getAlarmt(){
@@ -30,17 +28,11 @@ public class WarehouseWarnQuery extends PageParam {
     public void setAlarmt(Date alarmt ){
         this.alarmt = alarmt;
     }
-    public Date getNextAlarmt(){
-        return  nextAlarmt;
+    public String getCode(){
+        return  code;
     }
-    public void setNextAlarmt(Date nextAlarmt ){
-        this.nextAlarmt = nextAlarmt;
-    }
-    public String getCheck(){
-        return  check;
-    }
-    public void setCheck(String check ){
-        this.check = check;
+    public void setCode(String code ){
+        this.code = code;
     }
  
 }

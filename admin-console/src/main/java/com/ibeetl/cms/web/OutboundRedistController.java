@@ -75,7 +75,7 @@ public class OutboundRedistController{
     @GetMapping(MODEL + "/edit.do")
     @Function("outboundRedist.edit")
     @ResponseBody
-    public ModelAndView edit(String outRegistId) {
+    public ModelAndView edit(Long outRegistId) {
         ModelAndView view = new ModelAndView("/cms/outboundRedist/edit.html");
         OutboundRedist outboundRedist = outboundRedistService.queryById(outRegistId);
         view.addObject("outboundRedist", outboundRedist);
@@ -139,7 +139,7 @@ public class OutboundRedistController{
     @GetMapping(MODEL + "/view.json")
     @Function("outboundRedist.query")
     @ResponseBody
-    public JsonResult<OutboundRedist>queryInfo(String outRegistId) {
+    public JsonResult<OutboundRedist>queryInfo(Long outRegistId) {
         OutboundRedist outboundRedist = outboundRedistService.queryById( outRegistId);
         return  JsonResult.success(outboundRedist);
     }
@@ -166,7 +166,7 @@ public class OutboundRedistController{
          * 2)通常excel导出需要关联更多数据，因此outboundRedistService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/outboundRedist/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/outboundRedist/outbound_regist_export.xls";
         PageQuery<OutboundRedist> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
@@ -178,7 +178,7 @@ public class OutboundRedistController{
             if(is==null) {
                 throw new PlatformException("模板资源不存在："+excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("OutboundRedist_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            FileItem item = fileService.createFileTemp("出库登记信息_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);

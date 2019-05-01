@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-13
+ * @date 2019-05-01
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class WarehouseWarn extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String warningId ;
+    private Long warningId ;
 
 	/**
 	 * 预警时间
@@ -92,7 +92,7 @@ public class WarehouseWarn extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

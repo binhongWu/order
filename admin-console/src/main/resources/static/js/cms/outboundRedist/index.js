@@ -22,65 +22,61 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'outRegistId', 
                 title : '出库单号',
-                fixed:'left'
+                fixed:'left',
+                }, 
+                {
+                field : 'outorderId', 
+                title : '订单号',
                 }, 
                 {
                 field : 'outRegistDate', 
-                title : '出库日期'
+                title : '出库日期',
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码'
+                title : '绘本编码',
                 }, 
                 {
                 field : 'supplierId', 
-                title : '供货商编码'
+                title : '供货商编码',
                 }, 
-                {
-                field : 'registrateBy', 
-                title : '登记人'
-                }, 
-                {
-                field : 'registrateDate', 
-                title : '登记时间'
-                }, 
-                {
-                field : 'checkBy', 
-                title : '审核人'
-                }, 
-                {
-                field : 'checkDate', 
-                title : '审核时间'
-                }, 
-                {
-                field : 'checkStatus', 
-                title : '审核状态'
-                }, 
+                // {
+                // field : 'checkBy',
+                // title : '审核人',
+                // },
+                // {
+                // field : 'checkDate',
+                // title : '审核时间',
+                // },
+                // {
+                // field : 'checkStatus',
+                // title : '审核状态',
+                // },
                 {
                 field : 'price', 
-                title : '绘本单价'
+                title : '绘本单价',
                 }, 
                 {
                 field : 'number', 
-                title : '绘本数量'
+                title : '绘本数量',
                 }, 
                 {
                 field : 'total', 
-                title : '绘本总额'
+                title : '绘本总额',
                 }, 
                 {
                 field : 'statusText', //数据字典类型为 outbound_redist_status
-                title : '状态位'
+                title : '状态位（0:销售出库 1：其他）',
                 },
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]

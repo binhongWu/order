@@ -14,11 +14,8 @@ queryByCondition
     @if(!isEmpty(alarmt)){
         and  t.alarmt =#alarmt#
     @}
-    @if(!isEmpty(nextAlarmt)){
-        and  t.next_alarmt =#nextAlarmt#
-    @}
-    @if(!isEmpty(check)){
-        and  t.check =#check#
+    @if(!isEmpty(code)){
+        and  t.code =#code#
     @}
     order by t.created_time desc
     

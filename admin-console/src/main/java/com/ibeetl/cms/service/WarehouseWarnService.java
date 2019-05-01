@@ -71,6 +71,10 @@ public class WarehouseWarnService extends BaseService<WarehouseWarn>{
 
     @Override
     public boolean save(WarehouseWarn model) {
+        model.setCreatedTime(new Date());
+        model.setUpdatedTime(new Date());
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 

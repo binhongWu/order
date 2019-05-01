@@ -75,7 +75,7 @@ public class WarehouseWarnController{
     @GetMapping(MODEL + "/edit.do")
     @Function("warehouseWarn.edit")
     @ResponseBody
-    public ModelAndView edit(String warningId) {
+    public ModelAndView edit(Long warningId) {
         ModelAndView view = new ModelAndView("/cms/warehouseWarn/edit.html");
         WarehouseWarn warehouseWarn = warehouseWarnService.queryById(warningId);
         view.addObject("warehouseWarn", warehouseWarn);
@@ -139,7 +139,7 @@ public class WarehouseWarnController{
     @GetMapping(MODEL + "/view.json")
     @Function("warehouseWarn.query")
     @ResponseBody
-    public JsonResult<WarehouseWarn>queryInfo(String warningId) {
+    public JsonResult<WarehouseWarn>queryInfo(Long warningId) {
         WarehouseWarn warehouseWarn = warehouseWarnService.queryById( warningId);
         return  JsonResult.success(warehouseWarn);
     }
@@ -166,7 +166,7 @@ public class WarehouseWarnController{
          * 2)通常excel导出需要关联更多数据，因此warehouseWarnService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/warehouseWarn/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/warehouseWarn/warehouse_warn_export.xls";
         PageQuery<WarehouseWarn> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
@@ -178,7 +178,7 @@ public class WarehouseWarnController{
             if(is==null) {
                 throw new PlatformException("模板资源不存在："+excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("WarehouseWarn_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            FileItem item = fileService.createFileTemp("仓库预警信息"+DateUtil.now("yyyyMMddHHmmss")+".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);

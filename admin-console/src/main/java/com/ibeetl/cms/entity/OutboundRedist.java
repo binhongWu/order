@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-13
+ * @date 2019-05-01
  */
 @Data
 @Builder
@@ -41,7 +41,12 @@ public class OutboundRedist extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String outRegistId ;
+    private Long outRegistId ;
+
+	/**
+	 * 订单号
+	 */
+    private String outorderId ;
 
 	/**
 	 * 出库日期
@@ -57,16 +62,6 @@ public class OutboundRedist extends BaseEntity{
 	 * 供货商编码
 	 */
     private String supplierId ;
-
-	/**
-	 * 登记人
-	 */
-    private String registrateBy ;
-
-	/**
-	 * 登记时间
-	 */
-    private Date registrateDate ;
 
 	/**
 	 * 审核人
@@ -99,7 +94,7 @@ public class OutboundRedist extends BaseEntity{
     private String total ;
 
 	/**
-	 * 状态位（0:销售出库 1：采购退货）
+	 * 状态位（0:销售出库 1：其他）
 	 */
     @Dict(type="outbound_redist_status")
     private String status ;
@@ -127,7 +122,7 @@ public class OutboundRedist extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

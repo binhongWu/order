@@ -11,17 +11,11 @@ queryByCondition
     @if(!isEmpty(outRegistId)){
         and  t.out_regist_id =#outRegistId#
     @}
+    @if(!isEmpty(outorderId)){
+        and  t.outOrder_id =#outorderId#
+    @}
     @if(!isEmpty(outRegistDate)){
         and  t.out_regist_date =#outRegistDate#
-    @}
-    @if(!isEmpty(registrateDate)){
-        and  t.registrate_date =#registrateDate#
-    @}
-    @if(!isEmpty(checkDate)){
-        and  t.check_date =#checkDate#
-    @}
-    @if(!isEmpty(checkStatus)){
-        and  t.check_status =#checkStatus#
     @}
     order by t.created_time desc
     
@@ -57,11 +51,10 @@ updateCustom
         updated_time = #updatedTime#
         ,updated_by = #updatedBy#
                 ,out_regist_id = #outRegistId#
+                ,outOrder_id = #outorderId#
                 ,out_regist_date = #outRegistDate#
                 ,code = #code#
                 ,supplier_id = #supplierId#
-                ,registrate_by = #registrateBy#
-                ,registrate_date = #registrateDate#
                 ,check_by = #checkBy#
                 ,check_date = #checkDate#
                 ,check_status = #checkStatus#
@@ -89,6 +82,9 @@ findListByCustom
     @if(!isEmpty(outRegistId)){
         and  t.out_regist_id =#outRegistId#
     @}
+    @if(!isEmpty(outorderId)){
+        and  t.outOrder_id =#outorderId#
+    @}
     @if(!isEmpty(outRegistDate)){
         and  t.out_regist_date =#outRegistDate#
     @}
@@ -97,12 +93,6 @@ findListByCustom
     @}
     @if(!isEmpty(supplierId)){
         and  t.supplier_id =#supplierId#
-    @}
-    @if(!isEmpty(registrateBy)){
-        and  t.registrate_by =#registrateBy#
-    @}
-    @if(!isEmpty(registrateDate)){
-        and  t.registrate_date =#registrateDate#
     @}
     @if(!isEmpty(checkBy)){
         and  t.check_by =#checkBy#

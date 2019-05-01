@@ -11,44 +11,28 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class OutboundRedistQuery extends PageParam {
     @Query(name = "出库单号", display = true)        
-    private String outRegistId;
+    private Long outRegistId;
+    @Query(name = "订单号", display = true)        
+    private String outorderId;
     @Query(name = "出库日期", display = true)        
     private Date outRegistDate;
-    @Query(name = "登记时间", display = true)        
-    private Date registrateDate;
-    @Query(name = "审核时间", display = true)        
-    private Date checkDate;
-    @Query(name = "审核状态", display = true)        
-    private String checkStatus;
-    public String getOutRegistId(){
+    public Long getOutRegistId(){
         return  outRegistId;
     }
-    public void setOutRegistId(String outRegistId ){
+    public void setOutRegistId(Long outRegistId ){
         this.outRegistId = outRegistId;
+    }
+    public String getOutorderId(){
+        return  outorderId;
+    }
+    public void setOutorderId(String outorderId ){
+        this.outorderId = outorderId;
     }
     public Date getOutRegistDate(){
         return  outRegistDate;
     }
     public void setOutRegistDate(Date outRegistDate ){
         this.outRegistDate = outRegistDate;
-    }
-    public Date getRegistrateDate(){
-        return  registrateDate;
-    }
-    public void setRegistrateDate(Date registrateDate ){
-        this.registrateDate = registrateDate;
-    }
-    public Date getCheckDate(){
-        return  checkDate;
-    }
-    public void setCheckDate(Date checkDate ){
-        this.checkDate = checkDate;
-    }
-    public String getCheckStatus(){
-        return  checkStatus;
-    }
-    public void setCheckStatus(String checkStatus ){
-        this.checkStatus = checkStatus;
     }
  
 }
