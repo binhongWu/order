@@ -66,18 +66,18 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'tradeLocal', 
                 title : '交货地点',
                 }, 
-                {
-                field : 'checkBy', 
-                title : '审核人',
-                }, 
-                {
-                field : 'checkDate', 
-                title : '审核时间',
-                }, 
-                {
-                field : 'chenkStatusText',//purchase_warehouse_checkstatus
-                title : '审核状态',
-                }, 
+                // {
+                // field : 'checkBy',
+                // title : '审核人',
+                // },
+                // {
+                // field : 'checkDate',
+                // title : '审核时间',
+                // },
+                // {
+                // field : 'chenkStatusText',//purchase_warehouse_checkstatus
+                // title : '审核状态',
+                // },
                 {
                 field : 'finishConditionText', //数据字典类型为 purchase_order_finishcondition
                 title : '完成状态',

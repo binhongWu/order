@@ -3,136 +3,88 @@
 <form class="layui-form layui-form-pane" id="addForm">
     <div class="layui-row">
         <div class="layui-form-item">
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本编码">绘本编码</label>
             <div class="layui-input-inline">
                 <input type="text" name="code" class="layui-input" >
             </div>
             </div>
-		
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本数量">绘本数量</label>
             <div class="layui-input-inline">
                 <input type="text" name="number" class="layui-input" >
             </div>
             </div>
-		
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本单价">绘本单价</label>
             <div class="layui-input-inline">
                 <input type="text" name="price" class="layui-input" >
             </div>
             </div>
-		
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="供应商编号">供应商编号</label>
             <div class="layui-input-inline">
                 <input type="text" name="supplierId" class="layui-input" >
             </div>
             </div>
-		
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="订单日期">订单日期</label>
             <div class="layui-input-inline">
                 <input type="text" name="orderDate" class="layui-input input-date" >
             </div>
             </div>
-		
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="交货日期">交货日期</label>
             <div class="layui-input-inline">
                 <input type="text" name="deliverDate" class="layui-input input-date" >
             </div>
             </div>
-		
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-		
             <div class="layui-inline">
-            <label class="layui-form-label" title="付款方式（0：支付宝 1：微信 2：银行卡）">付款方式（0：支付宝 1：微信 2：银行卡）</label>
+            <label class="layui-form-label" title="付款方式（0：支付宝 1：微信 2：银行卡）">付款方式</label>
             <div class="layui-input-inline">
                 <layui:simpleDictSelect style='layui-input-inline' type="purchase_order_paymentmethod" layVerify="" 
                 			id="paymentMethod" name="paymentMethod" value="" />
             </div>
             </div>
-		
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="付款金额">付款金额</label>
             <div class="layui-input-inline">
                 <input type="text" name="paymentAmount" class="layui-input" >
             </div>
             </div>
-		
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-		
             <div class="layui-inline">
             <label class="layui-form-label" title="交货地点">交货地点</label>
             <div class="layui-input-inline">
                 <input type="text" name="tradeLocal" class="layui-input" >
             </div>
             </div>
-		
-		
             <div class="layui-inline">
-            <label class="layui-form-label" title="审核人">审核人</label>
-            <div class="layui-input-inline">
-                <input type="text" name="checkBy" class="layui-input" >
+                <label class="layui-form-label" title="完成状态（0：待完成 1：完成 2：未完成）">完成状态</label>
+                <div class="layui-input-inline">
+                    <layui:simpleDictSelect style='layui-input-inline' type="purchase_order_finishcondition" layVerify=""
+                                            id="finishCondition" name="finishCondition" value="" />
+                </div>
             </div>
-            </div>
-		
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-		
-            <div class="layui-inline">
-            <label class="layui-form-label" title="审核时间">审核时间</label>
-            <div class="layui-input-inline">
-                <input type="text" name="checkDate" class="layui-input input-date" >
-            </div>
-            </div>
-		
-		
-            <div class="layui-inline">
-            <label class="layui-form-label" title="审核状态">审核状态</label>
-            <div class="layui-input-inline">
-                <layui:simpleDictSelect style='layui-input-inline' type="purchase_warehouse_checkstatus" layVerify=""
-                                        id="chenkStatus" name="chenkStatus" value="" />
-            </div>
-            </div>
-		
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-		
-            <div class="layui-inline">
-            <label class="layui-form-label" title="完成状态（0：待完成 1：完成 2：未完成）">完成状态</label>
-            <div class="layui-input-inline">
-                <layui:simpleDictSelect style='layui-input-inline' type="purchase_order_finishcondition" layVerify="" 
-                			id="finishCondition" name="finishCondition" value="" />
-            </div>
-            </div>
             <div class="layui-inline">
                 <label class="layui-form-label" title="备注">备注</label>
                 <div class="layui-input-inline">

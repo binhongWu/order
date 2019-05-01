@@ -73,8 +73,8 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
 
     @Override
     public boolean save(PurchaseOrder model) {
-        model.setCreatedBy(platformService.getCurrentUser().getId());
         model.setCreatedTime(new Date());
+        model.setCreatedBy(platformService.getCurrentUser().getId());
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.insertTemplate(model, true) > 0;
@@ -91,29 +91,38 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
         return purchaseOrderDao.findListByCustom(model);
     }
 
+    /**
+     * 初始导入  记录所有导入数据并状态都为待完成
+     * @param datas
+     */
     public void saveImport(List<PurchaseOrder> datas) {
         for (PurchaseOrder model : datas) {
             model.setOrderId(null);
-            model.setCreatedBy(platformService.getCurrentUser().getId());
-            model.setCreatedTime(new Date());
-            model.setUpdatedTime(new Date());
-            model.setUpdatedBy(platformService.getCurrentUser().getId());
+            model.setFinishCondition("0");
             save(model);
         }
     }
 
     /**
-     * 更新订单状态  记录到订单入库表  检索出剩下的，默认为未完成记录到退回表
+     * 1、订单进行状态更改为完成
+     * 2、录入到采购入库表中
+     * 3、录入到仓库管理的入库登记中
+     * 4、修改绘本的库存量
      * @param datas
      */
     public void saveImport2(List<PurchaseOrder> datas) {
         for (PurchaseOrder model : datas) {
-            model.setUpdatedTime(new Date());
-            model.setUpdatedBy(platformService.getCurrentUser().getId());
-            model.setDel("0");
-            model.setFinishCondition("1");
-            sqlManager.updateById(model);
+            PurchaseOrder purchaseOrder = queryById(model.getOrderId());
+            if (purchaseOrder != null) {
+                // 1
+                model.setUpdatedTime(new Date());
+                model.setUpdatedBy(platformService.getCurrentUser().getId());
+                model.setFinishCondition("1");
+                sqlManager.updateById(model);
+                // 2
 
+                // 3
+            }
         }
     }
 }

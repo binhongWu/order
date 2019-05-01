@@ -191,7 +191,13 @@ public class PurchaseOrderController{
         }
         
     }
-    
+
+    /**
+     * 初始导入，这时候采购订单为未完成
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @PostMapping(MODEL + "/excel/import.do")
     @Function("purchaseOrder.importDocument")
     @ResponseBody
@@ -232,6 +238,13 @@ public class PurchaseOrderController{
         int end = str.indexOf("on");
         return str.substring(start, end);
     }
+
+    /**
+     * 完成导入  这时候就要区分出订单状态  导入的都改成已完成，然后插入到采购入库表（根据订单号）以及入库登记表（根据绘本编码、订单号）
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @PostMapping(MODEL + "/excel/import2.do")
     @Function("purchaseOrder.importDocument")
     @ResponseBody
