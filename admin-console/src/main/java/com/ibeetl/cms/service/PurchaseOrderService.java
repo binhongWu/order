@@ -3,7 +3,9 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.cms.entity.IncomingRegist;
 import com.ibeetl.cms.entity.ProductInfor;
+import com.ibeetl.cms.entity.PurchaseWarehouse;
 import com.ibeetl.utils.StringUtils;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,12 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
 
     @Autowired private PurchaseOrderDao purchaseOrderDao;
     @Autowired private CorePlatformService platformService;
+    @Autowired
+    private PurchaseWarehouseService purchaseWarehouseService;
+    @Autowired
+    private IncomingRegistService incomingRegistService;
+    @Autowired
+    private ProductInforService productInforService;
 
     public PageQuery<PurchaseOrder>queryByCondition(PageQuery query){
         PageQuery ret =  purchaseOrderDao.queryByCondition(query);
@@ -108,21 +116,61 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
      * 2、录入到采购入库表中
      * 3、录入到仓库管理的入库登记中
      * 4、修改绘本的库存量
+     * 5、检索出所有还待完成的订单全部改为失败状态，并录入到采购退回表中
      * @param datas
      */
     public void saveImport2(List<PurchaseOrder> datas) {
-        for (PurchaseOrder model : datas) {
-            PurchaseOrder purchaseOrder = queryById(model.getOrderId());
-            if (purchaseOrder != null) {
-                // 1
-                model.setUpdatedTime(new Date());
-                model.setUpdatedBy(platformService.getCurrentUser().getId());
-                model.setFinishCondition("1");
-                sqlManager.updateById(model);
-                // 2
-
-                // 3
+        if (datas.size() > 0) {
+            for (PurchaseOrder model : datas) {
+                PurchaseOrder purchaseOrder = queryById(model.getOrderId());
+                if (purchaseOrder != null) {
+                    // 1
+                    model.setUpdatedTime(new Date());
+                    model.setUpdatedBy(platformService.getCurrentUser().getId());
+                    model.setFinishCondition("1");
+                    sqlManager.updateById(model);
+                    // 2
+                    PurchaseWarehouse purchaseWarehouse = new PurchaseWarehouse();
+                    purchaseWarehouse.setOrderId(purchaseOrder.getOrderId().toString());
+                    purchaseWarehouse.setCode(purchaseOrder.getCode());
+                    purchaseWarehouse.setNumber(purchaseOrder.getNumber());
+                    purchaseWarehouse.setPrice(purchaseOrder.getPrice());
+                    purchaseWarehouse.setSupplierId(purchaseOrder.getSupplierId());
+                    purchaseWarehouse.setPaymentAmount(purchaseOrder.getPaymentAmount());
+                    purchaseWarehouse.setPurchaseDate(purchaseOrder.getDeliverDate());
+                    // 采购人 ---> 创建人还是审核人？
+                    purchaseWarehouse.setBuyerBy(purchaseOrder.getCheckBy());
+                    purchaseWarehouseService.save(purchaseWarehouse);
+                    // 3 录入到仓库管理的入库登记中
+                    IncomingRegist incomingRegist = new IncomingRegist();
+                    incomingRegist.setOrderId(purchaseOrder.getOrderId().toString());
+                    incomingRegist.setInRegistDate(new Date());
+                    incomingRegist.setCode(purchaseOrder.getCode());
+                    incomingRegist.setSupplierId(purchaseOrder.getSupplierId());
+                    incomingRegist.setPrice(purchaseOrder.getPrice());
+                    incomingRegist.setNumber(purchaseOrder.getNumber());
+                    incomingRegist.setTotal(String.valueOf(Integer.parseInt(purchaseOrder.getPrice())*Integer.parseInt(purchaseOrder.getNumber())));
+                    incomingRegist.setStatus("0");
+                    incomingRegistService.save(incomingRegist);
+                    // 4 修改绘本的库存量
+                    ProductInfor productInfor = productInforService.findByCode(purchaseOrder.getCode());
+                    productInfor.setExistStocks(productInfor.getExistStocks()+purchaseOrder.getNumber());
+                    productInforService.update(productInfor);
+                }
+            }
+            // 5 检索出所有还待完成的订单全部改为失败状态，并录入到采购退回表中
+            String status = "0";
+            List<PurchaseOrder> list = findByFinishCondition(status);
+            if (list.size() > 0) {
+                for (PurchaseOrder purchaseOrder : list) {
+                    purchaseOrder.setFinishCondition("2");
+                    update(purchaseOrder);
+                }
             }
         }
+    }
+
+    private List<PurchaseOrder> findByFinishCondition(String status) {
+        return purchaseOrderDao.findByFinishCondition(status);
     }
 }

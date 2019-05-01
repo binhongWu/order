@@ -18,4 +18,6 @@ public interface PurchaseOrderDao extends BaseMapper<PurchaseOrder>{
     public PurchaseOrder getById(Object id);
     public Integer updateCustom(PurchaseOrder model);
     public List<PurchaseOrder> findListByCustom(PurchaseOrder model);
+
+    List<PurchaseOrder> findByFinishCondition(String status);
 }

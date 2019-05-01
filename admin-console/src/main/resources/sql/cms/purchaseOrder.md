@@ -25,7 +25,15 @@ queryByCondition
     @}
     order by t.created_time desc
     
-    
+findByFinishCondition
+===
+
+    select
+    *
+    from purchase_order t
+    where t.del = '0'
+    t.finish_condition =#status#
+        
     
 getById
 ===

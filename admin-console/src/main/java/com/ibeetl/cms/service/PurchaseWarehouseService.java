@@ -71,6 +71,10 @@ public class PurchaseWarehouseService extends BaseService<PurchaseWarehouse>{
 
     @Override
     public boolean save(PurchaseWarehouse model) {
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setCreatedTime(new Date());
+        model.setUpdatedTime(new Date());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 

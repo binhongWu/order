@@ -240,7 +240,7 @@ public class PurchaseOrderController{
     }
 
     /**
-     * 完成导入  这时候就要区分出订单状态  导入的都改成已完成，然后插入到采购入库表（根据订单号）以及入库登记表（根据绘本编码、订单号）
+     * 二次导入
      * @param file
      * @return
      * @throws Exception

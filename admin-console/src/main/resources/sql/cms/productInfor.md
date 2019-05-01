@@ -27,7 +27,15 @@ queryByCondition
         and  t.score =#score#
     @}
     order by t.created_time desc
-    
+  
+
+findByCode
+===
+    select
+    *
+    from product_infor t
+    where t.del = '0'
+    and t.code =#code#
     
     
 getById

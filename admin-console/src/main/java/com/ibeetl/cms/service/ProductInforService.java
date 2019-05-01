@@ -124,4 +124,13 @@ public class ProductInforService extends BaseService<ProductInfor>{
             save(model);
         }
     }
+
+    /**
+     * 根据编码查找
+     * @param code
+     * @return
+     */
+    public ProductInfor findByCode(String code) {
+        return productInforDao.findByCode(code);
+    }
 }

@@ -18,4 +18,6 @@ public interface ProductInforDao extends BaseMapper<ProductInfor>{
     public ProductInfor getById(Object id);
     public Integer updateCustom(ProductInfor model);
     public List<ProductInfor> findListByCustom(ProductInfor model);
+
+    ProductInfor findByCode(String code);
 }
