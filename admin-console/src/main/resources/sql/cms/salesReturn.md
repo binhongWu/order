@@ -17,11 +17,8 @@ queryByCondition
     @if(!isEmpty(returnDate)){
         and  t.return_date =#returnDate#
     @}
-    @if(!isEmpty(checkDate)){
-        and  t.check_date =#checkDate#
-    @}
-    @if(!isEmpty(entryDate)){
-        and  t.entry_date =#entryDate#
+    @if(!isEmpty(code)){
+        and  t.code =#code#
     @}
     order by t.created_time desc
     
@@ -68,7 +65,7 @@ updateCustom
                 ,checkman_by = #checkmanBy#
                 ,check_by = #checkBy#
                 ,check_date = #checkDate#
-                ,entry_date = #entryDate#
+                ,stats = #stats#
                 ,created_by = #createdBy#
                 ,created_time = #createdTime#
                 ,remarks = #remarks#
@@ -122,8 +119,8 @@ findListByCustom
     @if(!isEmpty(checkDate)){
         and  t.check_date =#checkDate#
     @}
-    @if(!isEmpty(entryDate)){
-        and  t.entry_date =#entryDate#
+    @if(!isEmpty(stats)){
+        and  t.stats =#stats#
     @}
     @if(!isEmpty(remarks)){
         and  t.remarks =#remarks#

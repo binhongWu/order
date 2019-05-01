@@ -90,53 +90,20 @@
             </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="录入时间">录入时间</label>
+            <label class="layui-form-label" title="审核状态">审核状态</label>
+
             <div class="layui-input-inline">
-                <input type="text" id="entryDate" name="entryDate"  value="${salesReturn.entryDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
+                <layui:simpleDictSelect style='layui-input-inline' type="sales_order_checkstatus"
+                                        id="stats" name="stats" value="${salesReturn.stats}" layVerify="" />
             </div>
             </div>
         </div>
     </div>
+
+
     <div class="layui-row">
         <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建人">创建人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdBy" name="createdBy"  value="${salesReturn.createdBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建时间">创建时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdTime" name="createdTime"  value="${salesReturn.createdTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新人">更新人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedBy" name="updatedBy"  value="${salesReturn.updatedBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新时间">更新时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedTime" name="updatedTime"  value="${salesReturn.updatedTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="删除标记{0:正常,1:已删除}">删除标记{0:正常,1:已删除}</label>
-            <div class="layui-input-inline">
-                <input type="text" id="del" name="del"  value="${salesReturn.del}"   class="layui-input" >
-            </div>
-            </div>
+
             <div class="layui-inline">
             <label class="layui-form-label" title="备注">备注</label>
             <div class="layui-input-inline">
@@ -147,6 +114,11 @@
     </div>
 	
     <input type="hidden" name="returnId" value=${salesReturn.returnId} />
+    <input type="hidden" name="del" value=${salesReturn.del} />
+    <input type="hidden" name="updatedBy" value="${salesReturn.updatedBy}"/>
+    <input type="hidden" name="createdBy" value="${salesReturn.createdBy}"/>
+    <input type="hidden" name="updatedTime" value="${salesReturn.updatedTime,"yyyy-MM-dd"}"/>
+    <input type="hidden" name="createdTime" value="${salesReturn.createdTime,"yyyy-MM-dd"}"/>
     <layui:submitButtons id="updateButton" />
 </form>
 <!--#} -->

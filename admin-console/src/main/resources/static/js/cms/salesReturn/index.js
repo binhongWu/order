@@ -22,65 +22,65 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'returnId', 
                 title : '退回单号',
-                fixed:'left'
+                fixed:'left',
                 }, 
                 {
                 field : 'salesId', 
-                title : '订单单号'
+                title : '订单单号',
                 }, 
                 {
                 field : 'returnDate', 
-                title : '退货日期'
+                title : '退货日期',
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码'
+                title : '绘本编码',
                 }, 
                 {
                 field : 'number', 
-                title : '绘本数量'
+                title : '绘本数量',
                 }, 
                 {
                 field : 'price', 
-                title : '绘本单价'
+                title : '绘本单价',
                 }, 
                 {
                 field : 'clientId', 
-                title : '客户编码'
+                title : '客户编码',
                 }, 
                 {
                 field : 'paymentAmount', 
-                title : '付款金额'
+                title : '付款金额',
                 }, 
                 {
                 field : 'salesBy', 
-                title : '销售人'
+                title : '销售人',
                 }, 
-                {
-                field : 'checkmanBy', 
-                title : '验收人'
-                }, 
+                // {
+                // field : 'checkmanBy',
+                // title : '验收人',
+                // },
                 {
                 field : 'checkBy', 
-                title : '审核人'
+                title : '审核人',
                 }, 
                 {
                 field : 'checkDate', 
-                title : '审核时间'
+                title : '审核时间',
                 }, 
                 {
-                field : 'entryDate', 
-                title : '录入时间'
+                field : 'stats', 
+                title : '审核状态',
                 },
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]
@@ -124,7 +124,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 exportDocument : function() {
                     layui.use([ 'salesReturnApi' ], function() {
                         var salesReturnApi = layui.salesReturnApi
-                        Common.openConfirm("确认要导出这些信息记录数据?", function() {
+                        Common.openConfirm("确认要导出这些SalesReturn数据?", function() {
                             salesReturnApi.exportExcel($("#searchForm"), function(fileId) {
                                 Lib.download(fileId);
                             })

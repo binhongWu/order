@@ -10,33 +10,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ibeetl.admin.core.util.PlatformException;
 
-import com.ibeetl.cms.dao.SalesOrderDao;
-import com.ibeetl.cms.entity.SalesOrder;
+import com.ibeetl.cms.dao.SalesReturnDao;
+import com.ibeetl.cms.entity.SalesReturn;
 import com.ibeetl.admin.core.service.BaseService;
 import com.ibeetl.admin.core.service.CorePlatformService;
 
 /**
- * SalesOrder Service
+ * SalesReturn Service
  */
 
 @Service
 @Transactional
-public class SalesOrderService extends BaseService<SalesOrder>{
+public class SalesReturnService extends BaseService<SalesReturn>{
 
-    @Autowired private SalesOrderDao salesOrderDao;
+    @Autowired private SalesReturnDao salesReturnDao;
     @Autowired private CorePlatformService platformService;
 
-    public PageQuery<SalesOrder>queryByCondition(PageQuery query){
-        PageQuery ret =  salesOrderDao.queryByCondition(query);
+    public PageQuery<SalesReturn>queryByCondition(PageQuery query){
+        PageQuery ret =  salesReturnDao.queryByCondition(query);
         queryListAfter(ret.getList());
         return ret;
     }
 
-    public void batchDelSalesOrder(List<String> ids){
+    public void batchDelSalesReturn(List<String> ids){
         try {
-            salesOrderDao.batchDelSalesOrderByIds(ids);
+            salesReturnDao.batchDelSalesReturnByIds(ids);
         } catch (Exception e) {
-            throw new PlatformException("批量删除SalesOrder失败", e);
+            throw new PlatformException("批量删除SalesReturn失败", e);
         }
     }
 
@@ -44,7 +44,7 @@ public class SalesOrderService extends BaseService<SalesOrder>{
      * 根据主键更新，属性为null的不会更新
      */
     @Override
-    public boolean updateTemplate(SalesOrder model) {
+    public boolean updateTemplate(SalesReturn model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateTemplateById(model) > 0;
@@ -54,7 +54,7 @@ public class SalesOrderService extends BaseService<SalesOrder>{
       * 根据主键更新，所有值参与更新
       */
     @Override
-    public boolean update(SalesOrder model) {
+    public boolean update(SalesReturn model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
@@ -63,14 +63,14 @@ public class SalesOrderService extends BaseService<SalesOrder>{
     /**
      * 自定义更新
       */
-    public boolean updateCustom(SalesOrder model) {
+    public boolean updateCustom(SalesReturn model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return salesOrderDao.updateCustom(model) > 0;
+        return salesReturnDao.updateCustom(model) > 0;
     }
 
     @Override
-    public boolean save(SalesOrder model) {
+    public boolean save(SalesReturn model) {
         model.setCreatedBy(platformService.getCurrentUser().getId());
         model.setCreatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
@@ -78,28 +78,19 @@ public class SalesOrderService extends BaseService<SalesOrder>{
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
-    public SalesOrder getById(Object id){
-        return salesOrderDao.getById(id);
+    public SalesReturn getById(Object id){
+        return salesReturnDao.getById(id);
     }
 
     /**
      * 按条件查找全部数据
      */
-    public List<SalesOrder> findListByCustom(SalesOrder model) {
-        return salesOrderDao.findListByCustom(model);
+    public List<SalesReturn> findListByCustom(SalesReturn model) {
+        return salesReturnDao.findListByCustom(model);
     }
 
-    /**
-     * 导入数据  存储到数据库
-     * @param datas
-     */
-    public void saveImport(List<SalesOrder> datas) {
-        for (SalesOrder model : datas) {
-            model.setSalesId(null);
-            model.setCreatedBy(platformService.getCurrentUser().getId());
-            model.setCreatedTime(new Date());
-            model.setUpdatedTime(new Date());
-            model.setUpdatedBy(platformService.getCurrentUser().getId());
+    public void saveImport(List<SalesReturn> datas) {
+        for (SalesReturn model : datas) {
             save(model);
         }
     }

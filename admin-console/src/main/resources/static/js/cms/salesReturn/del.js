@@ -9,7 +9,7 @@ layui.define(['table', 'salesReturnApi'], function(exports) {
             if(data==null){
                 return ;
             }
-            Common.openConfirm("确认要删除这些信息记录?",function(){
+            Common.openConfirm("确认要删除这些SalesReturn?",function(){
             var ids =Common.concatBatchId(data,"returnId");
             salesReturnApi.del(ids,function(){
                 Common.info("删除成功");
