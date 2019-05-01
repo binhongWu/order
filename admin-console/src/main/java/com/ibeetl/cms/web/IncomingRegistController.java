@@ -75,7 +75,7 @@ public class IncomingRegistController{
     @GetMapping(MODEL + "/edit.do")
     @Function("incomingRegist.edit")
     @ResponseBody
-    public ModelAndView edit(String inRegistId) {
+    public ModelAndView edit(Long inRegistId) {
         ModelAndView view = new ModelAndView("/cms/incomingRegist/edit.html");
         IncomingRegist incomingRegist = incomingRegistService.queryById(inRegistId);
         view.addObject("incomingRegist", incomingRegist);
@@ -139,7 +139,7 @@ public class IncomingRegistController{
     @GetMapping(MODEL + "/view.json")
     @Function("incomingRegist.query")
     @ResponseBody
-    public JsonResult<IncomingRegist>queryInfo(String inRegistId) {
+    public JsonResult<IncomingRegist>queryInfo(Long inRegistId) {
         IncomingRegist incomingRegist = incomingRegistService.queryById( inRegistId);
         return  JsonResult.success(incomingRegist);
     }
@@ -166,7 +166,7 @@ public class IncomingRegistController{
          * 2)通常excel导出需要关联更多数据，因此incomingRegistService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/incomingRegist/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/incomingRegist/incoming_regist_export.xls";
         PageQuery<IncomingRegist> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);

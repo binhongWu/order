@@ -4,140 +4,98 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
+            <label class="layui-form-label" title="关联订单号">关联订单号</label>
+            <div class="layui-input-inline">
+                <input type="text" id="orderId" name="orderId"  value="${incomingRegist.orderId}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
             <label class="layui-form-label" title="入库日期">入库日期</label>
             <div class="layui-input-inline">
                 <input type="text" id="inRegistDate" name="inRegistDate"  value="${incomingRegist.inRegistDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
             </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本编码">绘本编码</label>
             <div class="layui-input-inline">
                 <input type="text" id="code" name="code"  value="${incomingRegist.code}"   class="layui-input" >
             </div>
             </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="供应商编码">供应商编码</label>
             <div class="layui-input-inline">
                 <input type="text" id="supplierId" name="supplierId"  value="${incomingRegist.supplierId}"   class="layui-input" >
             </div>
             </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="登记人">登记人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="registrateBy" name="registrateBy"  value="${incomingRegist.registrateBy}"   class="layui-input" >
-            </div>
-            </div>
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="登记时间">登记时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="registrateDate" name="registrateDate"  value="${incomingRegist.registrateDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
             <div class="layui-inline">
             <label class="layui-form-label" title="审核人">审核人</label>
             <div class="layui-input-inline">
                 <input type="text" id="checkBy" name="checkBy"  value="${incomingRegist.checkBy}"   class="layui-input" >
             </div>
             </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="审核时间">审核时间</label>
             <div class="layui-input-inline">
                 <input type="text" id="checkDate" name="checkDate"  value="${incomingRegist.checkDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
             </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="审核状态">审核状态</label>
             <div class="layui-input-inline">
                 <input type="text" id="checkStatus" name="checkStatus"  value="${incomingRegist.checkStatus}"   class="layui-input" >
             </div>
             </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本单价">绘本单价</label>
             <div class="layui-input-inline">
                 <input type="text" id="price" name="price"  value="${incomingRegist.price}"   class="layui-input" >
             </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本数量">绘本数量</label>
             <div class="layui-input-inline">
                 <input type="text" id="number" name="number"  value="${incomingRegist.number}"   class="layui-input" >
             </div>
             </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="总额">总额</label>
             <div class="layui-input-inline">
                 <input type="text" id="total" name="total"  value="${incomingRegist.total}"   class="layui-input" >
             </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="状态位（0:销售出库 1：采购退货）">状态位（0:销售出库 1：采购退货）</label>
+            <label class="layui-form-label" title="状态位（0:采购入库 1：销售退货入库2：其他）">状态位（0:采购入库 1：销售退货入库2：其他）</label>
             <div class="layui-input-inline">
                 <layui:simpleDictSelect style='layui-input-inline' type="incoming_regist_status" 
 					id="status" name="status" value="${incomingRegist.status}" layVerify="" />
             </div>
             </div>
+
         </div>
     </div>
+
     <div class="layui-row">
         <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建人">创建人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdBy" name="createdBy"  value="${incomingRegist.createdBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="创建时间">创建时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="createdTime" name="createdTime"  value="${incomingRegist.createdTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新人">更新人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedBy" name="updatedBy"  value="${incomingRegist.updatedBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="更新时间">更新时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="updatedTime" name="updatedTime"  value="${incomingRegist.updatedTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="删除标记{0:正常,1:已删除}">删除标记{0:正常,1:已删除}</label>
-            <div class="layui-input-inline">
-                <input type="text" id="del" name="del"  value="${incomingRegist.del}"   class="layui-input" >
-            </div>
-            </div>
             <div class="layui-inline">
             <label class="layui-form-label" title="备注">备注</label>
             <div class="layui-input-inline">
@@ -148,6 +106,11 @@
     </div>
 	
     <input type="hidden" name="inRegistId" value=${incomingRegist.inRegistId} />
+    <input type="hidden" name="del" value=${incomingRegist.del} />
+    <input type="hidden" name="updatedBy" value="${incomingRegist.updatedBy}"/>
+    <input type="hidden" name="createdBy" value="${incomingRegist.createdBy}"/>
+    <input type="hidden" name="updatedTime" value="${incomingRegist.updatedTime,"yyyy-MM-dd"}"/>
+    <input type="hidden" name="createdTime" value="${incomingRegist.createdTime,"yyyy-MM-dd"}"/>
     <layui:submitButtons id="updateButton" />
 </form>
 <!--#} -->

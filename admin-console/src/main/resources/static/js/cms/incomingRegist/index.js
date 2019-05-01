@@ -22,13 +22,17 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'inRegistId', 
                 title : '入库单号',
-                fixed:'left'
+                fixed:'left',
+                }, 
+                {
+                field : 'orderId', 
+                title : '关联订单号',
                 }, 
                 {
                 field : 'inRegistDate', 
@@ -36,51 +40,43 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码'
+                title : '绘本编码',
                 }, 
                 {
                 field : 'supplierId', 
-                title : '供应商编码'
+                title : '供应商编码',
                 }, 
                 // {
-                // field : 'registrateBy',
-                // title : '登记人'
+                // field : 'checkBy',
+                // title : '审核人',
+                // },
+                // {
+                // field : 'checkDate',
+                // title : '审核时间',
+                // },
+                // {
+                // field : 'checkStatus',
+                // title : '审核状态',
                 // },
                 {
-                field : 'registrateDate', 
-                title : '登记时间'
-                }, 
-                {
-                field : 'checkBy', 
-                title : '审核人',
-                }, 
-                {
-                field : 'checkDate', 
-                title : '审核时间'
-                }, 
-                {
-                field : 'checkStatus', 
-                title : '审核状态'
-                }, 
-                {
                 field : 'price', 
-                title : '绘本单价'
+                title : '绘本单价',
                 }, 
                 {
                 field : 'number', 
-                title : '绘本数量'
+                title : '绘本数量',
                 }, 
                 {
                 field : 'total', 
-                title : '总额'
+                title : '总额',
                 }, 
                 {
                 field : 'statusText', //数据字典类型为 incoming_regist_status
-                title : '状态位（0:销售出库 1：采购退货）',
+                title : '状态位（0:采购入库 1：销售退货入库2：其他）',
                 },
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]
