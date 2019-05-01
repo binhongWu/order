@@ -69,7 +69,7 @@ public class SalesOrder extends BaseEntity{
     private Date salesDate ;
 
 	/**
-	 * 付款金额
+	 * 实付款金额
 	 */
     private String paymentAmount ;
 
@@ -107,9 +107,8 @@ public class SalesOrder extends BaseEntity{
     private Long checkBy ;
 
 	/**
-	 * 审核状态
+	 * 实付款金额
 	 */
-    @Dict(type="sales_order_checkstatus")
     private String checkStatus ;
 
 	/**

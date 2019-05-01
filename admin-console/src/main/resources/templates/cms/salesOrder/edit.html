@@ -52,7 +52,7 @@
             </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="付款金额">付款金额</label>
+            <label class="layui-form-label" title="应付款金额">应付款金额</label>
             <div class="layui-input-inline">
                 <input type="text" id="paymentAmount" name="paymentAmount"  value="${salesOrder.paymentAmount}"   class="layui-input" >
             </div>
@@ -113,10 +113,9 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="审核状态">审核状态</label>
+            <label class="layui-form-label" title="实付款金额">实付款金额</label>
             <div class="layui-input-inline">
-                <layui:simpleDictSelect style='layui-input-inline' type="sales_order_checkstatus" 
-					id="checkStatus" name="checkStatus" value="${salesOrder.checkStatus}" layVerify="" />
+                <input type="text" id="checkStatus" name="checkStatus"  value="${salesOrder.checkStatus}"   class="layui-input" >
             </div>
             </div>
             <div class="layui-inline">

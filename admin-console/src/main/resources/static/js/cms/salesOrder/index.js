@@ -52,7 +52,11 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 },
                 {
                 field : 'paymentAmount', 
-                title : '付款金额',
+                title : '应付款金额',
+                },
+                {
+                    field : 'checkStatusText',
+                    title : '实付款金额',
                 },
                 {
                 field : 'salesBy', 
@@ -60,7 +64,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 },
                 {
                 field : 'paymentMethodText', //数据字典类型为 sales_order_paymentmethod
-                title : '付款方式（0：支付宝 1：微信 2：银行卡）',
+                title : '付款方式',
                 },
                 {
                 field : 'tradeLocations', 
@@ -79,11 +83,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 // title : '审核人',
                 //     width : 100
                 // },
-                // {
-                // field : 'checkStatusText', //数据字典类型为 sales_order_checkstatus
-                // title : '审核状态',
-                //     width : 100
-                // },
+
                 // {
                 // field : 'checkDate',
                 // title : '审核日期',
