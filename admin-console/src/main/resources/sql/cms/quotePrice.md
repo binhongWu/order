@@ -11,9 +11,6 @@ queryByCondition
     @if(!isEmpty(quoteId)){
         and  t.quote_id =#quoteId#
     @}
-    @if(!isEmpty(quoteDate)){
-        and  t.quote_date =#quoteDate#
-    @}
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}

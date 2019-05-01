@@ -71,6 +71,10 @@ public class QuotePriceService extends BaseService<QuotePrice>{
 
     @Override
     public boolean save(QuotePrice model) {
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setCreatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedTime(new Date());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 

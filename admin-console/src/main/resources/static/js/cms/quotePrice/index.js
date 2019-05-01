@@ -22,33 +22,33 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'quoteId', 
                 title : '报价单号',
-                fixed:'left'
+                fixed:'left',
                 }, 
                 {
                 field : 'quoteDate', 
-                title : '报价日期'
+                title : '报价日期',
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码'
+                title : '绘本编码',
                 }, 
                 {
                 field : 'price', 
-                title : '绘本单价'
+                title : '绘本单价',
                 }, 
                 {
                 field : 'quoteBy', 
-                title : '报价人'
+                title : '报价人',
                 },
                 {
                 field : 'remarks', 
-                title : '备注'
+                title : '备注',
                 } 
         
                 ] ]

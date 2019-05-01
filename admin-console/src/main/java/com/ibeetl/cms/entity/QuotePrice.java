@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-12
+ * @date 2019-05-01
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class QuotePrice extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String quoteId ;
+    private Long quoteId ;
 
 	/**
 	 * 报价日期
@@ -86,7 +86,7 @@ public class QuotePrice extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

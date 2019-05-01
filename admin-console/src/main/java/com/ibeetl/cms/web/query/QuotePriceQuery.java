@@ -11,22 +11,14 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class QuotePriceQuery extends PageParam {
     @Query(name = "报价单号", display = true)        
-    private String quoteId;
-    @Query(name = "报价日期", display = true)        
-    private Date quoteDate;
+    private Long quoteId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    public String getQuoteId(){
+    public Long getQuoteId(){
         return  quoteId;
     }
-    public void setQuoteId(String quoteId ){
+    public void setQuoteId(Long quoteId ){
         this.quoteId = quoteId;
-    }
-    public Date getQuoteDate(){
-        return  quoteDate;
-    }
-    public void setQuoteDate(Date quoteDate ){
-        this.quoteDate = quoteDate;
     }
     public String getCode(){
         return  code;

@@ -149,6 +149,11 @@
     </div>
 	
     <input type="hidden" name="returnedId" value=${purchaseReturns.returnedId} />
+    <input type="hidden" name="del" value=${purchaseReturns.del} />
+    <input type="hidden" name="updatedBy" value="${purchaseReturns.updatedBy}"/>
+    <input type="hidden" name="createdBy" value="${purchaseReturns.createdBy}"/>
+    <input type="hidden" name="updatedTime" value="${purchaseReturns.updatedTime,"yyyy-MM-dd"}"/>
+    <input type="hidden" name="createdTime" value="${purchaseReturns.createdTime,"yyyy-MM-dd"}"/>
     <layui:submitButtons id="updateButton" />
 </form>
 <!--#} -->

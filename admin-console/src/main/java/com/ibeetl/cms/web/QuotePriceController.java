@@ -75,7 +75,7 @@ public class QuotePriceController{
     @GetMapping(MODEL + "/edit.do")
     @Function("quotePrice.edit")
     @ResponseBody
-    public ModelAndView edit(String quoteId) {
+    public ModelAndView edit(Long quoteId) {
         ModelAndView view = new ModelAndView("/cms/quotePrice/edit.html");
         QuotePrice quotePrice = quotePriceService.queryById(quoteId);
         view.addObject("quotePrice", quotePrice);
@@ -139,7 +139,7 @@ public class QuotePriceController{
     @GetMapping(MODEL + "/view.json")
     @Function("quotePrice.query")
     @ResponseBody
-    public JsonResult<QuotePrice>queryInfo(String quoteId) {
+    public JsonResult<QuotePrice>queryInfo(Long quoteId) {
         QuotePrice quotePrice = quotePriceService.queryById( quoteId);
         return  JsonResult.success(quotePrice);
     }
@@ -166,7 +166,7 @@ public class QuotePriceController{
          * 2)通常excel导出需要关联更多数据，因此quotePriceService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/quotePrice/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/quotePrice/quote_price_export.xls";
         PageQuery<QuotePrice> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
