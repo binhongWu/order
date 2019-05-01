@@ -32,8 +32,16 @@ findByFinishCondition
     *
     from purchase_order t
     where t.del = '0'
-    t.finish_condition =#status#
-        
+    and t.finish_condition =#status#
+
+queryOrderId
+===
+
+       select
+       *
+       from purchase_order t
+       where t.del = '0'
+       and t.order_id =#orderId#
     
 getById
 ===

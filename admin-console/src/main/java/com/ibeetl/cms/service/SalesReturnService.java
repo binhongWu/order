@@ -3,6 +3,8 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.cms.entity.IncomingRegist;
+import com.ibeetl.cms.entity.SalesOrder;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,10 @@ public class SalesReturnService extends BaseService<SalesReturn>{
 
     @Autowired private SalesReturnDao salesReturnDao;
     @Autowired private CorePlatformService platformService;
+    @Autowired
+    private SalesOrderService salesOrderService;
+    @Autowired
+    private IncomingRegistService incomingRegistService;
 
     public PageQuery<SalesReturn>queryByCondition(PageQuery query){
         PageQuery ret =  salesReturnDao.queryByCondition(query);
@@ -91,7 +97,25 @@ public class SalesReturnService extends BaseService<SalesReturn>{
 
     public void saveImport(List<SalesReturn> datas) {
         for (SalesReturn model : datas) {
+            model.setReturnId(null);
             save(model);
+            // 将对应的销售订单的完成状态改为失败。
+            SalesOrder salesOrder = salesOrderService.queryById(model.getSalesId());
+            if (salesOrder != null) {
+                salesOrder.setFinishedStatus("1");
+            }
+            salesOrderService.update(salesOrder);
+
+            IncomingRegist incomingRegist = new IncomingRegist();
+            incomingRegist.setOrderId(salesOrder.getSalesId().toString());
+            incomingRegist.setInRegistDate(new Date());
+            incomingRegist.setCode(salesOrder.getCode());
+//            incomingRegist.setSupplierId(salesOrder.getSupplierId());
+            incomingRegist.setPrice(salesOrder.getPrice());
+            incomingRegist.setNumber(salesOrder.getNumber());
+            incomingRegist.setTotal(String.valueOf(Integer.parseInt(salesOrder.getPrice())*Integer.parseInt(salesOrder.getNumber())));
+            incomingRegist.setStatus("1");
+            incomingRegistService.save(incomingRegist);
         }
     }
 }

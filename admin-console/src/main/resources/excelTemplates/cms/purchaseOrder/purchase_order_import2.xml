@@ -16,9 +16,6 @@
 				<mapping row="4" col="7">data.paymentMethod</mapping>
 				<mapping row="4" col="8">data.paymentAmount</mapping>
 				<mapping row="4" col="9">data.tradeLocal</mapping>
-				<mapping row="4" col="10">data.checkBy</mapping>
-				<mapping row="4" col="11">data.checkDate</mapping>
-				<mapping row="4" col="12">data.chenkStatus</mapping>
 				<mapping row="4" col="13">data.finishCondition</mapping>
 				<mapping row="4" col="14">data.remarks</mapping>
 			</section>

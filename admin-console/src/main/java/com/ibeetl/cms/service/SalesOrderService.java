@@ -3,6 +3,9 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.cms.entity.OutboundRedist;
+import com.ibeetl.cms.entity.ProductInfor;
+import com.ibeetl.cms.entity.SalesOutStack;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,12 @@ public class SalesOrderService extends BaseService<SalesOrder>{
 
     @Autowired private SalesOrderDao salesOrderDao;
     @Autowired private CorePlatformService platformService;
+    @Autowired
+    private ProductInforService productInforService;
+    @Autowired
+    private SalesOutStackService salesOutStackService;
+    @Autowired
+    private OutboundRedistService outboundRedistService;
 
     public PageQuery<SalesOrder>queryByCondition(PageQuery query){
         PageQuery ret =  salesOrderDao.queryByCondition(query);
@@ -90,17 +99,66 @@ public class SalesOrderService extends BaseService<SalesOrder>{
     }
 
     /**
-     * 导入数据  存储到数据库
+     * 导入数据  存储到数据库  流程的采购管理 1
      * @param datas
      */
     public void saveImport(List<SalesOrder> datas) {
         for (SalesOrder model : datas) {
             model.setSalesId(null);
-            model.setCreatedBy(platformService.getCurrentUser().getId());
-            model.setCreatedTime(new Date());
-            model.setUpdatedTime(new Date());
-            model.setUpdatedBy(platformService.getCurrentUser().getId());
+            ProductInfor productInfor = productInforService.findByCode(model.getCode());
+            if (productInfor != null) {
+                // 库存足 直销
+                if (Integer.parseInt(productInfor.getExistStocks()) >= Integer.parseInt(model.getNumber())) {
+                    model.setOrderFor("0");
+                }else{
+                    model.setOrderFor("1");
+                }
+            }
+            // 保存销售订单
             save(model);
         }
+        // 直销的销售出库
+        String status = "0";
+        List<SalesOrder> salesOrderList = findOrderForO(status);
+        if (salesOrderList.size() > 0) {
+            for (SalesOrder salesOrder : salesOrderList) {
+                if (salesOrder != null) {
+                    // 记录到销售出库
+                    SalesOutStack salesOutStack = new SalesOutStack();
+                    salesOutStack.setSalesId(salesOrder.getSalesId().toString());
+                    salesOutStack.setCode(salesOrder.getCode());
+                    salesOutStack.setNumber(salesOrder.getNumber());
+                    salesOutStack.setPrice(salesOrder.getPrice());
+                    salesOutStack.setSalesDate(salesOrder.getSalesDate());
+                    salesOutStack.setClientId(salesOrder.getClientId());
+                    salesOutStack.setPaymentAmount(salesOrder.getPaymentAmount());
+                    salesOutStack.setPaymentMethod(salesOrder.getPaymentMethod());
+                    salesOutStack.setSalesBy(salesOrder.getSalesBy());
+                    salesOutStack.setDeliveryAddress(salesOrder.getTradeLocations());
+                    salesOutStackService.save(salesOutStack);
+                    // 录入到出库登记
+                    OutboundRedist outboundRedist = new OutboundRedist();
+                    outboundRedist.setOutorderId(salesOrder.getSalesId().toString());
+                    outboundRedist.setOutRegistDate(new Date());
+                    outboundRedist.setCode(salesOrder.getCode());
+                    //供应商
+//                    outboundRedist.setSupplierId(salesOrder.getS);
+                    outboundRedist.setPrice(salesOrder.getPrice());
+                    outboundRedist.setNumber(salesOrder.getNumber());
+                    outboundRedist.setTotal(String.valueOf(Integer.parseInt(salesOrder.getPrice()) * Integer.parseInt(salesOrder.getNumber())));
+                    outboundRedist.setStatus("0");
+                    outboundRedistService.save(outboundRedist);
+                    // 修改库存
+                    ProductInfor productInfor = productInforService.findByCode(salesOrder.getCode());
+                    productInfor.setExistStocks(String.valueOf(Integer.parseInt(productInfor.getExistStocks())-Integer.parseInt(salesOutStack.getNumber())));
+                    sqlManager.updateTemplateById(productInfor);
+                }
+            }
+        }
+
+    }
+
+    private List<SalesOrder> findOrderForO(String status) {
+        return salesOrderDao.findOrderForO(status);
     }
 }

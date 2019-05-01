@@ -3,9 +3,7 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
-import com.ibeetl.cms.entity.IncomingRegist;
-import com.ibeetl.cms.entity.ProductInfor;
-import com.ibeetl.cms.entity.PurchaseWarehouse;
+import com.ibeetl.cms.entity.*;
 import com.ibeetl.utils.StringUtils;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ibeetl.admin.core.util.PlatformException;
 
 import com.ibeetl.cms.dao.PurchaseOrderDao;
-import com.ibeetl.cms.entity.PurchaseOrder;
 import com.ibeetl.admin.core.service.BaseService;
 import com.ibeetl.admin.core.service.CorePlatformService;
 
@@ -35,6 +32,8 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
     private IncomingRegistService incomingRegistService;
     @Autowired
     private ProductInforService productInforService;
+    @Autowired
+    private PurchaseReturnsService purchaseReturnsService;
 
     public PageQuery<PurchaseOrder>queryByCondition(PageQuery query){
         PageQuery ret =  purchaseOrderDao.queryByCondition(query);
@@ -122,13 +121,14 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
     public void saveImport2(List<PurchaseOrder> datas) {
         if (datas.size() > 0) {
             for (PurchaseOrder model : datas) {
-                PurchaseOrder purchaseOrder = queryById(model.getOrderId());
+                PurchaseOrder purchaseOrder = queryOrderId(model.getOrderId());
                 if (purchaseOrder != null) {
                     // 1
                     model.setUpdatedTime(new Date());
                     model.setUpdatedBy(platformService.getCurrentUser().getId());
                     model.setFinishCondition("1");
-                    sqlManager.updateById(model);
+                    model.setRemarks("");
+                    sqlManager.updateTemplateById(model);
                     // 2
                     PurchaseWarehouse purchaseWarehouse = new PurchaseWarehouse();
                     purchaseWarehouse.setOrderId(purchaseOrder.getOrderId().toString());
@@ -155,7 +155,7 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
                     // 4 修改绘本的库存量
                     ProductInfor productInfor = productInforService.findByCode(purchaseOrder.getCode());
                     productInfor.setExistStocks(productInfor.getExistStocks()+purchaseOrder.getNumber());
-                    productInforService.update(productInfor);
+                    sqlManager.updateTemplateById(productInfor);
                 }
             }
             // 5 检索出所有还待完成的订单全部改为失败状态，并录入到采购退回表中
@@ -165,9 +165,23 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
                 for (PurchaseOrder purchaseOrder : list) {
                     purchaseOrder.setFinishCondition("2");
                     update(purchaseOrder);
+                    PurchaseReturns purchaseReturns = new PurchaseReturns();
+                    purchaseReturns.setCode(purchaseOrder.getCode());
+                    purchaseReturns.setNumber(purchaseOrder.getNumber());
+                    purchaseReturns.setPrice(purchaseOrder.getPrice());
+                    purchaseReturns.setSupplierId(purchaseOrder.getSupplierId());
+                    purchaseReturns.setOrderId(purchaseOrder.getOrderId().toString());
+                    purchaseReturns.setRefundMethod(purchaseOrder.getPaymentMethod());
+                    purchaseReturns.setRefundAmount(purchaseOrder.getPaymentAmount());
+                    purchaseReturns.setReturnedDate(new Date());
+                    purchaseReturnsService.save(purchaseReturns);
                 }
             }
         }
+    }
+
+    private PurchaseOrder queryOrderId(Long orderId) {
+        return purchaseOrderDao.queryOrderId(orderId);
     }
 
     private List<PurchaseOrder> findByFinishCondition(String status) {

@@ -44,7 +44,7 @@ queryWarehouseWarn
     * 
     from product_infor t
     where t.del = '0'
-    and t.exist_stocks < t.min_stocks   
+    and (t.exist_stocks-t.min_stocks) < 0 
     
 getById
 ===

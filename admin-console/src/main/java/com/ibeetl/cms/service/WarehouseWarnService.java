@@ -80,8 +80,8 @@ public class WarehouseWarnService extends BaseService<WarehouseWarn>{
     public boolean save(WarehouseWarn model) {
         model.setCreatedTime(new Date());
         model.setUpdatedTime(new Date());
-        model.setCreatedBy(platformService.getCurrentUser().getId());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
+//        model.setCreatedBy(platformService.getCurrentUser().getId());
+//        model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
@@ -111,7 +111,7 @@ public class WarehouseWarnService extends BaseService<WarehouseWarn>{
                         warehouseWarn.setAlarmt(new Date());
                         warehouseWarn.setNextAlarmt(DateUtils.plusDays(new Date(),3));
                         warehouseWarn.setRemarks("非首次预警");
-                        update(warehouseWarn);
+                        sqlManager.updateTemplateById(warehouseWarn);
                     }
                 }else{
                     // 初始都为未解决  下一次预警时间设置为3天

@@ -22,7 +22,14 @@ queryByCondition
     @}
     order by t.created_time desc
     
-    
+findOrderForO
+===
+
+    select 
+    * 
+    from sales_order t
+    where t.del = '0'
+    and t.order_for = #status#  
     
 getById
 ===
@@ -31,7 +38,7 @@ getById
     *
     from sales_order t
     where t.del = '0'
-    and t.id=#id#
+    and t.sales_id =#salesId#
 
 
 
