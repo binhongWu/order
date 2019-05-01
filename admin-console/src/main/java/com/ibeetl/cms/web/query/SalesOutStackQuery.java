@@ -11,19 +11,17 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class SalesOutStackQuery extends PageParam {
     @Query(name = "出库单号", display = true)        
-    private String salesOutStackId;
+    private Long salesOutStackId;
     @Query(name = "销售单号", display = true)        
     private String salesId;
+    @Query(name = "绘本编码", display = true)        
+    private String code;
     @Query(name = "销售日期", display = true)        
     private Date salesDate;
-    @Query(name = "审核时间", display = true)        
-    private Date checkDate;
-    @Query(name = "审核状态", display = true)        
-    private String checkStatus;
-    public String getSalesOutStackId(){
+    public Long getSalesOutStackId(){
         return  salesOutStackId;
     }
-    public void setSalesOutStackId(String salesOutStackId ){
+    public void setSalesOutStackId(Long salesOutStackId ){
         this.salesOutStackId = salesOutStackId;
     }
     public String getSalesId(){
@@ -32,23 +30,17 @@ public class SalesOutStackQuery extends PageParam {
     public void setSalesId(String salesId ){
         this.salesId = salesId;
     }
+    public String getCode(){
+        return  code;
+    }
+    public void setCode(String code ){
+        this.code = code;
+    }
     public Date getSalesDate(){
         return  salesDate;
     }
     public void setSalesDate(Date salesDate ){
         this.salesDate = salesDate;
-    }
-    public Date getCheckDate(){
-        return  checkDate;
-    }
-    public void setCheckDate(Date checkDate ){
-        this.checkDate = checkDate;
-    }
-    public String getCheckStatus(){
-        return  checkStatus;
-    }
-    public void setCheckStatus(String checkStatus ){
-        this.checkStatus = checkStatus;
     }
  
 }

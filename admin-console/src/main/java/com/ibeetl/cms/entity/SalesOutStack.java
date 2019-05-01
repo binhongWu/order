@@ -24,7 +24,7 @@ import lombok.*;
 /**
  * 
  * @author admin
- * @date 2019-04-12
+ * @date 2019-05-01
  */
 @Data
 @Builder
@@ -41,7 +41,7 @@ public class SalesOutStack extends BaseEntity{
     /*@SeqID(name = ORACLE_CORE_SEQ_NAME)*/
     @AutoID
 	/*@AssignID("uuid")*/
-    private String salesOutStackId ;
+    private Long salesOutStackId ;
 
 	/**
 	 * 销售单号
@@ -110,14 +110,10 @@ public class SalesOutStack extends BaseEntity{
     private Date checkDate ;
 
 	/**
-	 * 审核状态
+	 * 审核状态 服用销售订单的审核状态字典类型
 	 */
+	@Dict(type="sales_order_checkstatus")
     private String checkStatus ;
-
-	/**
-	 * 录入日期
-	 */
-    private Date entryDate ;
 
 	/**
 	 * 创建人
@@ -142,7 +138,7 @@ public class SalesOutStack extends BaseEntity{
 	/**
 	 * 删除标记{0:正常,1:已删除}
 	 */
-    private Integer del ;
+    private String del ;
 
 	/**
 	 * 备注

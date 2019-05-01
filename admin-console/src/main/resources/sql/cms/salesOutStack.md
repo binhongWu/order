@@ -14,14 +14,11 @@ queryByCondition
     @if(!isEmpty(salesId)){
         and  t.sales_id =#salesId#
     @}
+    @if(!isEmpty(code)){
+        and  t.code =#code#
+    @}
     @if(!isEmpty(salesDate)){
         and  t.sales_date =#salesDate#
-    @}
-    @if(!isEmpty(checkDate)){
-        and  t.check_date =#checkDate#
-    @}
-    @if(!isEmpty(checkStatus)){
-        and  t.check_status =#checkStatus#
     @}
     order by t.created_time desc
     
@@ -71,7 +68,6 @@ updateCustom
                 ,check_by = #checkBy#
                 ,check_date = #checkDate#
                 ,check_status = #checkStatus#
-                ,entry_date = #entryDate#
                 ,created_by = #createdBy#
                 ,created_time = #createdTime#
                 ,remarks = #remarks#
@@ -133,9 +129,6 @@ findListByCustom
     @}
     @if(!isEmpty(checkStatus)){
         and  t.check_status =#checkStatus#
-    @}
-    @if(!isEmpty(entryDate)){
-        and  t.entry_date =#entryDate#
     @}
     @if(!isEmpty(remarks)){
         and  t.remarks =#remarks#

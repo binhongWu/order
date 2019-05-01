@@ -22,78 +22,77 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 ,limit : 10,
                 cols : [ [ // 表头
                 {
-                type : 'radio',
-                fixed:'left'
+                type : 'checkbox',
+                fixed:'left',
                 }, 
                 {
                 field : 'salesOutStackId', 
                 title : '出库单号',
-                fixed:'left'
-                }, 
-                {
-                field : 'salesId', 
-                title : '销售单号'
-                }, 
-                {
-                field : 'code', 
-                title : '绘本编码'
-                }, 
-                {
-                field : 'number', 
-                title : '绘本数量'
-                }, 
-                {
-                field : 'price', 
-                title : '绘本单价'
-                }, 
-                {
-                field : 'salesDate', 
-                title : '销售日期'
-                }, 
-                // {
-                // field : 'clientId',
-                // title : '客户信息'
-                // },
-                {
-                field : 'paymentAmount', 
-                title : '付款金额'
-                }, 
-                {
-                field : 'paymentMethodText', //数据字典类型为 sales_out_stack_paymentmethod
-                title : '付款方式'
-                }, 
-                {
-                field : 'salesBy', 
-                title : '销售人'
-                }, 
-                // {
-                // field : 'shipBy',
-                // title : '发货人'
-                // },
-                // {
-                // field : 'deliveryAddress',
-                // title : '送货地址'
-                // },
-                // {
-                // field : 'checkBy',
-                // title : '审核人'
-                // },
-                {
-                field : 'checkDate', 
-                title : '审核时间'
-                }, 
-                {
-                field : 'checkStatus', 
-                title : '审核状态'
-                }, 
-                {
-                field : 'entryDate', 
-                title : '录入日期'
+                fixed:'left',
                 },
                 {
+                field : 'salesId', 
+                title : '销售单号',
+                },
+                {
+                field : 'code', 
+                title : '绘本编码',
+                },
+                {
+                field : 'number', 
+                title : '绘本数量',
+                },
+                {
+                field : 'price', 
+                title : '绘本单价',
+                },
+                {
+                field : 'salesDate', 
+                title : '销售日期',
+                },
+                {
+                field : 'clientId', 
+                title : '客户信息',
+                },
+                {
+                field : 'paymentAmount', 
+                title : '付款金额',
+                },
+                {
+                field : 'paymentMethodText', //数据字典类型为 sales_out_stack_paymentmethod
+                title : '付款方式',
+                },
+                {
+                field : 'salesBy', 
+                title : '销售人',
+                },
+                {
+                field : 'shipBy', 
+                title : '发货人',
+                },
+                {
+                field : 'deliveryAddress', 
+                title : '送货地址',
+                },
+                // {
+                // field : 'checkBy',
+                // title : '审核人',
+                //     width : 100
+                // },
+                // {
+                // field : 'checkDate',
+                // title : '审核时间',
+                //     width : 100
+                // },
+                // {
+                // field : 'checkStatus',
+                // title : '审核状态',
+                //     width : 100
+                // },
+                {
                 field : 'remarks', 
-                title : '备注'
-                } 
+                title : '备注',
+                }
         
                 ] ]
         
@@ -136,7 +135,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 exportDocument : function() {
                     layui.use([ 'salesOutStackApi' ], function() {
                         var salesOutStackApi = layui.salesOutStackApi
-                        Common.openConfirm("确认要导出这些SalesOutStack数据?", function() {
+                        Common.openConfirm("确认要导出这些销售出库数据?", function() {
                             salesOutStackApi.exportExcel($("#searchForm"), function(fileId) {
                                 Lib.download(fileId);
                             })

@@ -75,7 +75,7 @@ public class SalesOutStackController{
     @GetMapping(MODEL + "/edit.do")
     @Function("salesOutStack.edit")
     @ResponseBody
-    public ModelAndView edit(String salesOutStackId) {
+    public ModelAndView edit(Long salesOutStackId) {
         ModelAndView view = new ModelAndView("/cms/salesOutStack/edit.html");
         SalesOutStack salesOutStack = salesOutStackService.queryById(salesOutStackId);
         view.addObject("salesOutStack", salesOutStack);
@@ -139,7 +139,7 @@ public class SalesOutStackController{
     @GetMapping(MODEL + "/view.json")
     @Function("salesOutStack.query")
     @ResponseBody
-    public JsonResult<SalesOutStack>queryInfo(String salesOutStackId) {
+    public JsonResult<SalesOutStack>queryInfo(Long salesOutStackId) {
         SalesOutStack salesOutStack = salesOutStackService.queryById( salesOutStackId);
         return  JsonResult.success(salesOutStack);
     }
@@ -166,7 +166,7 @@ public class SalesOutStackController{
          * 2)通常excel导出需要关联更多数据，因此salesOutStackService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/salesOutStack/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/salesOutStack/sales_out_stack_export.xls";
         PageQuery<SalesOutStack> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
@@ -178,7 +178,7 @@ public class SalesOutStackController{
             if(is==null) {
                 throw new PlatformException("模板资源不存在："+excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("SalesOutStack_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            FileItem item = fileService.createFileTemp("销售出库_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);
@@ -197,12 +197,40 @@ public class SalesOutStackController{
     @ResponseBody
     public JsonResult importExcel(@RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-           return JsonResult.fail();
+            return JsonResult.fail();
         }
         InputStream ins = file.getInputStream();
-        /*解析模板并导入到数据库里,参考DictConsoleContorller，使用jxls reader读取excel数据*/
-        ins.close();
-        return JsonResult.success();
+        InputStream inputXML = Thread.currentThread().getContextClassLoader().getResourceAsStream("excelTemplates/cms/salesOutStack/sales_out_stack_import.xml");
+        XLSReader mainReader = ReaderBuilder.buildFromXML( inputXML );
+        InputStream inputXLS = ins;
+        List<SalesOutStack> datas = new ArrayList<>();
+        Map beans = new HashMap();
+        beans.put("list", datas);
+        ReaderConfig.getInstance().setSkipErrors( true );
+        XLSReadStatus readStatus = mainReader.read( inputXLS, beans);
+        List<XLSReadMessage>  errors = readStatus.getReadMessages();
+        if(!errors.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for(XLSReadMessage msg:errors) {
+                sb.append(parseXLSReadMessage(msg));
+                sb.append(",");
+            }
+            sb.setLength(sb.length()-1);
+            return JsonResult.failMessage("解析excel出错:"+sb.toString());
+        }
+        try {
+            this.salesOutStackService.saveImport(datas);
+            return JsonResult.success();
+        }catch(Exception ex) {
+            return JsonResult.failMessage(ex.getMessage());
+        }
+    }
+
+    private String parseXLSReadMessage(XLSReadMessage msg) {
+        String str = msg.getMessage();
+        int start = "Can't read cell ".length();
+        int end = str.indexOf("on");
+        return str.substring(start,end);
     }
     
     

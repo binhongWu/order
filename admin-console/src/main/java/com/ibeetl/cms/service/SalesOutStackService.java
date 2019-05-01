@@ -71,6 +71,10 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
 
     @Override
     public boolean save(SalesOutStack model) {
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setCreatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedTime(new Date());
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
@@ -83,5 +87,12 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
      */
     public List<SalesOutStack> findListByCustom(SalesOutStack model) {
         return salesOutStackDao.findListByCustom(model);
+    }
+
+    public void saveImport(List<SalesOutStack> datas) {
+        for (SalesOutStack model : datas) {
+            model.setSalesOutStackId(null);
+            save(model);
+        }
     }
 }
