@@ -52,7 +52,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 }, 
                 {
                 field : 'refundMethodText', //数据字典类型为 purchase_returns_refundmethod
-                title : '退款方式（0：支付宝 1：微信 2：银行卡）',
+                title : '退款方式',
                 }, 
                 {
                 field : 'refundAmount', 
@@ -65,39 +65,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'sender', 
                 title : '发货人',
-                }, 
-                {
-                field : 'checkBy', 
-                title : '审查人',
-                }, 
-                {
-                field : 'checkDate', 
-                title : '审查日期',
-                }, 
-                {
-                field : 'checkStatusText', //数据字典类型为 purchase_returns_checkstatus
-                title : '审核状态（0：待审核 1：通过 2：拒绝）',
-                }, 
-                // {
-                // field : 'createdBy',
-                // title : '创建人',
-                // },
-                // {
-                // field : 'createdTime',
-                // title : '创建时间',
-                // },
-                // {
-                // field : 'updatedBy',
-                // title : '更新人',
-                // },
-                // {
-                // field : 'updatedTime',
-                // title : '更新时间',
-                // },
-                // {
-                // field : 'del',
-                // title : '删除标记{0:正常,1:已删除}',
-                // },
+                },
                 {
                 field : 'remarks', 
                 title : '备注',
@@ -144,7 +112,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 exportDocument : function() {
                     layui.use([ 'purchaseReturnsApi' ], function() {
                         var purchaseReturnsApi = layui.purchaseReturnsApi
-                        Common.openConfirm("确认要导出这些PurchaseReturns数据?", function() {
+                        Common.openConfirm("确认要导出这些采购退回数据?", function() {
                             purchaseReturnsApi.exportExcel($("#searchForm"), function(fileId) {
                                 Lib.download(fileId);
                             })

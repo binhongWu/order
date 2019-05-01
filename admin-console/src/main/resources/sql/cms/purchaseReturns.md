@@ -14,11 +14,11 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
+    @if(!isEmpty(supplierId)){
+        and  t.supplier_id =#supplierId#
+    @}
     @if(!isEmpty(orderId)){
         and  t.order_id =#orderId#
-    @}
-    @if(!isEmpty(returnedDate)){
-        and  t.returned_date =#returnedDate#
     @}
     order by t.created_time desc
     

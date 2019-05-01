@@ -166,7 +166,7 @@ public class PurchaseReturnsController{
          * 2)通常excel导出需要关联更多数据，因此purchaseReturnsService.queryByCondition方法经常不符合需求，需要重写一个为模板导出的查询
          * 3)参考ConsoleDictController来实现模板导入导出
          */
-        String excelTemplate ="excelTemplates/cms/purchaseReturns/你的excel模板文件名字.xls";
+        String excelTemplate ="excelTemplates/cms/purchaseReturns/purchase_returns_export.xls";
         PageQuery<PurchaseReturns> page = condtion.getPageQuery();
         //取出全部符合条件的
         page.setPageSize(Integer.MAX_VALUE);
@@ -178,7 +178,7 @@ public class PurchaseReturnsController{
             if(is==null) {
                 throw new PlatformException("模板资源不存在："+excelTemplate);
             }
-            FileItem item = fileService.createFileTemp("采购退回_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            FileItem item = fileService.createFileTemp("PurchaseReturns_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);

@@ -14,10 +14,10 @@ public class PurchaseReturnsQuery extends PageParam {
     private Long returnedId;
     @Query(name = "绘本编码", display = true)        
     private String code;
+    @Query(name = "供货商编号", display = true)        
+    private String supplierId;
     @Query(name = "采购订单单号", display = true)        
     private String orderId;
-    @Query(name = "退货日期", display = true)        
-    private Date returnedDate;
     public Long getReturnedId(){
         return  returnedId;
     }
@@ -30,17 +30,17 @@ public class PurchaseReturnsQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
+    public String getSupplierId(){
+        return  supplierId;
+    }
+    public void setSupplierId(String supplierId ){
+        this.supplierId = supplierId;
+    }
     public String getOrderId(){
         return  orderId;
     }
     public void setOrderId(String orderId ){
         this.orderId = orderId;
-    }
-    public Date getReturnedDate(){
-        return  returnedDate;
-    }
-    public void setReturnedDate(Date returnedDate ){
-        this.returnedDate = returnedDate;
     }
  
 }
