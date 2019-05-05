@@ -57,6 +57,7 @@ public class ProductInfor extends BaseEntity{
 	 * 图片
 	 */
     private String picture ;
+    private String pictureUrl;
 
 	/**
 	 * 作者

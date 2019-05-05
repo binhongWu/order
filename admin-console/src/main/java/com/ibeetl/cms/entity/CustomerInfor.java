@@ -49,6 +49,11 @@ public class CustomerInfor extends BaseEntity{
     private String clientCode ;
 
 	/**
+	 * 密码
+	 */
+	private String password;
+
+	/**
 	 * 客户名称
 	 */
     private String name ;

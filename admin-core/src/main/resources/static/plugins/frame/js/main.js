@@ -20,6 +20,11 @@ layui.use(['layer','fsTab',"element","form","jquery"], function(){
 	window.addEventListener("hashchange", hashChanged, false);
 
 	hashChanged();
+
+    var layId = $.uuid();
+    addTab('首页',Common.ctxPath + '/cms/productInfor/index.do',layId);
+    element.tabDelete('fsTab', '0');
+    element.tabChange('fsTab', layId);
 	
 	function intiCompanySelect(){
 		$("#changeCompanyButton").click(function(){

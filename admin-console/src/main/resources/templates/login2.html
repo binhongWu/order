@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<title>中英文绘本购买平台</title>-->
+    <title>XXXXX</title>
+    <link rel="stylesheet" href="${ctxPath}/plugins/layui/css/layui.css">
+    <script src="${ctxPath}/plugins/layui/layui.js"></script>
+
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style rel="stylesheet" type="text/css">
+        input{
+            -webkit-appearance: none;
+            background-color: #fff;
+            background-image: none;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #606266;
+            display: inline-block;
+            font-size: inherit;
+            height: 40px;
+            line-height: 40px;
+            outline: 0;
+            padding: 0 15px;
+            -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+            transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+            width: 100%;
+            text-rendering: auto;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0;
+            text-shadow: none;
+            text-align: start;
+            margin: 0;
+        }
+        label{
+            width: 80px;
+            text-align:left;
+            float: left;
+            font-size: 14px;
+            color: #606266;
+            line-height: 40px;
+            padding: 0 12px 0 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .login {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            background-size: 100%;
+        }
+
+        .logo {
+            background-color: #ffffff;
+            width: 460px;
+            left: 50%;
+            margin-left: -230px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            padding: 45px 0 30px 0;
+            position: fixed;
+            text-align: center;
+            top: 200px;
+        }
+
+        .logo img {
+            position: absolute;
+            top: -47px;
+            left: 116px;
+        }
+
+        .form {
+            margin: 275px auto 0;
+            max-width: 380px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            background-color: white;
+            padding: 30px 40px 50px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+        .form-item{
+            margin-bottom: 22px;
+        }
+        .form-item::after{
+            clear: both;
+            display: table;
+            content: "";
+        }
+
+        .form-item-content{
+            margin-left: 80px;
+            line-height: 40px;
+            position: relative;
+            font-size: 14px;
+        }
+        .form-item-content::after{
+            clear: both;
+            display: table;
+            content: "";
+        }
+
+        .footer {
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        .footer span {
+            color: #848383;
+            font-size: 14px;
+        }
+
+        .login-btn{
+            width: 100%;
+            margin-top: 30px;
+            color: #fff;
+            background-color: #009688;
+            border-color: #009688;
+            display: inline-block;
+            line-height: 1;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid #dcdfe6;
+            -webkit-appearance: none;
+            text-align: center;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            outline: 0;
+            margin: 0;
+            -webkit-transition: .1s;
+            transition: .1s;
+            font-weight: 500;
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 9px;
+        }
+    </style>
+    <script>
+        if (window.frames.length != parent.frames.length) {
+            window.parent.location.replace(document.referrer);
+        }
+
+        let layer = null;
+        layui.use(['layer'], function(){
+            layer = layui.layer;
+            message = "${!(errorMessage)}";
+            if(message != null && message != ""){
+                layer.msg(message);
+            }
+        });
+
+        function vaild() {
+            let code = document.getElementById('code').value;
+            let password =  document.getElementById('password').value;
+            if (code == null || code == ''){
+                layer.msg('请输入账号');
+                return false
+            }
+            if (password == null || password == ''){
+                layer.msg('请输入密码');
+                return false
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+<div class="login" style="background: url('${ctxPath}/img/login_bgx.gif')">
+    <div class="logo" style="border-radius: 20px 20px 0 0;color: #009688;font-size: 25px;font-weight: bold">
+        <span>中英文绘本购买平台</span>
+    </div>
+    <br/>
+    <form class="form" action="${ctxPath}/index/login.do" method="post" onsubmit="return vaild()" style="border-radius: 0 0 20px 20px">
+        <div class="form-item">
+            <label>账&nbsp;&nbsp;&nbsp;号</label>
+            <div class="form-item-content">
+                <input id="code" type="text" name="code" autocomplete="off" placeholder="请输入账号">
+            </div>
+        </div>
+        <div class="form-item">
+            <label>密&nbsp;&nbsp;&nbsp;码</label>
+            <div class="form-item-content">
+                <input id="password" type="password" name="password" autocomplete="off" placeholder="请输入密码">
+            </div>
+        </div>
+        <div>
+            <button class="login-btn" type="submit">登 录</button>
+            <button class="login-btn" type="submit">注 册</button>
+        </div>
+    </form>
+    <div class="footer">
+        <span class="powered">Copyright © 2018-2020 计算机科学与技术1501-14-PJH - Powered By CSB V1.1.0</span>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    layui.use(['layer',"form","jquery"], function(){
+        layer = layui.layer;
+        message = "${!(errorMessage)}";
+        if(message != null && message != ""){
+            layer.msg(message);
+        }
+    });
+</script>

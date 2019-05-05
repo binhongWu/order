@@ -4,9 +4,10 @@ queryByCondition
 
     select 
     @pageTag(){
-    t.*
+    t.*,a.path picture_url
     @}
     from product_infor t
+    left join core_file a on a.BIZ_ID = t.picture
     where t.del = '0'  
     @if(!isEmpty(code)){
         and  t.code =#code#
@@ -26,7 +27,7 @@ queryByCondition
     @if(!isEmpty(score)){
         and  t.score =#score#
     @}
-    order by t.created_time desc
+    order by t.updated_time desc
   
 
 findByCode
@@ -180,3 +181,11 @@ findListByCustom
         and  t.remarks =#remarks#
     @}
     order by t.created_time desc
+    
+findAll
+===
+
+    select
+    *
+    from product_infor t
+    where t.del = '0'

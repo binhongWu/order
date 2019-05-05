@@ -22,4 +22,6 @@ public interface ProductInforDao extends BaseMapper<ProductInfor>{
     ProductInfor findByCode(String code);
 
     List<ProductInfor> queryWarehouseWarn();
+
+    List<ProductInfor> findAll();
 }

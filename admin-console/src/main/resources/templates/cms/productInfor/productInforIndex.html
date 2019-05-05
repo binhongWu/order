@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="${ctxPath}/plugins/layui/css/layui.css">
+    <script src="${ctxPath}/plugins/layui/layui.js"></script>
+    <script src="${ctxPath}/js/lib.js"></script>
+    <script src="${ctxPath}/js/common.js"></script>
+
+</head>
+<body>
+    <div style="margin: 15px">
+
+    </div>
+    <div style="margin: 15px">
+        <table id="productInforIndexTable" lay-filter="productInforIndexTable"></table>
+    </div>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="purchase">购买</a>
+    </script>
+</body>
+    <script>
+        layui.use([ 'table','layer','jquery'], function() {
+            var table = layui.table;
+            var $ = layui.jquery;
+            table.render({
+                elem : '#productInforIndexTable',
+                height : Lib.getTableHeight(1),
+                method : 'post',
+                url : '/cms/productInfor/productInforIndexList.json' // 数据接口
+                ,page : Lib.tablePage // 开启分页
+                ,limit : 10,
+                cols : [ [ // 表头
+                    {
+                        field : 'name',
+                        title : '绘本名称',
+                        event: 'getInfo',
+                        style:'cursor: pointer;'
+                    },
+                    {
+                        field : 'picture',
+                        title : '图片',
+                        templet: '<div><img src="{{d.pictureUrl}}"></div>'
+                    },
+                    // {
+                    //     field : 'introduction',
+                    //     title : '简介'
+                    // },
+                    {
+                        field : 'author',
+                        title : '作者'
+                    },
+                    {
+                        field : 'languageText', //数据字典类型为 product_infor_language
+                        title : '语种'
+                    },
+                    {
+                        field : 'kindsText', //数据字典类型为 product_infor_kinds
+                        title : '推荐读者对象'
+                    },
+                    {
+                        field : 'bookKind',
+                        title : '图书分类'
+                    },
+                    {
+                        field : 'publishHouse',
+                        title : '出版社'
+                    },
+                    {
+                        field : 'publishDate',
+                        title : '出版日期'
+                    },
+                    {
+                        field : '购买',
+                        title : '操作',
+                        toolbar : '#barDemo',
+                        style:'cursor: pointer;'
+                    }
+                    // {
+                    //     field : 'scoreText', //数据字典类型为 product_infor_score
+                    //     title : '是否是套装'
+                    // },
+                    // {
+                    //     field : 'productNum',
+                    //     title : '套装册数'
+                    // },
+                    // {
+                    //     field : 'rank',
+                    //     title : '热销商品排名'
+                    // },
+
+                ] ]
+            });
+
+            // 监听查看单元格事件
+            table.on('tool(productInforIndexTable)', function(obj){
+                var data = obj.data;
+                var event = obj.event;
+                console.log(event);
+                if(event === "getInfo"){
+
+                }
+                if (event === "purchase") {
+                    $.post('/cms/purchaseOrder/purchase.do', {id:data.id}, function(ret){
+                        var msg = ret.msg;
+                        console.log(ret);
+                        layer.open({
+                            type: 1,
+                            title:"购买信息",
+                            content:  "购买成功！"
+                        });
+                    });
+
+                }
+            });
+
+        })
+    </script>
+</html>

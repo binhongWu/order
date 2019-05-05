@@ -3,6 +3,9 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.admin.core.conf.PasswordConfig;
+import com.ibeetl.admin.core.util.enums.DelFlagEnum;
+import com.ibeetl.admin.core.util.enums.GeneralStateEnum;
 import com.ibeetl.cms.web.dto.CustomerInforData;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,8 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
 
     @Autowired private CustomerInforDao customerInforDao;
     @Autowired private CorePlatformService platformService;
+    @Autowired
+    PasswordConfig.PasswordEncryptService passwordEncryptService;
 
     public PageQuery<CustomerInfor>queryByCondition(PageQuery query){
         PageQuery ret =  customerInforDao.queryByCondition(query);
@@ -111,5 +116,19 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
             customerInfor.setUpdatedBy(platformService.getCurrentUser().getId());
             save(customerInfor);
         }
+    }
+
+    public CustomerInfor login(String code, String password) {
+        CustomerInfor query = new CustomerInfor();
+        query.setClientCode(code);
+        query.setPassword(passwordEncryptService.password(password));
+        CustomerInfor user = customerInforDao.getSQLManager().templateOne(query);
+        if (user == null) {
+            return null;
+        }
+        if(user.getDel().equals(String.valueOf(DelFlagEnum.DELETED.getValue()))){
+            throw new PlatformException("用户"+code+"不存在！");
+        }
+        return user;
     }
 }

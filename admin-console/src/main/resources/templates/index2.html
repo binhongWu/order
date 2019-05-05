@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>首页</title>
+    <link rel="stylesheet" href="${ctxPath}/plugins/layui/css/layui.css">
+    <script src="${ctxPath}/plugins/layui/layui.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">爱书小屋购买平台</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">绘本总览</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    ${session["customer:user"].name}
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">基本资料</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="/index/logout2.do">退下了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">订单列表</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">待完成订单</a></dd>
+                        <dd><a href="javascript:;">历史订单</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 右边内容区域 -->
+    <div class="layui-body layui-form">
+        <div class="layui-tab layui-tab-card fsTab" lay-filter="fsTab" lay-allowClose="true">
+
+            <!-- 菜单导航 -->
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="0">首页</li>
+            </ul>
+            <!-- 内容 -->
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <!--#include("/help.html"){}  -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer" style="text-align: center">
+        <!-- 底部固定区域 -->
+        © Copyright © 2018-2020 计算机科学与技术1501-14-PJH - Powered By CSB V1.1.0
+    </div>
+</div>
+<script>
+    //JavaScript代码区域
+    layui.use(['element','layer','jquery'], function(){
+        var element = layui.element;
+        var $ = layui.jquery;
+        getCurrentUserInfo();
+        function getCurrentUserInfo() {
+            console.log(123456);
+            $.ajax({
+                url: "/index/getUserInfo.json",
+                type: "POST",
+                success: function (rsp) {
+                    var msg= rsp.msg;
+                    $("#content").html(msg)
+                }
+            });
+        }
+    });
+
+
+</script>
+</body>
+</html>

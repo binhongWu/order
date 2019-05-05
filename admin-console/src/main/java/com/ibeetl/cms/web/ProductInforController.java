@@ -62,12 +62,37 @@ public class ProductInforController{
         return view;
     }
 
+    /**
+     * 购买首页 展示所有绘本信息
+     * @return
+     */
+    @GetMapping(MODEL + "/productInforIndex.do")
+    @ResponseBody
+    public ModelAndView productInforIndex() {
+        ModelAndView view = new ModelAndView("/cms/productInfor/productInforIndex.html") ;
+        return view;
+    }
+
+    @PostMapping(MODEL + "/productInforIndexList.json")
+    @ResponseBody
+    public JsonResult<PageQuery> productInforIndexList(ProductInforQuery condtion)
+    {
+        PageQuery page = condtion.getPageQuery();
+        productInforService.queryByCondition(page);
+        return JsonResult.success(page);
+    }
+
     @GetMapping(MODEL + "/edit.do")
     @Function("productInfor.edit")
     @ResponseBody
     public ModelAndView edit(Long id) {
         ModelAndView view = new ModelAndView("/cms/productInfor/edit.html");
         ProductInfor productInfor = productInforService.queryById(id);
+        List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
+        if(fileItems.size() > 0){
+            FileItem fileItem = fileItems.get(0);
+            productInfor.setPictureUrl(fileItem.getPath());
+        }
         view.addObject("productInfor", productInfor);
         return view;
     }
@@ -222,7 +247,7 @@ public class ProductInforController{
         int end = str.indexOf("on");
         return str.substring(start, end);
     }
-    
+
     
 
 }

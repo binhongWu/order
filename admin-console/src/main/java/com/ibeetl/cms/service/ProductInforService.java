@@ -141,4 +141,8 @@ public class ProductInforService extends BaseService<ProductInfor>{
     public List<ProductInfor> queryWarehouseWarn() {
         return productInforDao.queryWarehouseWarn();
     }
+
+    public List<ProductInfor> findAll() {
+        return productInforDao.findAll();
+    }
 }

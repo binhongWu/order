@@ -278,7 +278,13 @@ public class PurchaseOrderController{
             return JsonResult.failMessage(ex.getMessage());
         }
     }
-    
+
+    @PostMapping(MODEL + "/purchase.do")
+    @ResponseBody
+    public JsonResult purchase(Long id){
+        System.out.println("进入购买！");
+        return JsonResult.success();
+    }
     
 
 }
