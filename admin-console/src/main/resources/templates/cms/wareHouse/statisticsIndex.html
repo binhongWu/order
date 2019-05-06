@@ -1,0 +1,19 @@
+<!--#layout("/common/layout.html",{"jsBase":"/js/cms/wareHouse/"}){ -->
+<layui:searchForm formId="searchForm"  condition="${search}">
+</layui:searchForm>
+
+<!--<div class="layui-btn-group">-->
+    <!--<layui:accessButton function="wareHouse.add"  action="add">增加</layui:accessButton>-->
+    <!--<layui:accessButton function="wareHouse.edit"  action="edit">编辑</layui:accessButton>-->
+<!--</div>-->
+
+<table id="wareHouseTable" lay-filter="wareHouseTable"></table>
+<!--#} -->
+<script>
+
+layui.use(['index'], function(){
+    var index = layui.index;
+    index.init();
+});
+
+</script>

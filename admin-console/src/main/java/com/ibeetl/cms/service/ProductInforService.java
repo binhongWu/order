@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.ibeetl.admin.core.util.DateUtils;
 import org.beetl.sql.core.engine.PageQuery;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,36 +93,30 @@ public class ProductInforService extends BaseService<ProductInfor>{
 
     public void saveImport(List<ProductInfor> datas) {
         for (ProductInfor model : datas) {
-            switch (model.getLanguage()){
-                case "中文":
-                    model.setLanguage("0");
-                    break;
-                case "英文":
-                    model.setLanguage("1");
-                    break;
-                default:
-                    model.setLanguage("2");
+            ProductInfor productInfor = findByCode(model.getCode());
+            if (productInfor == null) {
+                save(model);
+            }else{
+                productInfor.setName(model.getName());
+                productInfor.setAuthor(model.getAuthor());
+                productInfor.setLanguage(model.getLanguage());
+                productInfor.setKinds(model.getKinds());
+                productInfor.setBookKind(model.getBookKind());
+                productInfor.setPublishHouse(model.getPublishHouse());
+                productInfor.setPublishDate(model.getPublishDate());
+                productInfor.setIntroduction(model.getIntroduction());
+                productInfor.setBrand(model.getBrand());
+                productInfor.setScore(model.getScore());
+                productInfor.setProductNum(model.getProductNum());
+                productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks())+Integer.valueOf(model.getExistStocks())));
+                productInfor.setWareId(model.getWareId());
+                productInfor.setSupplierId(model.getSupplierId());
+                productInfor.setInPrice(model.getInPrice());
+                productInfor.setOutPrice(model.getOutPrice());
+                productInfor.setMinStocks(model.getMinStocks());
+                productInfor.setMaxStocks(model.getMaxStocks());
+                update(productInfor);
             }
-            switch (model.getKinds()){
-                case "0-3岁":
-                    model.setKinds("0");
-                    break;
-                case "4-6岁":
-                    model.setKinds("1");
-                    break;
-                case "7-12岁":
-                    model.setKinds("2");
-                    break;
-                default:
-                    model.setKinds("3");
-            }
-            model.setScore("是".equals(model.getScore()) ?"0":"1");
-            model.setCreatedBy(platformService.getCurrentUser().getId());
-            model.setCreatedTime(new Date());
-            model.setUpdatedTime(new Date());
-            model.setUpdatedBy(platformService.getCurrentUser().getId());
-            model.setPublishDate(DateUtils.parseDate(model.getPublishDate()));
-            save(model);
         }
     }
 

@@ -27,115 +27,87 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 }, 
                 {
                 field : 'code', 
-                title : '绘本编码isbn',
-                    width : 100
+                title : '绘本编码isbn'
                 }, 
                 {
                 field : 'name', 
-                title : '绘本名称',
-                    width : 100
-                }, 
-                // {
-                // field : 'picture',
-                // title : '图片',
-                //     width : 100
-                // },
+                title : '绘本名称'
+                },
                 {
                 field : 'author', 
-                title : '作者',
-                    width : 100
+                title : '作者'
                 }, 
                 {
                 field : 'languageText', //数据字典类型为 product_infor_language
-                title : '语种',
-                    width : 100
+                title : '语种'
                 }, 
                 {
                 field : 'kindsText', //数据字典类型为 product_infor_kinds
-                title : '读者对象',
-                    width : 100
+                title : '读者对象'
                 }, 
                 {
                 field : 'bookKind', 
-                title : '图书分类',
-                    width : 100
+                title : '图书分类'
                 }, 
                 {
                 field : 'publishHouse', 
-                title : '出版社',
-                    width : 100
+                title : '出版社'
                 }, 
                 {
                 field : 'publishDate', 
-                title : '出版日期',
-                    width : 100
+                title : '出版日期'
+                ,templet:function(d){
+                    return Common.getDate(d.publishDate,'yyyy-MM-dd');
+                }
                 }, 
                 {
                 field : 'introduction', 
-                title : '简介',
-                    width : 100
+                title : '简介'
                 }, 
                 {
-                field : 'brand', 
-                title : '品牌',
-                    width : 100
-                }, 
+                field : 'brand',
+                title : '品牌'
+                },
                 {
                 field : 'scoreText', //数据字典类型为 product_infor_score
-                title : '是否是套装',
-                    width : 100
+                title : '是否是套装'
                 }, 
                 {
                 field : 'productNum', 
-                title : '套装册数',
-                    width : 100
+                title : '套装册数'
                 }, 
                 {
                 field : 'rank', 
-                title : '热销商品排名',
-                    width : 100
+                title : '热销商品排名'
                 }, 
                 {
                 field : 'wareId', 
-                title : '仓库系统编码',
-                    width : 100
+                title : '仓库系统编码'
                 }, 
                 {
                 field : 'supplierId', 
-                title : '供应商编码',
-                    width : 100
+                title : '供应商编码'
                 }, 
                 {
                 field : 'inPrice', 
-                title : '入库单价',
-                    width : 100
+                title : '入库单价'
                 }, 
                 {
                 field : 'outPrice', 
-                title : '出库单价',
-                    width : 100
+                title : '出库单价'
                 }, 
                 {
                 field : 'existStocks', 
-                title : '现有库存',
-                    width : 100
+                title : '现有库存'
                 }, 
                 {
                 field : 'minStocks', 
-                title : '最小库存',
-                    width : 100
+                title : '最小库存'
                 }, 
                 {
                 field : 'maxStocks', 
-                title : '最大库存',
-                    width : 100
-                },
-                {
-                field : 'remarks', 
-                title : '备注',
-                    width : 100
-                } 
-        
+                title : '最大库存'
+                }
                 ] ]
         
             });
