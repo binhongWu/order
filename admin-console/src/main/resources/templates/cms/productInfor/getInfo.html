@@ -1,0 +1,146 @@
+<!--# layout("/common/layout.html",{"jsBase":"/js/cms/productInfor/"}){ -->
+
+<form class="layui-form layui-form-pane" id="updateForm">
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本编码isbn">绘本编码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="code" name="code"  value="${productInfor.code}"   class="layui-input" disabled>
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本名称">绘本名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name"  value="${productInfor.name}"   class="layui-input" disabled>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" title="简介">简介</label>
+                <div class="layui-input-inline">
+                    <textarea id="introduction" name="introduction"  class="layui-textarea"  style="width: 512px;height: 200px" disabled>${productInfor.introduction}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-upload">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="pictureUrl" src="${productInfor.pictureUrl}" alt="" style="width: 13.5em;height: 13.5em;"/>
+                    <p id="productImgText"></p>
+                </div>
+                <!--<button type="button" class="layui-btn" id="productImageBtn" style="width: 13.5em;">上传图片</button>-->
+            </div>
+            <input type="text" id="picture" name="picture" hidden="true" lay-verify="imgVerify" value="${productInfor.picture}">
+        </div>
+    </div>
+
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="作者">作者</label>
+            <div class="layui-input-inline">
+                <input type="text" id="author" name="author"  value="${productInfor.author}"   class="layui-input"disabled >
+            </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="语种">语种</label>
+                <div class="layui-input-inline">
+                    <layui:simpleDictSelect style='layui-input-inline' type="product_infor_language"
+                                            id="language" name="language" value="${productInfor.language}" layVerify=""/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="读者对象">读者对象</label>
+            <div class="layui-input-inline">
+                <layui:simpleDictSelect style='layui-input-inline' type="product_infor_kinds" 
+					id="kinds" name="kinds" value="${productInfor.kinds}" layVerify=""/>
+            </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="图书分类">图书分类</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="bookKind" name="bookKind"  value="${productInfor.bookKind}"   class="layui-input" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="出版社">出版社</label>
+            <div class="layui-input-inline">
+                <input type="text" id="publishHouse" name="publishHouse"  value="${productInfor.publishHouse}"   class="layui-input" disabled>
+            </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="出版日期">出版日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="publishDate" name="publishDate"  value="${productInfor.publishDate,"yyyy-MM-dd"}"   class="layui-input input-date" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" title="现有库存">现有库存</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="existStocks" name="existStocks"  value="${productInfor.existStocks}"   class="layui-input" disabled>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="热销商品排名">热销商品排名</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="rank" name="rank"  value="${productInfor.rank}"   class="layui-input" disabled>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="是否是套装">是否是套装</label>
+            <div class="layui-input-inline">
+                <layui:simpleDictSelect style='layui-input-inline' type="product_infor_score" 
+					id="score" name="score" value="${productInfor.score}" layVerify=""/>
+            </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="套装册数">套装册数</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="productNum" name="productNum"  value="${productInfor.productNum}"   class="layui-input" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" title="出库单价">出库单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="outPrice" name="outPrice"  value="${productInfor.outPrice}"   class="layui-input" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--#} -->
+<script>
+layui.use(['getInfo'], function(){
+    var productInforEdit = layui.getInfo;
+    productInforEdit.init();
+});
+
+</script>

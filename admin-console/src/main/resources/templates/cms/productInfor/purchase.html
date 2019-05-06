@@ -1,0 +1,105 @@
+<!--# layout("/common/layout.html",{"jsBase":"/js/cms/productInfor/"}){ -->
+
+<form class="layui-form layui-form-pane" id="updateForm">
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本名称">绘本名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name"  value="${productInfor.name}"   class="layui-input" disabled style="width: 512px">
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-upload">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="pictureUrl" src="${productInfor.pictureUrl}" alt="" style="width: 13.5em;height: 13.5em;"/>
+                    <p id="productImgText"></p>
+                </div>
+                <!--<button type="button" class="layui-btn" id="productImageBtn" style="width: 13.5em;">上传图片</button>-->
+            </div>
+            <input type="text" id="picture" name="picture" hidden="true" lay-verify="imgVerify" value="${productInfor.picture}">
+            <div class="layui-inline">
+                <label class="layui-form-label">库存</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="existStocks" name="existStocks"  value="${productInfor.existStocks}"   class="layui-input" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">单价（元）</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="outPrice" name="outPrice"  value="${productInfor.outPrice}"   class="layui-input" disabled>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">数量</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" class="layui-input" value="" placeholder="请输入数量，最少为1">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">销售方式</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="orderFor" value="0" title="直销" checked="">
+                    <input type="radio" name="orderFor" value="1" title="代销">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">收获地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="" class="layui-input" value="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收获人</label>
+                <div class="layui-input-inline">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">应付金额</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="shouldPrice" class="layui-input" value="" disabled>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">实付金额</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="realityPrice" class="layui-input" value="" disabled>
+                </div>
+                <span style="color: red">选择代销方式优惠 5% ！</span>
+            </div>
+        </div>
+    </div>
+    <button class="layui-btn">购买</button>
+</form>
+<!--#} -->
+<script>
+layui.use(['purchase'], function(){
+    var productInforEdit = layui.purchase;
+    productInforEdit.init();
+});
+
+</script>

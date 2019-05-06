@@ -70,6 +70,7 @@ public class ProductInforController{
     @ResponseBody
     public ModelAndView productInforIndex() {
         ModelAndView view = new ModelAndView("/cms/productInfor/productInforIndex.html") ;
+        view.addObject("search", ProductInforQuery.class.getName());
         return view;
     }
 
@@ -87,13 +88,42 @@ public class ProductInforController{
         return JsonResult.success(page);
     }
 
-    @PostMapping(MODEL + "/findDetailInfoById.json")
+    /**
+     * 获取详情  页面+数据
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/getInfo.do")
     @ResponseBody
-    public JsonResult<ProductInfor> findDetailInfoById(Long id){
-        ProductInfor data = productInforService.getById(id);
-        return JsonResult.success(data);
+    public ModelAndView getInfo(Long id) {
+        ModelAndView view = new ModelAndView("/cms/productInfor/getInfo.html");
+        ProductInfor productInfor = productInforService.queryById(id);
+        List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
+        if(fileItems.size() > 0){
+            FileItem fileItem = fileItems.get(0);
+            productInfor.setPictureUrl(fileItem.getPath());
+        }
+        view.addObject("productInfor", productInfor);
+        return view;
     }
-
+    /**
+     * 获取详情  页面+数据
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/purchase.do")
+    @ResponseBody
+    public ModelAndView purchase(Long id) {
+        ModelAndView view = new ModelAndView("/cms/productInfor/purchase.html");
+        ProductInfor productInfor = productInforService.queryById(id);
+        List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
+        if(fileItems.size() > 0){
+            FileItem fileItem = fileItems.get(0);
+            productInfor.setPictureUrl(fileItem.getPath());
+        }
+        view.addObject("productInfor", productInfor);
+        return view;
+    }
 
 
     @GetMapping(MODEL + "/edit.do")
@@ -131,6 +161,10 @@ public class ProductInforController{
         return JsonResult.success(page);
     }
 
+    /**
+     * 仓库盘点页面
+     * @return
+     */
     @GetMapping(MODEL + "/statistics.do")
     @Function("productInfor.query")
     @ResponseBody
@@ -138,6 +172,11 @@ public class ProductInforController{
         ModelAndView view = new ModelAndView("/cms/wareHouse/statisticsIndex.html") ;
         return view;
     }
+
+    /**
+     * 仓库盘点数据
+     * @return
+     */
     @PostMapping(MODEL + "/statistics.json")
     @Function("productInfor.query")
     @ResponseBody
@@ -147,9 +186,9 @@ public class ProductInforController{
     }
 
 
-        /**
-         * 根据ID查找
-         */
+    /**
+     * 根据ID查找
+     */
     @PostMapping(MODEL + "/queryById.json")
     @Function("productInfor.query")
     @ResponseBody
