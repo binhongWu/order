@@ -100,14 +100,33 @@ public class WarehouseWarnService extends BaseService<WarehouseWarn>{
      * 3、设定一个时间进行存量检索，若库存量小于最小库存量则生成仓库预警记录并发送邮件给仓库管理员进行提示。
      */
     public void queryWarehouseWarn() {
+        //解除预警
+        List<WarehouseWarn> warehouseWarnList = warehouseWarnDao.findByCheck();
+        if (warehouseWarnList.size() > 0) {
+            for (WarehouseWarn warehouseWarn : warehouseWarnList) {
+                ProductInfor productInfor = productInforService.findByCode(warehouseWarn.getCode());
+                if (productInfor != null) {
+                    if (Integer.valueOf(productInfor.getExistStocks()) >= Integer.valueOf(productInfor.getMinStocks())) {
+                        warehouseWarn.setCheck("0");
+                        update(warehouseWarn);
+                    }
+                }else{
+                    warehouseWarn.setCheck("0");
+                    update(warehouseWarn);
+                }
+            }
+        }
+        // 设置预警
         List<ProductInfor> list = productInforService.queryWarehouseWarn();
         if (list.size() > 0) {
             for (ProductInfor productInfor : list) {
                 // 设置预警记录 下一次预警时间
-                WarehouseWarn warehouseWarn = findByCode(productInfor.getCode());
-                // 如果这个预警还存在 则判断下一次预警时间是否已过，未过的不进行处理，已过的状态设置为解决
+                WarehouseWarn warehouseWarn = warehouseWarnDao.findByCode(productInfor.getCode());
+                // 如果这个预警还存在 则判断下一次预警时间是否已过，未过的不进行处理，
+                // 已过的设置再下一次预警时间
                 if (warehouseWarn != null) {
-                    if(DateUtils.greaterThan(new Date(),warehouseWarn.getNextAlarmt())){
+                    // 时间比较 前者大于后者 为false  代表着未解决  设置下一次预警时间，并设置备注
+                    if(!DateUtils.greaterThan(new Date(),warehouseWarn.getNextAlarmt())){
                         warehouseWarn.setAlarmt(new Date());
                         warehouseWarn.setNextAlarmt(DateUtils.plusDays(new Date(),3));
                         warehouseWarn.setRemarks("非首次预警");
@@ -129,7 +148,4 @@ public class WarehouseWarnService extends BaseService<WarehouseWarn>{
         }
     }
 
-    private WarehouseWarn findByCode(String code) {
-        return warehouseWarnDao.findByCode(code);
-    }
 }

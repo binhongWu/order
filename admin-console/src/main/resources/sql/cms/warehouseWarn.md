@@ -25,8 +25,18 @@ findByCode
     select
     * 
     from warehouse_warn t
-    where t.del = '0'  
+    where t.del = '0'
+    and t.check = '1'  
     and  t.code =#code#
+
+findByCheck
+===
+    select
+    * 
+    from warehouse_warn t
+    where t.del = '0'
+    and t.check = '1'  
+
     
 getById
 ===
