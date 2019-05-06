@@ -1,19 +1,55 @@
 <!--#layout("/common/layout.html",{"jsBase":"/js/cms/wareHouse/"}){ -->
-<layui:searchForm formId="searchForm"  condition="${search}">
-</layui:searchForm>
 
-<!--<div class="layui-btn-group">-->
-    <!--<layui:accessButton function="wareHouse.add"  action="add">增加</layui:accessButton>-->
-    <!--<layui:accessButton function="wareHouse.edit"  action="edit">编辑</layui:accessButton>-->
-<!--</div>-->
+<table id="wareHouseTable" lay-filter="wareHouseTable">
 
-<table id="wareHouseTable" lay-filter="wareHouseTable"></table>
+</table>
 <!--#} -->
 <script>
 
-layui.use(['index'], function(){
-    var index = layui.index;
-    index.init();
+layui.use(['table'], function(){
+    var table = layui.table;
+    table.render({
+        elem : '#wareHouseTable',
+        height : Lib.getTableHeight(1),
+        method : 'post',
+        url : Common.ctxPath + '/cms/productInfor/statistics.json' // 数据接口
+        ,page : false // 开启分页
+        ,cols : [ [ // 表头
+            // {
+            //     type : 'checkbox',
+            //     fixed:'left'
+            // },
+            {
+                field : 'wareId',
+                title : '仓库系统编码'
+            },
+            {
+                field : 'kinds', //数据字典类型为 product_infor_kinds
+                title : '读者对象'
+            },
+            {
+                field : 'existStocks',
+                title : '现有库存'
+                ,templet:function(d){
+                    return d.existStocks.split(".")[0];
+                }
+            },
+            {
+                field : 'supplierId',
+                title : '最后一次操作人'
+            },
+            {
+                field : 'updatedTime',
+                title : '最后一次操作时间'
+                ,templet:function(d){
+                    return Common.getDate(d.updatedTime,'yyyy-MM-dd');
+                }
+            },
+
+
+        ] ]
+
+    });
 });
 
 </script>

@@ -189,3 +189,20 @@ findAll
     *
     from product_infor t
     where t.del = '0'
+    
+statistics
+===
+*每个仓库的绘本信息 --> 盘点
+    
+    select
+    a.ware_id,t2.`NAME` kinds,a.exist_stocks,t1.`NAME`supplier_id,a.updated_time
+    from
+    (select
+    t.ware_id,t.kinds,sum(t.exist_stocks)exist_stocks,max(t.updated_by)updated_by,max(t.updated_time)updated_time
+    from product_infor t
+    where t.del = '0'
+    group by t.ware_id,t.kinds)a
+    left join core_user t1 on t1.ID = a.updated_by
+    left join core_dict t2 on t2.`VALUE` = a.kinds
+    where t2.TYPE = 'product_infor_kinds'
+    order by a.exist_stocks desc

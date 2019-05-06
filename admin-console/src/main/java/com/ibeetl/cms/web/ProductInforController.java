@@ -117,6 +117,22 @@ public class ProductInforController{
         return JsonResult.success(page);
     }
 
+    @GetMapping(MODEL + "/statistics.do")
+    @Function("productInfor.query")
+    @ResponseBody
+    public ModelAndView statisticsIndex() {
+        ModelAndView view = new ModelAndView("/cms/wareHouse/statisticsIndex.html") ;
+        return view;
+    }
+    @PostMapping(MODEL + "/statistics.json")
+    @Function("productInfor.query")
+    @ResponseBody
+    public JsonResult<List<ProductInfor>> statistics(){
+        List<ProductInfor> statisticsList = productInforService.statistics();
+        return JsonResult.success(statisticsList);
+    }
+
+
         /**
          * 根据ID查找
          */

@@ -24,4 +24,6 @@ public interface ProductInforDao extends BaseMapper<ProductInfor>{
     List<ProductInfor> queryWarehouseWarn();
 
     List<ProductInfor> findAll();
+
+    List<ProductInfor> statistics();
 }

@@ -140,4 +140,8 @@ public class ProductInforService extends BaseService<ProductInfor>{
     public List<ProductInfor> findAll() {
         return productInforDao.findAll();
     }
+
+    public List<ProductInfor> statistics() {
+        return productInforDao.statistics();
+    }
 }
