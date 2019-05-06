@@ -20,6 +20,30 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
+                <label class="layui-form-label" title="简介">简介</label>
+                <div class="layui-input-inline">
+                    <textarea id="introduction" name="introduction"  class="layui-textarea"  style="width: 512px;">${productInfor.introduction}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-upload">
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="pictureUrl" src="${productInfor.pictureUrl}" alt="" style="width: 13.5em;height: 13.5em;"/>
+                    <p id="productImgText"></p>
+                </div>
+                <button type="button" class="layui-btn" id="productImageBtn" style="width: 13.5em;">上传图片</button>
+            </div>
+            <input type="text" id="picture" name="picture" hidden="true" lay-verify="imgVerify" value="${productInfor.picture}">
+        </div>
+    </div>
+
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
             <label class="layui-form-label" title="作者">作者</label>
             <div class="layui-input-inline">
                 <input type="text" id="author" name="author"  value="${productInfor.author}"   class="layui-input" >
@@ -36,7 +60,6 @@
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-
             <div class="layui-inline">
             <label class="layui-form-label" title="读者对象">读者对象</label>
             <div class="layui-input-inline">
@@ -54,7 +77,6 @@
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-
             <div class="layui-inline">
             <label class="layui-form-label" title="出版社">出版社</label>
             <div class="layui-input-inline">
@@ -71,12 +93,11 @@
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-
             <div class="layui-inline">
-            <label class="layui-form-label" title="简介">简介</label>
-            <div class="layui-input-inline">
-                <input type="text" id="introduction" name="introduction"  value="${productInfor.introduction}"   class="layui-input" >
-            </div>
+                <label class="layui-form-label" title="热销商品排名">热销商品排名</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="rank" name="rank"  value="${productInfor.rank}"   class="layui-input" >
+                </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label" title="品牌">品牌</label>
@@ -88,7 +109,6 @@
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-
             <div class="layui-inline">
             <label class="layui-form-label" title="是否是套装">是否是套装</label>
             <div class="layui-input-inline">
@@ -113,39 +133,31 @@
                 </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="热销商品排名">热销商品排名</label>
-            <div class="layui-input-inline">
-                <input type="text" id="rank" name="rank"  value="${productInfor.rank}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-
-            <div class="layui-inline">
-            <label class="layui-form-label" title="供应商编码">供应商编码</label>
-            <div class="layui-input-inline">
-                <input type="text" id="supplierId" name="supplierId"  value="${productInfor.supplierId}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label" title="入库单价">入库单价</label>
+                <label class="layui-form-label" title="供应商编码">供应商编码</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="inPrice" name="inPrice"  value="${productInfor.inPrice}"   class="layui-input" >
+                    <input type="text" id="supplierId" name="supplierId"  value="${productInfor.supplierId}"   class="layui-input" >
                 </div>
             </div>
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-
             <div class="layui-inline">
-            <label class="layui-form-label" title="出库单价">出库单价</label>
-            <div class="layui-input-inline">
-                <input type="text" id="outPrice" name="outPrice"  value="${productInfor.outPrice}"   class="layui-input" >
+                <label class="layui-form-label" title="入库单价">入库单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="inPrice" name="inPrice"  value="${productInfor.inPrice}"   class="layui-input" >
+                </div>
             </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="出库单价">出库单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="outPrice" name="outPrice"  value="${productInfor.outPrice}"   class="layui-input" >
+                </div>
             </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label" title="现有库存">现有库存</label>
                 <div class="layui-input-inline">
@@ -156,7 +168,6 @@
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-
             <div class="layui-inline">
             <label class="layui-form-label" title="最小库存">最小库存</label>
             <div class="layui-input-inline">
@@ -196,4 +207,57 @@ layui.use(['edit'], function(){
     var productInforEdit = layui.edit
     productInforEdit.init();
 });
+
+layui.use('form', function(){
+    var form = layui.form;
+    //各种基于事件的操作，下面会有进一步介绍
+    form.verify({
+        imgVerify: function(value, item){ //value：表单的值、item：表单的DOM对象
+            if(!value){
+                return '请上传图片';
+            }
+        }
+    });
+});
+
+layui.use('upload', function(){
+    var upload = layui.upload;
+
+    //普通图片上传
+    var uploadInst = upload.render({
+        elem: '#productImageBtn'
+        ,url: '/upload/uploadImage.json'
+        ,data: {"bizType":"ProductInfo"}
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            obj.preview(function(index, file, result){
+                $('#pictureUrl').attr('src', result); //图片链接（base64）
+            });
+        }
+        ,done: function(res){
+            //如果上传失败
+            if(res.code > 0){
+                //演示失败状态，并实现重传
+                var posImgText = $('#productImgText');
+                posImgText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                posImgText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+                return layer.msg('上传失败');
+            }else{
+                $("#picture").val(res.data.bizId);
+                return layer.msg('上传成功');
+            }
+        }
+        ,error: function(){
+            //演示失败状态，并实现重传
+            var posImgText = $('#productImgText');
+            posImgText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+            posImgText.find('.demo-reload').on('click', function(){
+                uploadInst.upload();
+            });
+        }
+    });
+});
+
 </script>

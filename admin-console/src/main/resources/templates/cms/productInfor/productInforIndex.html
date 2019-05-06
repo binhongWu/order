@@ -10,14 +10,70 @@
 
 </head>
 <body>
-    <div style="margin: 15px">
-
+    <div style="margin: 15px" id="payContent">
+        <form class="layui-form layui-form-pane" id="addForm">
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">绘本名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="code" class="layui-input" disabled value="名称" style="width: 520px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">单价（元）</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" class="layui-input" disabled value="100">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">数量</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" class="layui-input" value="" placeholder="请输入数量，最少为1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">销售方式</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="orderFor" value="0" title="直销" checked="">
+                            <input type="radio" name="orderFor" value="1" title="代销">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">应付金额</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="shouldPrice" class="layui-input" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">实付金额</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="realityPrice" class="layui-input" value="" disabled>
+                        </div>
+                        <span style="color: red">选择代销方式优惠 5% ！</span>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-    <div style="margin: 15px">
+    <div style="margin: 30px">
         <table id="productInforIndexTable" lay-filter="productInforIndexTable"></table>
     </div>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="purchase">购买</a>
+        <a class="layui-btn layui-btn-xs" lay-event="findDetailInfo">详     情</a>
+        <a class="layui-btn layui-btn-xs" lay-event="purchase">购     买</a>
     </script>
 </body>
     <script>
@@ -35,18 +91,16 @@
                     {
                         field : 'name',
                         title : '绘本名称',
-                        event: 'getInfo',
-                        style:'cursor: pointer;'
+                    },
+                    {
+                        field : 'outPrice',
+                        title : '单价（元）',
                     },
                     {
                         field : 'picture',
                         title : '图片',
                         templet: '<div><img src="{{d.pictureUrl}}"></div>'
                     },
-                    // {
-                    //     field : 'introduction',
-                    //     title : '简介'
-                    // },
                     {
                         field : 'author',
                         title : '作者'
@@ -97,18 +151,81 @@
             table.on('tool(productInforIndexTable)', function(obj){
                 var data = obj.data;
                 var event = obj.event;
-                console.log(event);
-                if(event === "getInfo"){
-
+                if(event === "findDetailInfo"){
+                    console.log("查看详情");
+                    $.post('/cms/productInfor/findDetailInfoById.json', {id:data.id}, function(ret){
+                        var data = ret.data;
+                        console.log(data);
+                        layer.open({
+                            type: 1,
+                            title:'详细信息',
+                            area: ['40%','50%'],
+                            btn: ['关闭'],
+                            btnAlign: 'c', //按钮居中
+                            content:  '<div class="layui-row">'+
+                                        '<div class="layui-form-item">'+
+                                            '<div class="layui-inline">'+
+                                                '<div class="layui-input-inline">'+
+                                                    '<img class="layui-upload-img" id="pictureUrl" src="'+data.pictureUrl+'" alt="" style="width: 13.5em;height: 13.5em;"/>'+
+                                                '</div>'+
+                                                '</div>'+
+                                                '<div class="layui-inline">'+
+                                                    '<div class="layui-input-inline">'+
+                                                        '<p style="width: 400px;text-indent:2em">'+data.introduction+'</p>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'
+                            ,yes: function(){
+                                layer.closeAll();
+                            }
+                        });
+                    });
                 }
                 if (event === "purchase") {
-                    $.post('/cms/purchaseOrder/purchase.do', {id:data.id}, function(ret){
-                        var msg = ret.msg;
+                    console.log("购买");
+                    $.post('/cms/productInfor/findDetailInfoById.json', {id:data.id}, function(ret){
+                        var data = ret.data;
                         console.log(ret);
+                        console.log(data);
                         layer.open({
                             type: 1,
                             title:"购买信息",
-                            content:  "购买成功！"
+                            area: ['40%','50%'],
+                            btn: ['确定','关闭'],
+                            btnAlign: 'c', //按钮居中
+                            // content:  '<div>'+
+                            //             '<form class="layui-form layui-form-pane" id="updateForm">'+
+                            //                 '<div class="layui-row">'+
+                            //                 '<div class="layui-form-item">'+
+                            //                 '<div class="layui-inline">'+
+                            //                     '<label class="layui-form-label">绘本名称</label>'+
+                            //                 '<div class="layui-input-inline">'+
+                            //                     '<input type="text" name="name" class="layui-input" disabled value="'+data.name+'" style="width: 300px">'+
+                            //                 '</div>'+
+                            //                 '</div>'+
+                            //                 '</div>'+
+                            //                 '</div>'+
+                            //                 '<div class="layui-row">'+
+                            //                 '<div class="layui-form-item">'+
+                            //                 '<div class="layui-inline">'+
+                            //                     '<label class="layui-form-label">单价（元）</label>'+
+                            //                 '<div class="layui-input-inline">'+
+                            //                     '<input type="text" name="outPrice" class="layui-input" disabled value="'+data.outPrice+'" style="width: 300px">'+
+                            //                 '</div>'+
+                            //                 '</div>'+
+                            //                 '</div>'+
+                            //                 '</div>'+
+                            //             '</form>'+
+                            //            '</div>'
+                            content : $('#payContent').html()
+                            ,yes: function(){
+                                // 异步发送到后台订单接口
+
+                            }
+                            ,btn2: function () {
+                                layer.closeAll();
+                            }
                         });
                     });
 

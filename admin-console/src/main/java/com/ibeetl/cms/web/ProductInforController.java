@@ -73,6 +73,11 @@ public class ProductInforController{
         return view;
     }
 
+    /**
+     * 购买首页 数据
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/productInforIndexList.json")
     @ResponseBody
     public JsonResult<PageQuery> productInforIndexList(ProductInforQuery condtion)
@@ -81,6 +86,15 @@ public class ProductInforController{
         productInforService.queryByCondition(page);
         return JsonResult.success(page);
     }
+
+    @PostMapping(MODEL + "/findDetailInfoById.json")
+    @ResponseBody
+    public JsonResult<ProductInfor> findDetailInfoById(Long id){
+        ProductInfor data = productInforService.getById(id);
+        return JsonResult.success(data);
+    }
+
+
 
     @GetMapping(MODEL + "/edit.do")
     @Function("productInfor.edit")

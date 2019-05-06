@@ -51,8 +51,9 @@ getById
 ===
 
     select
-    *
+    t.*,a.path picture_url
     from product_infor t
+    left join core_file a on a.BIZ_ID = t.picture
     where t.del = '0'
     and t.id=#id#
 
