@@ -59,6 +59,7 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
     public boolean update(SalesOrderBak model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
+
         return sqlManager.updateById(model) > 0;
      }
 
@@ -120,6 +121,7 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
         salesOrderService.save(salesOrder);
         //临时表关联销售订单号
         model.setSalesOrderId(salesOrder.getSalesId());
+        sqlManager.updateTemplateById(model);
         //判断直销的保存到销售出库 --> 保存到出库登记  （此时应该要有一个审核，审核通过了才能发货然后修改库存量，暂时未实现） --> 修改库存
         if("0".equals(model.getOrderFor())){
             SalesOutStack salesOutStack = new SalesOutStack();
@@ -157,5 +159,51 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
             productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(model.getNumber())));
             productInforService.update(productInfor);
         }
+    }
+
+    @Autowired
+    private SalesReturnService salesReturnService;
+    @Autowired
+    private IncomingRegistService incomingRegistService;
+    /**
+     * 销售退货
+     * @param model
+     * @return
+     */
+    public boolean saveApplyReturn(SalesOrderBak model) {
+        //退货单
+        SalesReturn salesReturn = new SalesReturn();
+        salesReturn.setSalesId(model.getSalesOrderId().toString());
+        salesReturn.setReturnDate(new Date());
+        salesReturn.setCode(model.getCode());
+        salesReturn.setNumber(model.getNumber());
+        salesReturn.setPrice(model.getPrice());
+        salesReturn.setClientId(model.getClientId());
+        salesReturn.setPaymentAmount(model.getPaymentAmount());
+        salesReturn.setSalesBy(model.getSalesBy());
+        salesReturnService.save(salesReturn);
+        // 销售订单改为失败
+        SalesOrder salesOrder =salesOrderService.getById(model.getSalesOrderId());
+        salesOrder.setFinishedStatus("1");
+        salesOrderService.update(salesOrder);
+        //入库登记（此处应该是申请）
+        IncomingRegist incomingRegist = new IncomingRegist();
+        incomingRegist.setOrderId(salesReturn.getReturnId().toString());
+        incomingRegist.setInRegistDate(new Date());
+        incomingRegist.setCode(model.getCode());
+        incomingRegist.setPrice(model.getPrice());
+        incomingRegist.setNumber(model.getPrice());
+        incomingRegist.setTotal(model.getCheckStatus());
+        incomingRegist.setStatus("1");
+        incomingRegistService.save(incomingRegist);
+        //修改库存量
+        ProductInfor productInfor = productInforService.findByCode(model.getCode());
+        productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks())+Integer.valueOf(model.getNumber())));
+        productInforService.update(productInfor);
+        return true;
+    }
+
+    public SalesOrderBak getBySalId(Long salesId) {
+        return salesOrderBakDao.getBySalId(salesId);
     }
 }

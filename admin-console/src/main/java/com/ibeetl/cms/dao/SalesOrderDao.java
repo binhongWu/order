@@ -15,7 +15,7 @@ import  com.ibeetl.cms.entity.*;
 public interface SalesOrderDao extends BaseMapper<SalesOrder>{
     public PageQuery<SalesOrder> queryByCondition(PageQuery query);
     public void batchDelSalesOrderByIds( List<String> ids);
-    public SalesOrder getById(Object id);
+    public SalesOrder getById(Object salesId);
     public Integer updateCustom(SalesOrder model);
     public List<SalesOrder> findListByCustom(SalesOrder model);
 

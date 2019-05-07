@@ -72,6 +72,11 @@ public class SalesOrderBakController{
         return view;
     }
 
+    /**
+     * 退货记录页面  ---> 实际应该是申请记录
+     * @param salesId
+     * @return
+     */
     @GetMapping(MODEL + "/edit.do")
     @Function("salesOrderBak.edit")
     @ResponseBody
@@ -80,6 +85,24 @@ public class SalesOrderBakController{
         SalesOrderBak salesOrderBak = salesOrderBakService.queryById(salesId);
         view.addObject("salesOrderBak", salesOrderBak);
         return view;
+    }
+
+    /**
+     * 退货申请数据保存
+     * @param salesOrderBak
+     * @return
+     */
+    @PostMapping(MODEL + "/applyReturn.json")
+    @Function("salesOrderBak.update")
+    @ResponseBody
+    public JsonResult<String> applyReturn(@Validated(ValidateConfig.UPDATE.class)  SalesOrderBak salesOrderBak) {
+        SalesOrderBak model = salesOrderBakService.getBySalId(salesOrderBak.getSalesId());
+        boolean success = salesOrderBakService.saveApplyReturn(model);
+        if (success) {
+            return JsonResult.success();
+        } else {
+            return JsonResult.failMessage("失败");
+        }
     }
 
     @GetMapping(MODEL + "/add.do")

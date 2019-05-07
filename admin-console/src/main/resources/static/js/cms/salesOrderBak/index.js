@@ -93,23 +93,13 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
         },
         initToolBar:function(){
             toolbar = {
-                add : function() { // 获取选中数据
-                    var url = "/cms/salesOrderBak/add.do";
-                    Common.openDlg(url,"SalesOrderBak管理>新增");
-                },
                 edit : function() { // 获取选中数目
                     var data = Common.getOneFromTable(table,"salesOrderBakTable");
                     if(data==null){
                         return ;
                     }
                     var url = "/cms/salesOrderBak/edit.do?salesId="+data.salesId;
-                    Common.openDlg(url,"SalesOrderBak管理>"+data.salesId+">编辑");
-                },
-                del : function() { 
-                    layui.use(['del'], function(){
-                        var delView = layui.del
-                        delView.delBatch();
-                    });
+                    Common.openDlg(url,"销售订单>"+data.salesId+">退货确认记录");
                 }
             };
             $('.ext-toolbar').on('click', function() {

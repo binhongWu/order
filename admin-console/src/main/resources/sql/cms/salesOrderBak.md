@@ -40,9 +40,16 @@ getById
     *
     from sales_order_bak t
     where t.del = '0'
-    and t.id=#id#
+    and t.sales_id =#salesId#
 
+getBySalId
+===
 
+    select
+    *
+    from sales_order_bak t
+    where t.del = '0'
+    and t.sales_id =#salesId#
 
 batchDelSalesOrderBakByIds
 ===

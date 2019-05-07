@@ -12,7 +12,8 @@ layui.define([ 'form', 'laydate', 'table','salesOrderBakApi'], function(exports)
                 form.on('submit(form)', function(){
                     salesOrderBakApi.updateSalesOrderBak($('#updateForm'),function(){
                        parent.window.dataReload();
-                       Common.info("更新成功");
+                       Common.info("申请成功");
+                       // Common.info("退货成功");
                        Lib.closeFrame();
                     });
                 });
