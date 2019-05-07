@@ -123,8 +123,12 @@ public class SalesOrderBakController{
     @ResponseBody
     public JsonResult add(@Validated(ValidateConfig.ADD.class)SalesOrderBak salesOrderBak)
     {
-        salesOrderBakService.save(salesOrderBak);
-        return JsonResult.success();
+        boolean success = salesOrderBakService.save(salesOrderBak);
+        if(success){
+            salesOrderBakService.saveOthersInfo(salesOrderBak);
+            return JsonResult.success();
+        }
+        return JsonResult.failMessage("购买失败，请检查订单信息重试");
     }
 
     @PostMapping(MODEL + "/update.json")

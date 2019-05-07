@@ -69,7 +69,7 @@ public class SalesOrder extends BaseEntity{
     private Date salesDate ;
 
 	/**
-	 * 实付款金额
+	 * 应付款金额
 	 */
     private String paymentAmount ;
 

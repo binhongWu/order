@@ -3,8 +3,7 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
-import com.ibeetl.cms.entity.SalesOrder;
-import com.ibeetl.cms.entity.SalesOutStack;
+import com.ibeetl.cms.entity.*;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ibeetl.admin.core.util.PlatformException;
 
 import com.ibeetl.cms.dao.SalesOrderBakDao;
-import com.ibeetl.cms.entity.SalesOrderBak;
 import com.ibeetl.admin.core.service.BaseService;
 import com.ibeetl.admin.core.service.CorePlatformService;
 
@@ -76,6 +74,10 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
     private SalesOrderService salesOrderService;
     @Autowired
     private SalesOutStackService salesOutStackService;
+    @Autowired
+    private OutboundRedistService outboundRedistService;
+    @Autowired
+    private ProductInforService productInforService;
 
     @Override
     public boolean save(SalesOrderBak model) {
@@ -86,22 +88,6 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
         model.setSalesDate(new Date());
         model.setSalesBy(platformService.getCurrentUser().getName());
         model.setFinishedStatus("0");
-        //2、保存到销售订单等等....
-        SalesOrder salesOrder = new SalesOrder();
-        //复制相同的属性
-        BeanUtils.copyProperties(model,salesOrder);
-        //保存到销售订单
-        salesOrderService.save(salesOrder);
-        //临时表关联销售订单号
-        model.setSalesOrderId(salesOrder.getSalesId());
-        //判断直销的保存到销售出库
-        if("0".equals(model.getOrderFor())){
-            SalesOutStack salesOutStack = new SalesOutStack();
-
-
-
-            salesOutStackService.save(salesOutStack);
-        }
         //1、保存到临时销售订单
         return sqlManager.insertTemplate(model, true) > 0;
     }
@@ -118,5 +104,58 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
      */
     public List<SalesOrderBak> findListByCustom(SalesOrderBak model) {
         return salesOrderBakDao.findListByCustom(model);
+    }
+
+    /**
+     * 保存到销售订单、销售出库、出库登记、修改库存
+     * @param model
+     */
+    public void saveOthersInfo(SalesOrderBak model) {
+        //2、保存到销售订单等等....
+        SalesOrder salesOrder = new SalesOrder();
+        //复制相同的属性
+        BeanUtils.copyProperties(model,salesOrder);
+        //保存到销售订单
+        salesOrder.setCheckStatus(model.getCheckStatus());
+        salesOrderService.save(salesOrder);
+        //临时表关联销售订单号
+        model.setSalesOrderId(salesOrder.getSalesId());
+        //判断直销的保存到销售出库 --> 保存到出库登记  （此时应该要有一个审核，审核通过了才能发货然后修改库存量，暂时未实现） --> 修改库存
+        if("0".equals(model.getOrderFor())){
+            SalesOutStack salesOutStack = new SalesOutStack();
+            salesOutStack.setSalesId(salesOrder.getSalesId().toString());
+            salesOutStack.setCode(model.getCode());
+            salesOutStack.setClientId(model.getClientId());
+            salesOutStack.setNumber(model.getNumber());
+            salesOutStack.setPrice(model.getPrice());
+            salesOutStack.setSalesDate(model.getSalesDate());
+            salesOutStack.setPaymentAmount(model.getCheckStatus());
+            salesOutStack.setPaymentMethod(model.getPaymentMethod());
+            salesOutStack.setSalesBy(model.getSalesBy());
+            salesOutStack.setDeliveryAddress(model.getTradeLocations());
+            salesOutStack.setCreatedTime(new Date());
+            salesOutStack.setCreatedBy(platformService.getCurrentUser().getId());
+            salesOutStack.setUpdatedTime(new Date());
+            salesOutStack.setUpdatedBy(platformService.getCurrentUser().getId());
+            salesOutStackService.save(salesOutStack);
+            // 保存到出库登记
+            OutboundRedist outboundRedist = new OutboundRedist();
+            outboundRedist.setOutorderId(salesOutStack.getSalesOutStackId().toString());
+            outboundRedist.setOutRegistDate(salesOutStack.getSalesDate());
+            outboundRedist.setCode(model.getCode());
+            outboundRedist.setNumber(model.getNumber());
+            outboundRedist.setPrice(model.getPrice());
+            outboundRedist.setTotal(model.getCheckStatus());
+            outboundRedist.setStatus("0");
+            outboundRedist.setCreatedTime(new Date());
+            outboundRedist.setCreatedBy(platformService.getCurrentUser().getId());
+            outboundRedist.setUpdatedTime(new Date());
+            outboundRedist.setUpdatedBy(platformService.getCurrentUser().getId());
+            outboundRedistService.save(outboundRedist);
+            // 修改库存
+            ProductInfor productInfor = productInforService.findByCode(model.getCode());
+            productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(model.getNumber())));
+            productInforService.update(productInfor);
+        }
     }
 }

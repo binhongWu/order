@@ -50,12 +50,12 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'salesDate', 
                 title : '销售日期',
                 },
+                // {
+                // field : 'paymentAmount',
+                // title : '应付款金额',
+                // },
                 {
-                field : 'paymentAmount', 
-                title : '应付款金额',
-                },
-                {
-                    field : 'checkStatusText',
+                    field : 'checkStatus',
                     title : '实付款金额',
                 },
                 {
