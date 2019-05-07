@@ -18,4 +18,6 @@ public interface CustomerInforDao extends BaseMapper<CustomerInfor>{
     public CustomerInfor getById(Object id);
     public Integer updateCustom(CustomerInfor model);
     public List<CustomerInfor> findListByCustom(CustomerInfor model);
+
+    CustomerInfor findByCode(String clientId);
 }

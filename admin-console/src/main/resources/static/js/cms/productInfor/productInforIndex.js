@@ -60,7 +60,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                     },
                     {
                         field : 'publishDate',
-                        title : '出版日期'
+                        title : '出版日期',
+                        templet:function(d){
+                            return Common.getDate(d.publishDate,'yyyy-MM-dd');
+                        }
                     }
                 ] ]
 

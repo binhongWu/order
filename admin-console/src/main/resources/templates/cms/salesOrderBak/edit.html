@@ -1,0 +1,174 @@
+<!--# layout("/common/layout.html",{"jsBase":"/js/cms/salesOrderBak/"}){ -->
+
+<form class="layui-form layui-form-pane" id="updateForm">
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本编码">绘本编码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="code" name="code"  value="${salesOrderBak.code}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本数量">绘本数量</label>
+            <div class="layui-input-inline">
+                <input type="text" id="number" name="number"  value="${salesOrderBak.number}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本单价">绘本单价</label>
+            <div class="layui-input-inline">
+                <input type="text" id="price" name="price"  value="${salesOrderBak.price}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="客户编码">客户编码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="clientId" name="clientId"  value="${salesOrderBak.clientId}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="销售日期">销售日期</label>
+            <div class="layui-input-inline">
+                <input type="text" id="salesDate" name="salesDate"  value="${salesOrderBak.salesDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="应付款金额">应付款金额</label>
+            <div class="layui-input-inline">
+                <input type="text" id="paymentAmount" name="paymentAmount"  value="${salesOrderBak.paymentAmount}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="销售人">销售人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="salesBy" name="salesBy"  value="${salesOrderBak.salesBy}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="付款方式">付款方式</label>
+            <div class="layui-input-inline">
+                <input type="text" id="paymentMethod" name="paymentMethod"  value="${salesOrderBak.paymentMethod}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="交货地点">交货地点</label>
+            <div class="layui-input-inline">
+                <input type="text" id="tradeLocations" name="tradeLocations"  value="${salesOrderBak.tradeLocations}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="0:直销 1：代销">0:直销 1：代销</label>
+            <div class="layui-input-inline">
+                <input type="text" id="orderFor" name="orderFor"  value="${salesOrderBak.orderFor}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="完成状态">完成状态</label>
+            <div class="layui-input-inline">
+                <input type="text" id="finishedStatus" name="finishedStatus"  value="${salesOrderBak.finishedStatus}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="审核人">审核人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="checkBy" name="checkBy"  value="${salesOrderBak.checkBy}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="实付款金额">实付款金额</label>
+            <div class="layui-input-inline">
+                <input type="text" id="checkStatus" name="checkStatus"  value="${salesOrderBak.checkStatus}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="审核日期">审核日期</label>
+            <div class="layui-input-inline">
+                <input type="text" id="checkDate" name="checkDate"  value="${salesOrderBak.checkDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="创建人">创建人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="createdBy" name="createdBy"  value="${salesOrderBak.createdBy}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="创建时间">创建时间</label>
+            <div class="layui-input-inline">
+                <input type="text" id="createdTime" name="createdTime"  value="${salesOrderBak.createdTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="更新人">更新人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="updatedBy" name="updatedBy"  value="${salesOrderBak.updatedBy}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="更新时间">更新时间</label>
+            <div class="layui-input-inline">
+                <input type="text" id="updatedTime" name="updatedTime"  value="${salesOrderBak.updatedTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="删除标记{0:正常,1:已删除}">删除标记{0:正常,1:已删除}</label>
+            <div class="layui-input-inline">
+                <input type="text" id="del" name="del"  value="${salesOrderBak.del}"   class="layui-input" >
+            </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="备注">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" id="remarks" name="remarks"  value="${salesOrderBak.remarks}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+	
+    <input type="hidden" name="salesId" value=${salesOrderBak.salesId} />
+    <layui:submitButtons id="updateButton" />
+</form>
+<!--#} -->
+<script>
+layui.use(['edit'], function(){
+    var salesOrderBakEdit = layui.edit
+    salesOrderBakEdit.init();
+});
+</script>

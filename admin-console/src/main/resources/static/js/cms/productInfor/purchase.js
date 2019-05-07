@@ -4,20 +4,25 @@ layui.define([ 'form', 'laydate', 'table','productInforApi'], function(exports) 
     var index = layui.index;
     var view = {
         init:function(){
-            Lib.initGenrealForm($("#updateForm"),form);
+            Lib.initGenrealForm($("#purchaseForm"),form);
             this.initSubmit();
         },
         initSubmit:function(){
-            $("#updateButton").click(function(){
+            $("#addButton").click(function(){
+                $('#code').removeAttr("disabled");
+                $('#outPrice').removeAttr("disabled");
+                $('#proNum').removeAttr("disabled");
+                $('#shouldPrice').removeAttr("disabled");
+                $('#realityPrice').removeAttr("disabled");
                 form.on('submit(form)', function(){
-                    productInforApi.updateProductInfor($('#updateForm'),function(){
+                    productInforApi.purchaseProductInfor($('#purchaseForm'),function(){
                         parent.window.dataReload();
-                        Common.info("更新成功");
+                        Common.info("购买成功");
                         Lib.closeFrame();
                     });
                 });
             });
-            $("#updateButton-cancel").click(function(){
+            $("#addButton-cancel").click(function(){
                 Lib.closeFrame();
             });
         }

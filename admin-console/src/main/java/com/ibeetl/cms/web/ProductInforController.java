@@ -67,6 +67,7 @@ public class ProductInforController{
      * @return
      */
     @GetMapping(MODEL + "/productInforIndex.do")
+    @Function("productInfor.purchase")
     @ResponseBody
     public ModelAndView productInforIndex() {
         ModelAndView view = new ModelAndView("/cms/productInfor/productInforIndex.html") ;
@@ -80,6 +81,7 @@ public class ProductInforController{
      * @return
      */
     @PostMapping(MODEL + "/productInforIndexList.json")
+    @Function("productInfor.purchase")
     @ResponseBody
     public JsonResult<PageQuery> productInforIndexList(ProductInforQuery condtion)
     {
@@ -94,6 +96,7 @@ public class ProductInforController{
      * @return
      */
     @GetMapping(MODEL + "/getInfo.do")
+    @Function("productInfor.purchase")
     @ResponseBody
     public ModelAndView getInfo(Long id) {
         ModelAndView view = new ModelAndView("/cms/productInfor/getInfo.html");
@@ -107,11 +110,12 @@ public class ProductInforController{
         return view;
     }
     /**
-     * 获取详情  页面+数据
+     * 购买  页面+数据
      * @param id
      * @return
      */
     @GetMapping(MODEL + "/purchase.do")
+    @Function("productInfor.purchase")
     @ResponseBody
     public ModelAndView purchase(Long id) {
         ModelAndView view = new ModelAndView("/cms/productInfor/purchase.html");

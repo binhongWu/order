@@ -1,6 +1,16 @@
 <!--# layout("/common/layout.html",{"jsBase":"/js/cms/productInfor/"}){ -->
 
-<form class="layui-form layui-form-pane" id="updateForm">
+<form class="layui-form layui-form-pane" id="purchaseForm">
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">绘本编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="code" name="code"  value="${productInfor.code}"   class="layui-input" disabled style="width: 512px">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -34,13 +44,51 @@
             <div class="layui-inline">
                 <label class="layui-form-label">单价（元）</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="outPrice" name="outPrice"  value="${productInfor.outPrice}"   class="layui-input" disabled>
+                    <input type="text" id="outPrice" name="price"  value="${productInfor.outPrice}"   class="layui-input" disabled>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">数量</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" class="layui-input" value="" placeholder="请输入数量，最少为1">
+                    <input type="text" name="number" id="proNum" class="layui-input" value="1" placeholder="请输入数量，最少为1">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收货人</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="clientId" class="layui-input" value="" id="clientId">
+                </div>
+                <span style="color: red">初级客户 9.5折  中级客户8.5折  高级客户6.5折</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="tel" class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">付款方式</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="paymentMethod" value="0" title="支付宝" checked lay-filter="paymentMethod">
+                    <input type="radio" name="paymentMethod" value="1" title="微信" lay-filter="paymentMethod">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">收货地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="tradeLocations" class="layui-input" value="" style="width: 512px;">
                 </div>
             </div>
         </div>
@@ -50,29 +98,10 @@
             <div class="layui-inline">
                 <label class="layui-form-label">销售方式</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="orderFor" value="0" title="直销" checked="">
-                    <input type="radio" name="orderFor" value="1" title="代销">
+                    <input type="radio" name="orderFor" value="0" title="直销" checked lay-filter="orderFor">
+                    <input type="radio" name="orderFor" value="1" title="代销" lay-filter="orderFor">
                 </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">收获地址</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="" class="layui-input" value="">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">收获人</label>
-                <div class="layui-input-inline">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">联系方式</label>
-                <div class="layui-input-inline">
-                </div>
+                <span style="color: red">选择代销方式优惠 5% ！（发货较慢）</span>
             </div>
         </div>
     </div>
@@ -81,25 +110,92 @@
             <div class="layui-inline">
                 <label class="layui-form-label">应付金额</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="shouldPrice" class="layui-input" value="" disabled>
+                    <input type="text" name="paymentAmount" id="shouldPrice" class="layui-input" value="" disabled>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">实付金额</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="realityPrice" class="layui-input" value="" disabled>
+                    <input type="text" name="checkStatus" id="realityPrice" class="layui-input" value="" disabled>
                 </div>
-                <span style="color: red">选择代销方式优惠 5% ！</span>
             </div>
         </div>
     </div>
-    <button class="layui-btn">购买</button>
+    <layui:submitButtons id="addButton" />
 </form>
 <!--#} -->
 <script>
-layui.use(['purchase'], function(){
+
+layui.use(['purchase','jquery'], function(){
     var productInforEdit = layui.purchase;
     productInforEdit.init();
+    var $ = layui.$;
+    var form = layui.form;
+    //初始赋值
+    var outPrice = $('#outPrice').val();
+    var proNum = $('#proNum').val();
+    $('#shouldPrice').val(outPrice*proNum);
+    $('#realityPrice').val(outPrice*proNum);
+
+    //输入数量改变值
+    $('#proNum').blur(function () {
+        var outPrice = $('#outPrice').val();
+        var proNum = $('#proNum').val();
+        $('#shouldPrice').val(outPrice*proNum);
+        $('#realityPrice').val(outPrice*proNum);
+    });
+    $('#clientId').blur(function () {
+        var clientId = $('#clientId').val();
+        if(clientId !== null && clientId !== ''){
+            $.ajax({
+                url: "/cms/customerInfor/findByCode.json",
+                type: "POST",
+                data: {"clientId":clientId},
+                success: function (rsp) {
+                    if(rsp.code !== 0){
+                        layer.msg("请输入正确的客户编码");
+                        return;
+                    }
+                    var data= rsp.data;
+                    var level = data.level;
+                    var outPrice = $('#outPrice').val();
+                    var proNum = $('#proNum').val();
+                    //初级客户  9.5折
+                    if(level === '0'){
+                        $('#realityPrice').val(outPrice*proNum*0.95);
+                    }
+                    //中级客户  8.5折
+                    if(level === '1'){
+                        $('#realityPrice').val(outPrice*proNum*0.85);
+                    }
+                    //高级客户  6.5折
+                    if(level === '2'){
+                        $('#realityPrice').val(outPrice*proNum*0.65);
+                    }
+                }
+            });
+        }
+
+    })
+
+    form.on('radio(orderFor)',function (data) {
+        var value = data.value;
+        // console.log(value);
+        // var val=$('input:radio[name="orderFor"]:checked').val();
+        var realityPrice = $('#realityPrice').val();
+        // 代销方式在原实付金额上再优惠5%
+        if(value === '1'){
+            $('#realityPrice').val(realityPrice*0.95);
+        }else{
+            $('#realityPrice').val(realityPrice/0.95);
+            // var existStocks = $('#existStocks').val();
+            // var proNum = $('#proNum').val();
+            // if (existStocks < proNum) {
+            //     layer.msg("库存量不足，请选择代销方式");
+            //     $('input:radio[name="orderFor"]:checked').val("1");
+            // }
+        }
+    })
 });
 
 </script>

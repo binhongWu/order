@@ -3,8 +3,8 @@
 </layui:searchForm>
 
 <div class="layui-btn-group">
-    <layui:accessButton function="" action="getInfo">查看详情</layui:accessButton>
-    <layui:accessButton function="" action="purchase">购买</layui:accessButton>
+    <layui:accessButton function="productInfor.purchase" action="getInfo">查看详情</layui:accessButton>
+    <layui:accessButton function="productInfor.purchase" action="purchase">购买</layui:accessButton>
 </div>
 
 <table id="productInforTable" lay-filter="productInforTable"></table>

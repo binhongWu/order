@@ -103,6 +103,17 @@ public class CustomerInforController{
         return JsonResult.success(page);
     }
 
+    @PostMapping(MODEL + "/findByCode.json")
+    @Function("customerInfor.query")
+    @ResponseBody
+    public JsonResult<CustomerInfor> findByCode(String clientId){
+        CustomerInfor data = customerInforService.findByCode(clientId);
+        if(data == null){
+            return JsonResult.failMessage("请输入正确的客户编码");
+        }
+        return JsonResult.success(data);
+    }
+
         /**
          * 根据ID查找
          */

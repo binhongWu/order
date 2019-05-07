@@ -1,0 +1,19 @@
+<!--#layout("/common/layout.html",{"jsBase":"/js/cms/salesOrderBak/"}){ -->
+<layui:searchForm formId="searchForm"  condition="${search}">
+</layui:searchForm>
+
+<div class="layui-btn-group">
+    <!--<layui:accessButton function="salesOrderBak.add"  action="add">增加</layui:accessButton>-->
+    <layui:accessButton function="salesOrderBak.edit"  action="edit">退货</layui:accessButton>
+</div>
+
+<table id="salesOrderBakTable" lay-filter="salesOrderBakTable"></table>
+<!--#} -->
+<script>
+
+layui.use(['index'], function(){
+    var index = layui.index
+    index.init();
+});
+
+</script>

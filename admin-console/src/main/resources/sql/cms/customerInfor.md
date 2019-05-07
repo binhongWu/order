@@ -19,7 +19,14 @@ queryByCondition
     @}
     order by t.created_time desc
     
-    
+findByCode
+===
+
+    select
+    *
+    from customer_infor t
+    where t.del = '0'
+    and t.client_code =#clientId#
     
 getById
 ===

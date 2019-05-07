@@ -18,6 +18,10 @@ layui.define([], function(exports) {
                 Common.post("/cms/productInfor/excel/export.json", formPara, function(fileId) {
                     callback(fileId);
                 })
+            },
+            // 购买订单提交
+            purchaseProductInfor:function(form,callback){
+                Lib.submitForm("/cms/salesOrderBak/add.json",form,{},callback)
             }
 		
     };

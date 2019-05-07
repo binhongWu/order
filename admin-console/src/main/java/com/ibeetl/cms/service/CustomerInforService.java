@@ -131,4 +131,9 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
         }
         return user;
     }
+
+    public CustomerInfor findByCode(String clientId) {
+        return customerInforDao.findByCode(clientId);
+    }
+
 }
