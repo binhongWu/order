@@ -126,7 +126,7 @@ public class PurchaseOrderController{
     @Function("purchaseOrder.update")
     @ResponseBody
     public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class)  PurchaseOrder purchaseOrder) {
-        boolean success = purchaseOrderService.update(purchaseOrder);
+        boolean success = purchaseOrderService.updateByList(purchaseOrder);
         if (success) {
             return JsonResult.success();
         } else {

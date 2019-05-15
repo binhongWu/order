@@ -1,5 +1,6 @@
 package com.ibeetl.cms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
@@ -186,5 +187,43 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
 
     private List<PurchaseOrder> findByFinishCondition(String status) {
         return purchaseOrderDao.findByFinishCondition(status);
+    }
+
+    /**
+     * 编辑状态改变为完成，则入库登记等一系列操作，如果没改则正常保存操作即可
+     * @param model
+     * @return
+     */
+    public boolean updateByList(PurchaseOrder model) {
+        PurchaseOrder purchaseOrder = queryOrderId(model.getOrderId());
+        if(purchaseOrder.getFinishCondition().equals(model.getFinishCondition())){
+            update(model);
+            return true;
+        }
+        else if("2".equals(model.getFinishCondition())){
+            update(model);
+            PurchaseReturns purchaseReturns = new PurchaseReturns();
+            purchaseReturns.setCode(model.getCode());
+            purchaseReturns.setNumber(model.getNumber());
+            purchaseReturns.setPrice(model.getPrice());
+            purchaseReturns.setSupplierId(model.getSupplierId());
+            purchaseReturns.setOrderId(model.getOrderId().toString());
+            purchaseReturns.setRefundMethod(model.getPaymentMethod());
+            purchaseReturns.setRefundAmount(model.getPaymentAmount());
+            purchaseReturns.setReturnedDate(new Date());
+            purchaseReturnsService.save(purchaseReturns);
+            return true;
+        }
+        else if("1".equals(model.getFinishCondition())){
+            List<PurchaseOrder> list = new ArrayList<>();
+            list.add(model);
+            try {
+                saveImport2(list);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
     }
 }
