@@ -148,10 +148,12 @@ public class SalesOrderBakController{
     {
         boolean success = salesOrderBakService.save(salesOrderBak);
         if(success){
-            salesOrderBakService.saveOthersInfo(salesOrderBak);
-            return JsonResult.success();
+            boolean result = salesOrderBakService.saveOthersInfo(salesOrderBak);
+            if(result){
+                return JsonResult.success();
+            }
         }
-        return JsonResult.failMessage("购买失败，请检查订单信息重试");
+        return JsonResult.failMessage("购买失败，请检查订单信息、购买人信息重试");
     }
 
     @PostMapping(MODEL + "/update.json")

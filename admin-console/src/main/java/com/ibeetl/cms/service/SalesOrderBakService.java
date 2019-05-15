@@ -26,6 +26,8 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
 
     @Autowired private SalesOrderBakDao salesOrderBakDao;
     @Autowired private CorePlatformService platformService;
+    @Autowired
+    private CustomerInforService customerInforService;
 
 
     public PageQuery<SalesOrderBak>queryByCondition(PageQuery query){
@@ -108,10 +110,14 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
     }
 
     /**
-     * 保存到销售订单、销售出库、出库登记、修改库存
+     * 保存到销售订单、销售出库、出库登记、修改库存、修改用户积分以及等级
      * @param model
      */
-    public void saveOthersInfo(SalesOrderBak model) {
+    public boolean saveOthersInfo(SalesOrderBak model) {
+        CustomerInfor customerInfor = customerInforService.findByCode(model.getClientId());
+        if (customerInfor == null) {
+            return false;
+        }
         //2、保存到销售订单等等....
         SalesOrder salesOrder = new SalesOrder();
         //复制相同的属性
@@ -159,6 +165,20 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
             productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(model.getNumber())));
             productInforService.update(productInfor);
         }
+        // 0-5000 初级  5001-10000中级  10000以上高级
+        int count = Integer.parseInt(model.getPaymentAmount().substring(0,model.getPaymentAmount().indexOf(".")));
+        customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())+count));
+        if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
+            customerInfor.setLevel("0");
+        }
+        if (Integer.valueOf(customerInfor.getIntergral()) > 5000 && Integer.valueOf(customerInfor.getIntergral()) < 10000) {
+            customerInfor.setLevel("1");
+        }
+        if(Integer.valueOf(customerInfor.getIntergral()) > 10000){
+            customerInfor.setLevel("2");
+        }
+        customerInforService.update(customerInfor);
+        return true;
     }
 
     @Autowired
@@ -171,6 +191,10 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
      * @return
      */
     public boolean saveApplyReturn(SalesOrderBak model) {
+        CustomerInfor customerInfor = customerInforService.findByCode(model.getClientId());
+        if (customerInfor == null) {
+            return false;
+        }
         //退货单
         SalesReturn salesReturn = new SalesReturn();
         salesReturn.setSalesId(model.getSalesOrderId().toString());
@@ -200,6 +224,19 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
         ProductInfor productInfor = productInforService.findByCode(model.getCode());
         productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks())+Integer.valueOf(model.getNumber())));
         productInforService.update(productInfor);
+        // 0-5000 初级  5001-10000中级  10000以上高级
+        int count = Integer.parseInt(model.getPaymentAmount().substring(0,model.getPaymentAmount().indexOf(".")));
+        customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())-count));
+        if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
+            customerInfor.setLevel("0");
+        }
+        if (Integer.valueOf(customerInfor.getIntergral()) > 5000 && Integer.valueOf(customerInfor.getIntergral()) <= 10000) {
+            customerInfor.setLevel("1");
+        }
+        if(Integer.valueOf(customerInfor.getIntergral()) > 10000){
+            customerInfor.setLevel("2");
+        }
+        customerInforService.update(customerInfor);
         return true;
     }
 
