@@ -50,7 +50,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">数量</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="number" id="proNum" class="layui-input" value="1" placeholder="请输入数量，最少为1">
+                    <input type="text" name="number" id="proNum" class="layui-input" value="1" placeholder="请输入数量，最少为1" lay-verify="required">
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">收货人</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="clientId" class="layui-input" value="" id="clientId">
+                    <input type="text" name="clientId" class="layui-input" value="" id="clientId" lay-verify="required">
                 </div>
                 <span style="color: red">初级客户 9.5折  中级客户8.5折  高级客户6.5折</span>
             </div>
@@ -71,7 +71,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">联系方式</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="tel" class="layui-input" value="">
+                    <input type="text" name="tel" class="layui-input" value="" lay-verify="required">
                 </div>
             </div>
             <div class="layui-inline">
@@ -88,7 +88,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">收货地址</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="tradeLocations" class="layui-input" value="" style="width: 512px;">
+                    <input type="text" name="tradeLocations" class="layui-input" value="" style="width: 512px;" lay-verify="required">
                 </div>
             </div>
         </div>
