@@ -11,6 +11,7 @@ import com.ibeetl.admin.core.web.JsonResult;
 import com.ibeetl.cms.entity.ProductInfor;
 import com.ibeetl.cms.service.ProductInforService;
 import com.ibeetl.cms.web.query.ProductInforQuery;
+import com.ibeetl.cms.web.query.ProductInforQuery2;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -174,6 +175,7 @@ public class ProductInforController{
     @ResponseBody
     public ModelAndView statisticsIndex() {
         ModelAndView view = new ModelAndView("/cms/wareHouse/statisticsIndex.html") ;
+        view.addObject("search", ProductInforQuery2.class.getName());
         return view;
     }
 
@@ -184,9 +186,10 @@ public class ProductInforController{
     @PostMapping(MODEL + "/statistics.json")
     @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<List<ProductInfor>> statistics(){
-        List<ProductInfor> statisticsList = productInforService.statistics();
-        return JsonResult.success(statisticsList);
+    public JsonResult<PageQuery> statistics(ProductInforQuery2 condtion){
+        PageQuery page = condtion.getPageQuery();
+        productInforService.statistics(page);
+        return JsonResult.success(page);
     }
 
 

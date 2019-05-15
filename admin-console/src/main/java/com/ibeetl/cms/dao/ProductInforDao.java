@@ -25,5 +25,5 @@ public interface ProductInforDao extends BaseMapper<ProductInfor>{
 
     List<ProductInfor> findAll();
 
-    List<ProductInfor> statistics();
+    PageQuery<ProductInfor> statistics(PageQuery query);
 }

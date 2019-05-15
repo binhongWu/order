@@ -194,16 +194,39 @@ findAll
 statistics
 ===
 *每个仓库的绘本信息 --> 盘点
-    
-    select
-    a.ware_id,t2.`NAME` kinds,a.exist_stocks,t1.`NAME`supplier_id,a.updated_time
-    from
-    (select
-    t.ware_id,t.kinds,sum(t.exist_stocks)exist_stocks,max(t.updated_by)updated_by,max(t.updated_time)updated_time
-    from product_infor t
-    where t.del = '0'
-    group by t.ware_id,t.kinds)a
-    left join core_user t1 on t1.ID = a.updated_by
-    left join core_dict t2 on t2.`VALUE` = a.kinds
+      
+    select 
+    @pageTag(){
+    t.ware_id,t.`code`,t.`name`,t2.`NAME` kinds,t.book_kind,t.exist_stocks,t.max_stocks,t.min_stocks,t3.number rank,t4.number remarks
+    @}
+    from product_infor t 
+    left join (select
+            t1.code,sum(number)number
+            from sales_order t1
+            where t1.del='0' and t1.finished_status = '1'
+            and t1.created_time >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+            group by t1.`code`)t3 on t3.`CODE` = t.`code`
+    left join core_dict t2 on t2.`VALUE` = t.kinds
+    left join (select
+            code,sum(number)number
+            from purchase_order
+            where del='0' and finish_condition = '1'
+            and order_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+            group by `code`)t4 on t4.`code`= t.`code`
     where t2.TYPE = 'product_infor_kinds'
-    order by a.exist_stocks desc
+    @if(!isEmpty(code)){
+        and  t.code =#code#
+    @}
+    @if(!isEmpty(name)){
+        and  t.name =#name#
+    @}
+    @if(!isEmpty(wareId)){
+        and  t.ware_id =#wareId#
+    @}
+    @if(!isEmpty(kinds)){
+        and  t.kinds =#kinds#
+    @}
+    @if(!isEmpty(bookKind)){
+        and  t.book_kind =#bookKind#
+    @}
+    order by t.exist_stocks desc

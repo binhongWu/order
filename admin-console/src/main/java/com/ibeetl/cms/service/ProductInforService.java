@@ -141,7 +141,9 @@ public class ProductInforService extends BaseService<ProductInfor>{
         return productInforDao.findAll();
     }
 
-    public List<ProductInfor> statistics() {
-        return productInforDao.statistics();
+    public PageQuery<ProductInfor>statistics(PageQuery query){
+        PageQuery ret =  productInforDao.statistics(query);
+        queryListAfter(ret.getList());
+        return ret;
     }
 }
