@@ -166,7 +166,7 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
             productInforService.update(productInfor);
         }
         // 0-5000 初级  5001-10000中级  10000以上高级
-        int count = Integer.parseInt(model.getPaymentAmount().substring(0,model.getPaymentAmount().indexOf(".")));
+        int count = Integer.parseInt(model.getCheckStatus().substring(0, model.getCheckStatus().contains(".") ? model.getCheckStatus().indexOf(".") : model.getCheckStatus().length()));
         customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())+count));
         if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
             customerInfor.setLevel("0");
@@ -225,7 +225,7 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
         productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks())+Integer.valueOf(model.getNumber())));
         productInforService.update(productInfor);
         // 0-5000 初级  5001-10000中级  10000以上高级
-        int count = Integer.parseInt(model.getPaymentAmount().substring(0,model.getPaymentAmount().indexOf(".")));
+        int count = Integer.parseInt(model.getCheckStatus().substring(0, model.getCheckStatus().contains(".") ? model.getCheckStatus().indexOf(".") : model.getCheckStatus().length()));
         customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())-count));
         if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
             customerInfor.setLevel("0");
