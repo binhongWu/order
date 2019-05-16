@@ -144,6 +144,7 @@ layui.use(['purchase','jquery'], function(){
         $('#shouldPrice').val(outPrice*proNum);
         $('#realityPrice').val(outPrice*proNum);
     });
+    // 验证客户编号是否有效
     $('#clientId').blur(function () {
         var clientId = $('#clientId').val();
         if(clientId !== null && clientId !== ''){
