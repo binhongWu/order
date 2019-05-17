@@ -58,24 +58,24 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'paymentAmount', 
                 title : '付款金额',
                 }, 
-                {
-                field : 'salesBy', 
-                title : '销售人',
-                }, 
+                // {
+                // field : 'salesBy',
+                // title : '销售人',
+                // },
                 // {
                 // field : 'checkmanBy',
                 // title : '验收人',
                 // },
-                {
-                field : 'checkBy', 
-                title : '审核人',
-                }, 
+                // {
+                // field : 'stats',
+                // title : '审核人',
+                // },
                 {
                 field : 'checkDate', 
                 title : '审核时间',
                 }, 
                 {
-                field : 'stats', 
+                field : 'statsText',// sales_return_status
                 title : '审核状态',
                 },
                 {
@@ -113,6 +113,18 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                     }
                     var url = "/cms/salesReturn/edit.do?returnId="+data.returnId;
                     Common.openDlg(url,"SalesReturn管理>"+data.returnId+">编辑");
+                },
+                audio : function() { // 获取选中数目
+                    var data = Common.getOneFromTable(table,"salesReturnTable");
+                    if(data.stats !== "0"){
+                        Common.info("该订单已审核，请勿重复审核");
+                        return
+                    }
+                    if(data==null){
+                        return ;
+                    }
+                    var url = "/cms/salesReturn/audio.do?returnId="+data.returnId;
+                    Common.openDlg(url,"SalesReturn管理>"+data.returnId+">审核");
                 },
                 del : function() { 
                     layui.use(['del'], function(){

@@ -22,7 +22,15 @@ queryByCondition
     @}
     order by t.created_time desc
     
-    
+
+getBySalId
+===
+
+    select
+    *
+    from sales_out_stack t
+    where t.del = '0'
+    and t.sales_id =#salesId#
     
 getById
 ===

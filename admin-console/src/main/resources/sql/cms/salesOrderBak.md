@@ -49,7 +49,7 @@ getBySalId
     *
     from sales_order_bak t
     where t.del = '0'
-    and t.sales_id =#salesId#
+    and t.sales_Order_Id =#salesId#
 
 batchDelSalesOrderBakByIds
 ===

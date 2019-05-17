@@ -1,6 +1,9 @@
 <!--# layout("/common/layout.html",{"jsBase":"/js/cms/salesReturn/"}){ -->
 
 <form class="layui-form layui-form-pane" id="updateForm">
+    <blockquote class="layui-elem-quote">
+        基本信息
+    </blockquote>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -65,54 +68,44 @@
             </div>
         </div>
     </div>
+    <blockquote class="layui-elem-quote">
+        审核
+    </blockquote>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="验收人">验收人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="checkmanBy" name="checkmanBy"  value="${salesReturn.checkmanBy}"   class="layui-input" >
-            </div>
+                <label class="layui-form-label" title="审核时间">审核时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="checkDate" name="checkDate"  value="${salesReturn.checkDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
+                </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="审核人">审核人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="checkBy" name="checkBy"  value="${salesReturn.checkBy}"   class="layui-input" >
-            </div>
+                <label class="layui-form-label" title="审核状态">审核状态</label>
+
+                <div class="layui-input-inline">
+                    <layui:simpleDictSelect style='layui-input-inline' type="sales_return_status"
+                                            id="stats" name="stats" value="${salesReturn.stats}" layVerify="" />
+                </div>
             </div>
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="审核时间">审核时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="checkDate" name="checkDate"  value="${salesReturn.checkDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
+                <label class="layui-form-label" title="审核人">审核人</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="checkBy" name="checkBy"  value="${salesReturn.checkBy}"   class="layui-input" >
+                </div>
             </div>
             <div class="layui-inline">
-            <label class="layui-form-label" title="审核状态">审核状态</label>
-
-            <div class="layui-input-inline">
-                <layui:simpleDictSelect style='layui-input-inline' type="sales_return_status"
-                                        id="stats" name="stats" value="${salesReturn.stats}" layVerify="" />
-            </div>
+                <label class="layui-form-label" title="备注">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="remarks" name="remarks"  value="${salesReturn.remarks}"   class="layui-input" >
+                </div>
             </div>
         </div>
     </div>
 
-
-    <div class="layui-row">
-        <div class="layui-form-item">
-
-            <div class="layui-inline">
-            <label class="layui-form-label" title="备注">备注</label>
-            <div class="layui-input-inline">
-                <input type="text" id="remarks" name="remarks"  value="${salesReturn.remarks}"   class="layui-input" >
-            </div>
-            </div>
-        </div>
-    </div>
-	
     <input type="hidden" name="returnId" value=${salesReturn.returnId} />
     <input type="hidden" name="del" value=${salesReturn.del} />
     <input type="hidden" name="updatedBy" value="${salesReturn.updatedBy}"/>
@@ -123,8 +116,8 @@
 </form>
 <!--#} -->
 <script>
-layui.use(['edit'], function(){
-    var salesReturnEdit = layui.edit
-    salesReturnEdit.init();
+layui.use(['audio'], function(){
+    var audio = layui.audio
+    audio.init();
 });
 </script>

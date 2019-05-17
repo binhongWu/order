@@ -110,9 +110,9 @@ public class SalesOutStack extends BaseEntity{
     private Date checkDate ;
 
 	/**
-	 * 审核状态 服用销售订单的审核状态字典类型
+	 * 审核状态 服用销售订单的审核状态字典类型  销售出库状态
 	 */
-	@Dict(type="sales_order_checkstatus")
+	@Dict(type="sales_order_finishedstatus")
     private String checkStatus ;
 
 	/**

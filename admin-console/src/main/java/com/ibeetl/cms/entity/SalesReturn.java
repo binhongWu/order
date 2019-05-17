@@ -101,7 +101,7 @@ public class SalesReturn extends BaseEntity{
 	/**
 	 * 审核状态
 	 */
-	@Dict(type="sales_order_checkstatus")
+	@Dict(type="sales_return_status")
     private String stats ;
 
 	/**

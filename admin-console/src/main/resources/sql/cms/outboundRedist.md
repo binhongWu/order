@@ -19,7 +19,13 @@ queryByCondition
     @}
     order by t.created_time desc
     
-    
+getByOutId
+===
+      select
+      *
+      from outbound_redist t
+      where t.del = '0'
+      and t.outOrder_id =#outorderId#
     
 getById
 ===

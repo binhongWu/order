@@ -61,7 +61,6 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
     public boolean update(SalesOrderBak model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
-
         return sqlManager.updateById(model) > 0;
      }
 
@@ -141,6 +140,8 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
             salesOutStack.setPaymentMethod(model.getPaymentMethod());
             salesOutStack.setSalesBy(model.getSalesBy());
             salesOutStack.setDeliveryAddress(model.getTradeLocations());
+            //订单状态为完成
+            salesOutStack.setCheckStatus("0");
             salesOutStack.setCreatedTime(new Date());
             salesOutStack.setCreatedBy(platformService.getCurrentUser().getId());
             salesOutStack.setUpdatedTime(new Date());
@@ -197,46 +198,18 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
         }
         //退货单
         SalesReturn salesReturn = new SalesReturn();
+        // 客户联的销售单号
         salesReturn.setSalesId(model.getSalesOrderId().toString());
         salesReturn.setReturnDate(new Date());
         salesReturn.setCode(model.getCode());
         salesReturn.setNumber(model.getNumber());
         salesReturn.setPrice(model.getPrice());
         salesReturn.setClientId(model.getClientId());
-        salesReturn.setPaymentAmount(model.getPaymentAmount());
+        salesReturn.setPaymentAmount(model.getCheckStatus());
         salesReturn.setSalesBy(model.getSalesBy());
+        //待审核
+        salesReturn.setStats("0");
         salesReturnService.save(salesReturn);
-        // 销售订单改为失败
-        SalesOrder salesOrder =salesOrderService.getById(model.getSalesOrderId());
-        salesOrder.setFinishedStatus("1");
-        salesOrderService.update(salesOrder);
-        //入库登记（此处应该是申请）
-        IncomingRegist incomingRegist = new IncomingRegist();
-        incomingRegist.setOrderId(salesReturn.getReturnId().toString());
-        incomingRegist.setInRegistDate(new Date());
-        incomingRegist.setCode(model.getCode());
-        incomingRegist.setPrice(model.getPrice());
-        incomingRegist.setNumber(model.getPrice());
-        incomingRegist.setTotal(model.getCheckStatus());
-        incomingRegist.setStatus("1");
-        incomingRegistService.save(incomingRegist);
-        //修改库存量
-        ProductInfor productInfor = productInforService.findByCode(model.getCode());
-        productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks())+Integer.valueOf(model.getNumber())));
-        productInforService.update(productInfor);
-        // 0-5000 初级  5001-10000中级  10000以上高级
-        int count = Integer.parseInt(model.getCheckStatus().substring(0, model.getCheckStatus().contains(".") ? model.getCheckStatus().indexOf(".") : model.getCheckStatus().length()));
-        customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())-count));
-        if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
-            customerInfor.setLevel("0");
-        }
-        if (Integer.valueOf(customerInfor.getIntergral()) > 5000 && Integer.valueOf(customerInfor.getIntergral()) <= 10000) {
-            customerInfor.setLevel("1");
-        }
-        if(Integer.valueOf(customerInfor.getIntergral()) > 10000){
-            customerInfor.setLevel("2");
-        }
-        customerInforService.update(customerInfor);
         return true;
     }
 

@@ -18,4 +18,6 @@ public interface SalesOutStackDao extends BaseMapper<SalesOutStack>{
     public SalesOutStack getById(Object id);
     public Integer updateCustom(SalesOutStack model);
     public List<SalesOutStack> findListByCustom(SalesOutStack model);
+
+    SalesOutStack getBySalId(Long salesId);
 }

@@ -3,6 +3,7 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
+import com.ibeetl.cms.entity.SalesOrderBak;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,5 +95,9 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
             model.setSalesOutStackId(null);
             save(model);
         }
+    }
+
+    public SalesOutStack getBySalId(Long salesId) {
+        return salesOutStackDao.getBySalId(salesId);
     }
 }

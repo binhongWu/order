@@ -18,6 +18,8 @@ public class SalesReturnQuery extends PageParam {
     private Date returnDate;
     @Query(name = "绘本编码", display = true)        
     private String code;
+    @Query(name = "绘本编码", display = true)
+    private String status;
     public Long getReturnId(){
         return  returnId;
     }
@@ -42,5 +44,12 @@ public class SalesReturnQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
- 
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

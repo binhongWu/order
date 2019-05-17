@@ -4,6 +4,9 @@ layui.define([], function(exports) {
             updateSalesReturn:function(form,callback){
                 Lib.submitForm("/cms/salesReturn/update.json",form,{},callback)
             },
+            audioSalesReturn:function(form,callback){
+                Lib.submitForm("/cms/salesReturn/audio.json",form,{},callback)
+            },
             addSalesReturn:function(form,callback){
                 Lib.submitForm("/cms/salesReturn/add.json",form,{},callback)
             },

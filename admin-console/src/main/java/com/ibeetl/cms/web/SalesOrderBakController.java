@@ -73,7 +73,7 @@ public class SalesOrderBakController{
     }
 
     /**
-     * 退货记录页面  ---> 实际应该是申请记录
+     * 退货记录页面
      * @param salesId
      * @return
      */

@@ -20,4 +20,6 @@ public interface SalesOrderDao extends BaseMapper<SalesOrder>{
     public List<SalesOrder> findListByCustom(SalesOrder model);
 
     List<SalesOrder> findOrderForO(String status);
+
+    SalesOrder getBySalId(Long salesId);
 }

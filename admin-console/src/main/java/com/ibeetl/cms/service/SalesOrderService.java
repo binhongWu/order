@@ -3,9 +3,7 @@ package com.ibeetl.cms.service;
 import java.util.List;
 import java.util.Date;
 
-import com.ibeetl.cms.entity.OutboundRedist;
-import com.ibeetl.cms.entity.ProductInfor;
-import com.ibeetl.cms.entity.SalesOutStack;
+import com.ibeetl.cms.entity.*;
 import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ibeetl.admin.core.util.PlatformException;
 
 import com.ibeetl.cms.dao.SalesOrderDao;
-import com.ibeetl.cms.entity.SalesOrder;
 import com.ibeetl.admin.core.service.BaseService;
 import com.ibeetl.admin.core.service.CorePlatformService;
 
@@ -160,5 +157,14 @@ public class SalesOrderService extends BaseService<SalesOrder>{
 
     private List<SalesOrder> findOrderForO(String status) {
         return salesOrderDao.findOrderForO(status);
+    }
+
+    /**
+     * 根据订单号（主键）查找
+     * @param salesId
+     * @return
+     */
+    public SalesOrder getBySalId(Long salesId) {
+        return salesOrderDao.getBySalId(salesId);
     }
 }

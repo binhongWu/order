@@ -27,9 +27,14 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 }, 
                 {
                 field : 'salesId', 
-                title : '订单单号',
+                title : '订单（客户联）单号',
                 fixed:'left'
-                }, 
+                },
+                {
+                    field : 'salesOrderId',
+                    title : '订单单号',
+                    fixed:'left'
+                },
                 {
                 field : 'code', 
                 title : '绘本编码'

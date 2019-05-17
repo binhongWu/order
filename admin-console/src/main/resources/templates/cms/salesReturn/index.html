@@ -3,6 +3,7 @@
 </layui:searchForm>
 
 <div class="layui-btn-group">
+    <layui:accessButton function="salesReturn.audio"  action="audio">审核</layui:accessButton>
     <layui:accessButton function="salesReturn.add"  action="add">增加</layui:accessButton>
     <layui:accessButton function="salesReturn.edit"  action="edit">编辑</layui:accessButton>
     <!--<layui:accessButton function="salesReturn.del"  action="del">删除</layui:accessButton>-->
@@ -15,7 +16,7 @@
 <script>
 
 layui.use(['index'], function(){
-    var index = layui.index
+    var index = layui.index;
     index.init();
 });
 

@@ -82,6 +82,38 @@ public class SalesReturnController{
         return view;
     }
 
+    /**
+     * 销售退回审核页面
+     * @param returnId
+     * @return
+     */
+    @GetMapping(MODEL + "/audio.do")
+    @Function("salesReturn.audio")
+    @ResponseBody
+    public ModelAndView audio(Long returnId) {
+        ModelAndView view = new ModelAndView("/cms/salesReturn/audio.html");
+        SalesReturn salesReturn = salesReturnService.queryById(returnId);
+        view.addObject("salesReturn", salesReturn);
+        return view;
+    }
+
+    /**
+     * 审核保存
+     * @param salesReturn
+     * @return
+     */
+    @PostMapping(MODEL + "/audio.json")
+    @Function("salesReturn.audio")
+    @ResponseBody
+    public JsonResult<String> audioData(SalesReturn salesReturn) {
+        boolean success = salesReturnService.audioData(salesReturn);
+        if (success) {
+            return JsonResult.success();
+        } else {
+            return JsonResult.failMessage("审核失败");
+        }
+    }
+
     @GetMapping(MODEL + "/add.do")
     @Function("salesReturn.add")
     @ResponseBody

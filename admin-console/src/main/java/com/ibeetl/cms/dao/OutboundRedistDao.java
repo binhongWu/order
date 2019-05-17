@@ -18,4 +18,6 @@ public interface OutboundRedistDao extends BaseMapper<OutboundRedist>{
     public OutboundRedist getById(Object id);
     public Integer updateCustom(OutboundRedist model);
     public List<OutboundRedist> findListByCustom(OutboundRedist model);
+
+    OutboundRedist getByOutId(String outorderId);
 }

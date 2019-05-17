@@ -20,6 +20,9 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
+    @if(!isEmpty(status)){
+        and  t.status =#status#
+    @}
     order by t.created_time desc
     
     

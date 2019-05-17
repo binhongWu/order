@@ -40,6 +40,14 @@ getById
     where t.del = '0'
     and t.sales_id =#salesId#
 
+getBySalId
+===
+
+    select
+    *
+    from sales_order t
+    where t.del = '0'
+    and t.sales_id =#salesId#
 
 
 batchDelSalesOrderByIds
