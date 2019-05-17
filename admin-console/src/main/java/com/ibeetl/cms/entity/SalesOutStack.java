@@ -74,7 +74,7 @@ public class SalesOutStack extends BaseEntity{
     private String clientId ;
 
 	/**
-	 * 付款金额
+	 * 实际付款金额
 	 */
     private String paymentAmount ;
 
@@ -110,9 +110,10 @@ public class SalesOutStack extends BaseEntity{
     private Date checkDate ;
 
 	/**
-	 * 审核状态 服用销售订单的审核状态字典类型  销售出库状态
+	 * 审核状态 复用销售订单的审核状态字典类型  销售出库状态
+	 * 0 待审核 1通过 2拒绝
 	 */
-	@Dict(type="sales_order_finishedstatus")
+	@Dict(type="sales_return_status")
     private String checkStatus ;
 
 	/**

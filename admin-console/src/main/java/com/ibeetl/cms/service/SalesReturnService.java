@@ -133,6 +133,7 @@ public class SalesReturnService extends BaseService<SalesReturn>{
      * @return
      */
     public boolean audioData(SalesReturn salesReturn) {
+        // 审核拒绝
         if("2".equals(salesReturn.getStats())){
             // 在备注里写上原因即可，不作额外操作
             if(update(salesReturn)){
@@ -143,7 +144,7 @@ public class SalesReturnService extends BaseService<SalesReturn>{
                 // a 将销售退回订单的状态改为审核通过   页面会带进来  直接保存即可
                 update(salesReturn);
                 // b 关联到销售订单客户联的销售订单单号，找到对应订单 修改失败
-                SalesOrderBak salesOrderBak = salesOrderBakService.getBySalId(Long.valueOf(salesReturn.getSalesId()));
+                SalesOrderBak salesOrderBak = salesOrderBakService.getBySalId(salesReturn.getSalesId());
                 salesOrderBak.setFinishedStatus("1");
                 salesOrderBakService.update(salesOrderBak);
                 // d 关联到销售订单里改成失败
@@ -162,7 +163,6 @@ public class SalesReturnService extends BaseService<SalesReturn>{
                 incomingRegistService.save(incomingRegist);
                 // f 销售出库  修改失败
                 SalesOutStack salesOutStack = salesOutStackService.getBySalId(salesOrder.getSalesId());
-                salesOutStack.setCheckStatus("1");
                 salesOutStack.setRemarks("销售退回");
                 salesOutStackService.update(salesOutStack);
                 // g 出库登记对应的状态改成其他，然后备注写上销售退回
@@ -177,7 +177,11 @@ public class SalesReturnService extends BaseService<SalesReturn>{
                 productInforService.update(productInfor);
                 // 0-5000 初级  5001-10000中级  10000以上高级
                 int count = Integer.parseInt(salesReturn.getPaymentAmount().substring(0, salesReturn.getPaymentAmount().contains(".") ? salesReturn.getPaymentAmount().indexOf(".") : salesReturn.getPaymentAmount().length()));
-                customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())-count));
+                if (Integer.valueOf(customerInfor.getIntergral()) - count < 0) {
+                    customerInfor.setIntergral("0");
+                }else{
+                    customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())-count));
+                }
                 if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
                     customerInfor.setLevel("0");
                 }
@@ -189,7 +193,7 @@ public class SalesReturnService extends BaseService<SalesReturn>{
                 }
                 customerInforService.update(customerInfor);
                 return true;
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

@@ -96,7 +96,7 @@ public class SalesOrderBakController{
     @Function("salesOrderBak.update")
     @ResponseBody
     public JsonResult<String> applyReturn(@Validated(ValidateConfig.UPDATE.class)  SalesOrderBak salesOrderBak) {
-        SalesOrderBak model = salesOrderBakService.getBySalId(salesOrderBak.getSalesId());
+        SalesOrderBak model = salesOrderBakService.getById(salesOrderBak.getSalesId());
         boolean success = salesOrderBakService.saveApplyReturn(model);
         if (success) {
             return JsonResult.success();

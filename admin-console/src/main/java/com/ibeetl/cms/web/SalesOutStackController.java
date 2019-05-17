@@ -82,6 +82,16 @@ public class SalesOutStackController{
         return view;
     }
 
+    @GetMapping(MODEL + "/audio.do")
+    @Function("salesOutStack.audio")
+    @ResponseBody
+    public ModelAndView audio(Long salesOutStackId) {
+        ModelAndView view = new ModelAndView("/cms/salesOutStack/audio.html");
+        SalesOutStack salesOutStack = salesOutStackService.queryById(salesOutStackId);
+        view.addObject("salesOutStack", salesOutStack);
+        return view;
+    }
+
     @GetMapping(MODEL + "/add.do")
     @Function("salesOutStack.add")
     @ResponseBody
@@ -131,6 +141,18 @@ public class SalesOutStackController{
             return JsonResult.success();
         } else {
             return JsonResult.failMessage("保存失败");
+        }
+    }
+
+    @PostMapping(MODEL + "/audio.json")
+    @Function("salesOutStack.audio")
+    @ResponseBody
+    public JsonResult<String> audioData(@Validated(ValidateConfig.UPDATE.class)  SalesOutStack salesOutStack) {
+        boolean success = salesOutStackService.audioData(salesOutStack);
+        if (success) {
+            return JsonResult.success();
+        } else {
+            return JsonResult.failMessage("审核失败");
         }
     }
 

@@ -84,11 +84,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 // title : '审核时间',
                 //     width : 100
                 // },
-                // {
-                // field : 'checkStatus',
-                // title : '审核状态',
-                //     width : 100
-                // },
+                {
+                field : 'checkStatusText',
+                title : '审核状态'
+                },
                 {
                 field : 'remarks', 
                 title : '备注',
@@ -124,6 +123,18 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                     }
                     var url = "/cms/salesOutStack/edit.do?salesOutStackId="+data.salesOutStackId;
                     Common.openDlg(url,"SalesOutStack管理>"+data.salesOutStackId+">编辑");
+                },
+                audio : function() { // 获取选中数目
+                    var data = Common.getOneFromTable(table,"salesOutStackTable");
+                    if(data==null){
+                        return ;
+                    }
+                    if(data.checkStatus !== "0"){
+                        Common.info("该订单已审核，请勿重复审核");
+                        return
+                    }
+                    var url = "/cms/salesOutStack/audio.do?salesOutStackId="+data.salesOutStackId;
+                    Common.openDlg(url,"SalesOutStack管理>"+data.salesOutStackId+">审核");
                 },
                 del : function() { 
                     layui.use(['del'], function(){

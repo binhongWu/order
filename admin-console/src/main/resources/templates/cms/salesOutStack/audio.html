@@ -1,6 +1,9 @@
 <!--# layout("/common/layout.html",{"jsBase":"/js/cms/salesOutStack/"}){ -->
 
 <form class="layui-form layui-form-pane" id="updateForm">
+    <blockquote class="layui-elem-quote">
+        基本信息
+    </blockquote>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -15,42 +18,36 @@
                 <input type="text" id="salesId" name="salesId"  value="${salesOutStack.salesId}"   class="layui-input" >
             </div>
             </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="绘本编码">绘本编码</label>
-            <div class="layui-input-inline">
-                <input type="text" id="code" name="code"  value="${salesOutStack.code}"   class="layui-input" >
-            </div>
-            </div>
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" title="绘本编码">绘本编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="code" name="code"  value="${salesOutStack.code}"   class="layui-input" >
+                </div>
+            </div>
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本数量">绘本数量</label>
             <div class="layui-input-inline">
                 <input type="text" id="number" name="number"  value="${salesOutStack.number}"   class="layui-input" >
             </div>
             </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="绘本单价">绘本单价</label>
-            <div class="layui-input-inline">
-                <input type="text" id="price" name="price"  value="${salesOutStack.price}"   class="layui-input" >
-            </div>
-            </div>
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
+                <label class="layui-form-label" title="绘本单价">绘本单价</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="price" name="price"  value="${salesOutStack.price}"   class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline">
             <label class="layui-form-label" title="销售日期">销售日期</label>
             <div class="layui-input-inline">
                 <input type="text" id="salesDate" name="salesDate"  value="${salesOutStack.salesDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="客户信息">客户信息</label>
-            <div class="layui-input-inline">
-                <input type="text" id="clientId" name="clientId"  value="${salesOutStack.clientId}"   class="layui-input" >
             </div>
             </div>
         </div>
@@ -75,15 +72,15 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
+                <label class="layui-form-label" title="客户信息">客户信息</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="clientId" name="clientId"  value="${salesOutStack.clientId}"   class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline">
             <label class="layui-form-label" title="销售人">销售人</label>
             <div class="layui-input-inline">
                 <input type="text" id="salesBy" name="salesBy"  value="${salesOutStack.salesBy}"   class="layui-input" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="发货人">发货人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="shipBy" name="shipBy"  value="${salesOutStack.shipBy}"   class="layui-input" >
             </div>
             </div>
         </div>
@@ -96,21 +93,18 @@
                 <input type="text" id="deliveryAddress" name="deliveryAddress"  value="${salesOutStack.deliveryAddress}"   class="layui-input" >
             </div>
             </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="审核人">审核人</label>
-            <div class="layui-input-inline">
-                <input type="text" id="checkBy" name="checkBy"  value="${salesOutStack.checkBy}"   class="layui-input" >
-            </div>
-            </div>
         </div>
     </div>
+    <blockquote class="layui-elem-quote">
+        审核
+    </blockquote>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="审核时间">审核时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="checkDate" name="checkDate"  value="${salesOutStack.checkDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
+                <label class="layui-form-label" title="审核时间">审核时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="checkDate" name="checkDate"  value="${salesOutStack.checkDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
+                </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label" title="审核状态">审核状态</label>
@@ -124,10 +118,16 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="备注">备注</label>
-            <div class="layui-input-inline">
-                <input type="text" id="remarks" name="remarks"  value="${salesOutStack.remarks}"   class="layui-input" >
+                <label class="layui-form-label" title="审核人">审核人</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="checkBy" name="checkBy"  value="${salesOutStack.checkBy}"   class="layui-input" >
+                </div>
             </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="备注">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="remarks" name="remarks"  value="${salesOutStack.remarks}"   class="layui-input" >
+                </div>
             </div>
         </div>
     </div>
@@ -142,8 +142,8 @@
 </form>
 <!--#} -->
 <script>
-layui.use(['edit'], function(){
-    var salesOutStackEdit = layui.edit
-    salesOutStackEdit.init();
+layui.use(['audio'], function(){
+    var audio = layui.audio;
+    audio.init();
 });
 </script>

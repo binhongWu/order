@@ -140,45 +140,18 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
             salesOutStack.setPaymentMethod(model.getPaymentMethod());
             salesOutStack.setSalesBy(model.getSalesBy());
             salesOutStack.setDeliveryAddress(model.getTradeLocations());
-            //订单状态为完成
+            //订单状态为待审核
             salesOutStack.setCheckStatus("0");
             salesOutStack.setCreatedTime(new Date());
             salesOutStack.setCreatedBy(platformService.getCurrentUser().getId());
             salesOutStack.setUpdatedTime(new Date());
             salesOutStack.setUpdatedBy(platformService.getCurrentUser().getId());
             salesOutStackService.save(salesOutStack);
-            // 保存到出库登记
-            OutboundRedist outboundRedist = new OutboundRedist();
-            outboundRedist.setOutorderId(salesOutStack.getSalesOutStackId().toString());
-            outboundRedist.setOutRegistDate(salesOutStack.getSalesDate());
-            outboundRedist.setCode(model.getCode());
-            outboundRedist.setNumber(model.getNumber());
-            outboundRedist.setPrice(model.getPrice());
-            outboundRedist.setTotal(model.getCheckStatus());
-            outboundRedist.setStatus("0");
-            outboundRedist.setCreatedTime(new Date());
-            outboundRedist.setCreatedBy(platformService.getCurrentUser().getId());
-            outboundRedist.setUpdatedTime(new Date());
-            outboundRedist.setUpdatedBy(platformService.getCurrentUser().getId());
-            outboundRedistService.save(outboundRedist);
             // 修改库存
             ProductInfor productInfor = productInforService.findByCode(model.getCode());
             productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(model.getNumber())));
             productInforService.update(productInfor);
         }
-        // 0-5000 初级  5001-10000中级  10000以上高级
-        int count = Integer.parseInt(model.getCheckStatus().substring(0, model.getCheckStatus().contains(".") ? model.getCheckStatus().indexOf(".") : model.getCheckStatus().length()));
-        customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())+count));
-        if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
-            customerInfor.setLevel("0");
-        }
-        if (Integer.valueOf(customerInfor.getIntergral()) > 5000 && Integer.valueOf(customerInfor.getIntergral()) < 10000) {
-            customerInfor.setLevel("1");
-        }
-        if(Integer.valueOf(customerInfor.getIntergral()) > 10000){
-            customerInfor.setLevel("2");
-        }
-        customerInforService.update(customerInfor);
         return true;
     }
 
@@ -213,7 +186,7 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak>{
         return true;
     }
 
-    public SalesOrderBak getBySalId(Long salesId) {
+    public SalesOrderBak getBySalId(String salesId) {
         return salesOrderBakDao.getBySalId(salesId);
     }
 }

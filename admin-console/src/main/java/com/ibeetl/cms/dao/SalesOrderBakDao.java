@@ -19,5 +19,5 @@ public interface SalesOrderBakDao extends BaseMapper<SalesOrderBak>{
     public Integer updateCustom(SalesOrderBak model);
     public List<SalesOrderBak> findListByCustom(SalesOrderBak model);
 
-    SalesOrderBak getBySalId(Long salesId);
+    SalesOrderBak getBySalId(String salesId);
 }
