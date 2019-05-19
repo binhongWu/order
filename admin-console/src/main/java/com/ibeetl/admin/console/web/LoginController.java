@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
+ * 没有使用了  但是代码删不掉，所以只能放着
  * @author Administrator
  */
 @Controller
@@ -41,23 +42,6 @@ public class LoginController {
         return view;
     }
 
-    /**
-     * 登录
-     * @param code 用户名
-     * @param password 密码
-     */
-    @PostMapping("/login.do")
-    public ModelAndView login(String code, String password) {
-        CustomerInfor customerInfor = customerInforService.login(code,password);
-        if (customerInfor == null) {
-            throw new PlatformException("用户名密码错误");
-        }
-        // 记录登录信息到session
-        this.platformService.setLoginUser(customerInfor);
-        ModelAndView view = new ModelAndView("redirect:/index2.do");
-//        view.addObject("name",customerInfor.getName());
-        return view;
-    }
 
     /**
      * 首页
