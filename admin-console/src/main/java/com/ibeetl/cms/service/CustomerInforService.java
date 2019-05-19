@@ -38,43 +38,21 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
         return ret;
     }
 
-    public void batchDelCustomerInfor(List<String> ids){
-        try {
-            customerInforDao.batchDelCustomerInforByIds(ids);
-        } catch (Exception e) {
-            throw new PlatformException("批量删除CustomerInfor失败", e);
-        }
-    }
-
     /**
-     * 根据主键更新，属性为null的不会更新
+     * 根据主键更新，所有值参与更新
      */
-    @Override
-    public boolean updateTemplate(CustomerInfor model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateTemplateById(model) > 0;
-    }
-
-     /**
-      * 根据主键更新，所有值参与更新
-      */
     @Override
     public boolean update(CustomerInfor model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
-     }
-
-    /**
-     * 自定义更新
-      */
-    public boolean updateCustom(CustomerInfor model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return customerInforDao.updateCustom(model) > 0;
     }
 
+    /**
+     * 保存
+     * @param model 实体类
+     * @return
+     */
     @Override
     public boolean save(CustomerInfor model) {
         model.setCreatedBy(platformService.getCurrentUser().getId());
@@ -89,17 +67,10 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
-    public CustomerInfor getById(Object id){
-        return customerInforDao.getById(id);
-    }
-
     /**
-     * 按条件查找全部数据
+     * 保存导入数据
+     * @param datas
      */
-    public List<CustomerInfor> findListByCustom(CustomerInfor model) {
-        return customerInforDao.findListByCustom(model);
-    }
-
     public void saveImport(List<CustomerInforData> datas) {
         for(CustomerInforData customerInforData:datas){
             CustomerInfor customerInfor = new CustomerInfor();
@@ -118,22 +89,61 @@ public class CustomerInforService extends BaseService<CustomerInfor>{
         }
     }
 
-    public CustomerInfor login(String code, String password) {
-        CustomerInfor query = new CustomerInfor();
-        query.setClientCode(code);
-        query.setPassword(passwordEncryptService.password(password));
-        CustomerInfor user = customerInforDao.getSQLManager().templateOne(query);
-        if (user == null) {
-            return null;
-        }
-        if(user.getDel().equals(String.valueOf(DelFlagEnum.DELETED.getValue()))){
-            throw new PlatformException("用户"+code+"不存在！");
-        }
-        return user;
-    }
-
+    /**
+     * 根据客户编码查找客户
+     * @param clientId
+     * @return
+     */
     public CustomerInfor findByCode(String clientId) {
         return customerInforDao.findByCode(clientId);
     }
+
+
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+
+    public CustomerInfor getById(Object id){
+        return customerInforDao.getById(id);
+    }
+
+
+    public void batchDelCustomerInfor(List<String> ids){
+        try {
+            customerInforDao.batchDelCustomerInforByIds(ids);
+        } catch (Exception e) {
+            throw new PlatformException("批量删除CustomerInfor失败", e);
+        }
+    }
+
+    /**
+     * 根据主键更新，属性为null的不会更新
+     */
+    @Override
+    public boolean updateTemplate(CustomerInfor model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateTemplateById(model) > 0;
+    }
+
+
+
+    /**
+     * 自定义更新
+      */
+    public boolean updateCustom(CustomerInfor model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return customerInforDao.updateCustom(model) > 0;
+    }
+
+    /**
+     * 按条件查找全部数据
+     */
+    public List<CustomerInfor> findListByCustom(CustomerInfor model) {
+        return customerInforDao.findListByCustom(model);
+    }
+
 
 }

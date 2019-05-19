@@ -22,6 +22,9 @@ queryByCondition
 findByCode
 ===
 
+* 根据客户编码查找客户
+
+
     select
     *
     from customer_infor t

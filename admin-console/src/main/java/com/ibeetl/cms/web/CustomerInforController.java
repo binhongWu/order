@@ -49,7 +49,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * CustomerInfor 接口
+ * 客户信息 接口
  */
 @Controller
 public class CustomerInforController{
@@ -62,8 +62,11 @@ public class CustomerInforController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+    /**
+     * 客户信息页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("customerInfor.query")
     @ResponseBody
@@ -73,26 +76,11 @@ public class CustomerInforController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("customerInfor.edit")
-    @ResponseBody
-    public ModelAndView edit(Long clientId) {
-        ModelAndView view = new ModelAndView("/cms/customerInfor/edit.html");
-        CustomerInfor customerInfor = customerInforService.queryById(clientId);
-        view.addObject("customerInfor", customerInfor);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("customerInfor.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/customerInfor/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 客户信息页面数据（含搜索条件）
+     * @param condtion  搜索条件
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("customerInfor.query")
     @ResponseBody
@@ -103,28 +91,23 @@ public class CustomerInforController{
         return JsonResult.success(page);
     }
 
-    @PostMapping(MODEL + "/findByCode.json")
-    @Function("customerInfor.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("customerInfor.add")
     @ResponseBody
-    public JsonResult<CustomerInfor> findByCode(String clientId){
-        CustomerInfor data = customerInforService.findByCode(clientId);
-        if(data == null){
-            return JsonResult.failMessage("请输入正确的客户编码");
-        }
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/customerInfor/add.html");
+        return view;
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("customerInfor.query")
-    @ResponseBody
-    public JsonResult<CustomerInfor> queryById(Object id){
-        CustomerInfor data = customerInforService.queryById(id);
-        return JsonResult.success(data);
-    }
-
+    /**
+     * 添加数据板保存
+     * @param customerInfor
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("customerInfor.add")
     @ResponseBody
@@ -134,6 +117,26 @@ public class CustomerInforController{
         return JsonResult.success();
     }
 
+    /**
+     *  编辑页面
+      * @param clientId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("customerInfor.edit")
+    @ResponseBody
+    public ModelAndView edit(Long clientId) {
+        ModelAndView view = new ModelAndView("/cms/customerInfor/edit.html");
+        CustomerInfor customerInfor = customerInforService.queryById(clientId);
+        view.addObject("customerInfor", customerInfor);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param customerInfor
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("customerInfor.update")
     @ResponseBody
@@ -146,16 +149,27 @@ public class CustomerInforController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
+    /**
+     * 购买页面 需要验证客户存不存在
+     * @param clientId
+     * @return
+     */
+    @PostMapping(MODEL + "/findByCode.json")
     @Function("customerInfor.query")
     @ResponseBody
-    public JsonResult<CustomerInfor>queryInfo(Long clientId) {
-        CustomerInfor customerInfor = customerInforService.queryById( clientId);
-        return  JsonResult.success(customerInfor);
+    public JsonResult<CustomerInfor> findByCode(String clientId){
+        CustomerInfor data = customerInforService.findByCode(clientId);
+        if(data == null){
+            return JsonResult.failMessage("请输入正确的客户编码");
+        }
+        return JsonResult.success(data);
     }
 
+    /**
+     * 根据id 可批量删除
+     * @param ids
+     * @return
+     */
     @PostMapping(MODEL + "/delete.json")
     @Function("customerInfor.delete")
     @ResponseBody
@@ -167,8 +181,13 @@ public class CustomerInforController{
         customerInforService.batchDelCustomerInfor(idList);
         return JsonResult.success();
     }
-    
-    
+
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("customerInfor.exportDocument")
     @ResponseBody
@@ -201,9 +220,15 @@ public class CustomerInforController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
-    
+
+    /**
+     * 导入数据
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @PostMapping(MODEL + "/excel/import.do")
     @Function("customerInfor.importDocument")
     @ResponseBody
@@ -238,11 +263,40 @@ public class CustomerInforController{
         }
     }
 
+    /**
+     * 导入数据错误地方的定位
+     * @param msg
+     * @return
+     */
     private String parseXLSReadMessage(XLSReadMessage msg) {
         String str = msg.getMessage();
         int start = "Can't read cell ".length();
         int end = str.indexOf("on");
         return str.substring(start,end);
+    }
+
+
+
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    @GetMapping(MODEL + "/view.json")
+    @Function("customerInfor.query")
+    @ResponseBody
+    public JsonResult<CustomerInfor>queryInfo(Long clientId) {
+        CustomerInfor customerInfor = customerInforService.queryById( clientId);
+        return  JsonResult.success(customerInfor);
+    }
+    /**
+     * 根据ID查找
+     */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("customerInfor.query")
+    @ResponseBody
+    public JsonResult<CustomerInfor> queryById(Object id){
+        CustomerInfor data = customerInforService.queryById(id);
+        return JsonResult.success(data);
     }
     
     

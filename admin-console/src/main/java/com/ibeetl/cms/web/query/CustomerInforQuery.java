@@ -7,7 +7,7 @@ import java.util.Date;
 import com.ibeetl.admin.core.util.Tool;
 import org.apache.commons.lang3.StringUtils;
 /**
- *CustomerInfor查询
+ *客户信息搜索条件
  */
 public class CustomerInforQuery extends PageParam {
     @Query(name = "客户编号", display = true)        
