@@ -61,8 +61,11 @@ public class PurchaseWarehouseController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+    /**
+     * 采购入库页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("purchaseWarehouse.query")
     @ResponseBody
@@ -72,26 +75,11 @@ public class PurchaseWarehouseController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("purchaseWarehouse.edit")
-    @ResponseBody
-    public ModelAndView edit(Long enterId) {
-        ModelAndView view = new ModelAndView("/cms/purchaseWarehouse/edit.html");
-        PurchaseWarehouse purchaseWarehouse = purchaseWarehouseService.queryById(enterId);
-        view.addObject("purchaseWarehouse", purchaseWarehouse);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("purchaseWarehouse.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/purchaseWarehouse/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 采购入库页面数据（含搜索条件）
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("purchaseWarehouse.query")
     @ResponseBody
@@ -102,17 +90,23 @@ public class PurchaseWarehouseController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("purchaseWarehouse.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("purchaseWarehouse.add")
     @ResponseBody
-    public JsonResult<PurchaseWarehouse> queryById(Object id){
-        PurchaseWarehouse data = purchaseWarehouseService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/purchaseWarehouse/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param purchaseWarehouse
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("purchaseWarehouse.add")
     @ResponseBody
@@ -122,6 +116,26 @@ public class PurchaseWarehouseController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param enterId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("purchaseWarehouse.edit")
+    @ResponseBody
+    public ModelAndView edit(Long enterId) {
+        ModelAndView view = new ModelAndView("/cms/purchaseWarehouse/edit.html");
+        PurchaseWarehouse purchaseWarehouse = purchaseWarehouseService.queryById(enterId);
+        view.addObject("purchaseWarehouse", purchaseWarehouse);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param purchaseWarehouse
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("purchaseWarehouse.update")
     @ResponseBody
@@ -134,16 +148,11 @@ public class PurchaseWarehouseController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("purchaseWarehouse.query")
-    @ResponseBody
-    public JsonResult<PurchaseWarehouse>queryInfo(Long enterId) {
-        PurchaseWarehouse purchaseWarehouse = purchaseWarehouseService.queryById( enterId);
-        return  JsonResult.success(purchaseWarehouse);
-    }
-
+    /**
+     * 根据ID批量删除
+     * @param ids
+     * @return
+     */
     @PostMapping(MODEL + "/delete.json")
     @Function("purchaseWarehouse.delete")
     @ResponseBody
@@ -155,6 +164,36 @@ public class PurchaseWarehouseController{
         purchaseWarehouseService.batchDelPurchaseWarehouse(idList);
         return JsonResult.success();
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("purchaseWarehouse.query")
+    @ResponseBody
+    public JsonResult<PurchaseWarehouse> queryById(Object id){
+        PurchaseWarehouse data = purchaseWarehouseService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("purchaseWarehouse.query")
+    @ResponseBody
+    public JsonResult<PurchaseWarehouse>queryInfo(Long enterId) {
+        PurchaseWarehouse purchaseWarehouse = purchaseWarehouseService.queryById( enterId);
+        return  JsonResult.success(purchaseWarehouse);
+    }
+
+
     
     
     @PostMapping(MODEL + "/excel/export.json")

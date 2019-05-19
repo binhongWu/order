@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * OutboundRedist 接口
+ * 出库登记 接口
  */
 @Controller
 public class OutboundRedistController{
@@ -63,6 +63,10 @@ public class OutboundRedistController{
     FileService fileService;
     /* 页面 */
 
+    /**
+     * 出库登记信息页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("outboundRedist.query")
     @ResponseBody
@@ -72,26 +76,11 @@ public class OutboundRedistController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("outboundRedist.edit")
-    @ResponseBody
-    public ModelAndView edit(Long outRegistId) {
-        ModelAndView view = new ModelAndView("/cms/outboundRedist/edit.html");
-        OutboundRedist outboundRedist = outboundRedistService.queryById(outRegistId);
-        view.addObject("outboundRedist", outboundRedist);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("outboundRedist.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/outboundRedist/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 客户信息页面数据（含搜索条件）
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("outboundRedist.query")
     @ResponseBody
@@ -102,17 +91,23 @@ public class OutboundRedistController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("outboundRedist.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("outboundRedist.add")
     @ResponseBody
-    public JsonResult<OutboundRedist> queryById(Object id){
-        OutboundRedist data = outboundRedistService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/outboundRedist/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param outboundRedist
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("outboundRedist.add")
     @ResponseBody
@@ -122,6 +117,26 @@ public class OutboundRedistController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param outRegistId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("outboundRedist.edit")
+    @ResponseBody
+    public ModelAndView edit(Long outRegistId) {
+        ModelAndView view = new ModelAndView("/cms/outboundRedist/edit.html");
+        OutboundRedist outboundRedist = outboundRedistService.queryById(outRegistId);
+        view.addObject("outboundRedist", outboundRedist);
+        return view;
+    }
+
+    /**
+     * 编辑页面数据保存
+     * @param outboundRedist
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("outboundRedist.update")
     @ResponseBody
@@ -134,29 +149,12 @@ public class OutboundRedistController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("outboundRedist.query")
-    @ResponseBody
-    public JsonResult<OutboundRedist>queryInfo(Long outRegistId) {
-        OutboundRedist outboundRedist = outboundRedistService.queryById( outRegistId);
-        return  JsonResult.success(outboundRedist);
-    }
-
-    @PostMapping(MODEL + "/delete.json")
-    @Function("outboundRedist.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-        if (ids.endsWith(",")) {
-            ids = StringUtils.substringBeforeLast(ids, ",");
-        }
-        List<String> idList = ConvertUtil.str2Strings(ids);
-        outboundRedistService.batchDelOutboundRedist(idList);
-        return JsonResult.success();
-    }
-    
-    
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("outboundRedist.exportDocument")
     @ResponseBody
@@ -189,8 +187,51 @@ public class OutboundRedistController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("outboundRedist.query")
+    @ResponseBody
+    public JsonResult<OutboundRedist> queryById(Object id){
+        OutboundRedist data = outboundRedistService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("outboundRedist.query")
+    @ResponseBody
+    public JsonResult<OutboundRedist>queryInfo(Long outRegistId) {
+        OutboundRedist outboundRedist = outboundRedistService.queryById( outRegistId);
+        return  JsonResult.success(outboundRedist);
+    }
+
+    @PostMapping(MODEL + "/delete.json")
+    @Function("outboundRedist.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        if (ids.endsWith(",")) {
+            ids = StringUtils.substringBeforeLast(ids, ",");
+        }
+        List<String> idList = ConvertUtil.str2Strings(ids);
+        outboundRedistService.batchDelOutboundRedist(idList);
+        return JsonResult.success();
+    }
+    
+    
+
     
     @PostMapping(MODEL + "/excel/import.do")
     @Function("outboundRedist.importDocument")

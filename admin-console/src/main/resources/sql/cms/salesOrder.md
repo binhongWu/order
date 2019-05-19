@@ -24,6 +24,7 @@ queryByCondition
     
 findOrderForO
 ===
+* 根据订单完成状态查找
 
     select 
     * 
@@ -42,6 +43,7 @@ getById
 
 getBySalId
 ===
+* 根据订单号（主键）查找
 
     select
     *

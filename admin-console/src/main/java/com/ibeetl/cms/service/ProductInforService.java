@@ -34,43 +34,11 @@ public class ProductInforService extends BaseService<ProductInfor>{
         return ret;
     }
 
-    public void batchDelProductInfor(List<String> ids){
-        try {
-            productInforDao.batchDelProductInforByIds(ids);
-        } catch (Exception e) {
-            throw new PlatformException("批量删除ProductInfor失败", e);
-        }
-    }
-
     /**
-     * 根据主键更新，属性为null的不会更新
+     * 保存
+     * @param model 实体类
+     * @return
      */
-    @Override
-    public boolean updateTemplate(ProductInfor model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateTemplateById(model) > 0;
-    }
-
-     /**
-      * 根据主键更新，所有值参与更新
-      */
-    @Override
-    public boolean update(ProductInfor model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateById(model) > 0;
-     }
-
-    /**
-     * 自定义更新
-      */
-    public boolean updateCustom(ProductInfor model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return productInforDao.updateCustom(model) > 0;
-    }
-
     @Override
     public boolean save(ProductInfor model) {
         model.setCreatedTime(new Date());
@@ -80,8 +48,16 @@ public class ProductInforService extends BaseService<ProductInfor>{
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
-    public ProductInfor getById(Object id){
-        return productInforDao.getById(id);
+
+
+    /**
+     * 根据主键更新，所有值参与更新
+     */
+    @Override
+    public boolean update(ProductInfor model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateById(model) > 0;
     }
 
     /**
@@ -121,15 +97,6 @@ public class ProductInforService extends BaseService<ProductInfor>{
     }
 
     /**
-     * 根据编码查找
-     * @param code
-     * @return
-     */
-    public ProductInfor findByCode(String code) {
-        return productInforDao.findByCode(code);
-    }
-
-    /**
      * 检索现有库存 < 最小库存
      * @return
      */
@@ -141,9 +108,65 @@ public class ProductInforService extends BaseService<ProductInfor>{
         return productInforDao.findAll();
     }
 
+    /**
+     * 每个仓库的绘本信息 --> 盘点
+     * @param query
+     * @return
+     */
+
     public PageQuery<ProductInfor>statistics(PageQuery query){
         PageQuery ret =  productInforDao.statistics(query);
         queryListAfter(ret.getList());
         return ret;
     }
+
+    /**
+     * 根据编码查找
+     * @param code
+     * @return
+     */
+    public ProductInfor findByCode(String code) {
+        return productInforDao.findByCode(code);
+    }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    public void batchDelProductInfor(List<String> ids){
+        try {
+            productInforDao.batchDelProductInforByIds(ids);
+        } catch (Exception e) {
+            throw new PlatformException("批量删除ProductInfor失败", e);
+        }
+    }
+
+    /**
+     * 根据主键更新，属性为null的不会更新
+     */
+    @Override
+    public boolean updateTemplate(ProductInfor model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateTemplateById(model) > 0;
+    }
+
+
+
+    /**
+     * 自定义更新
+      */
+    public boolean updateCustom(ProductInfor model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return productInforDao.updateCustom(model) > 0;
+    }
+
+
+
+    public ProductInfor getById(Object id){
+        return productInforDao.getById(id);
+    }
+
+
+
 }

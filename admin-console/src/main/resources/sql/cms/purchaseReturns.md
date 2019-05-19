@@ -76,7 +76,7 @@ updateCustom
 findListByCustom
 ===
 
-* 自定义查询
+* 按条件查找全部数据
 
 
     select 

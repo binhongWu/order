@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * WarehouseWarn 接口
+ * 仓库预警信息 接口
  */
 @Controller
 public class WarehouseWarnController{
@@ -63,6 +63,10 @@ public class WarehouseWarnController{
     FileService fileService;
     /* 页面 */
 
+    /**
+     * 仓库预警信息页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("warehouseWarn.query")
     @ResponseBody
@@ -72,26 +76,11 @@ public class WarehouseWarnController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("warehouseWarn.edit")
-    @ResponseBody
-    public ModelAndView edit(Long warningId) {
-        ModelAndView view = new ModelAndView("/cms/warehouseWarn/edit.html");
-        WarehouseWarn warehouseWarn = warehouseWarnService.queryById(warningId);
-        view.addObject("warehouseWarn", warehouseWarn);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("warehouseWarn.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/warehouseWarn/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 仓库预警信息页面数据
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("warehouseWarn.query")
     @ResponseBody
@@ -102,17 +91,23 @@ public class WarehouseWarnController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("warehouseWarn.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("warehouseWarn.add")
     @ResponseBody
-    public JsonResult<WarehouseWarn> queryById(Object id){
-        WarehouseWarn data = warehouseWarnService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/warehouseWarn/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param warehouseWarn
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("warehouseWarn.add")
     @ResponseBody
@@ -122,6 +117,26 @@ public class WarehouseWarnController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param warningId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("warehouseWarn.edit")
+    @ResponseBody
+    public ModelAndView edit(Long warningId) {
+        ModelAndView view = new ModelAndView("/cms/warehouseWarn/edit.html");
+        WarehouseWarn warehouseWarn = warehouseWarnService.queryById(warningId);
+        view.addObject("warehouseWarn", warehouseWarn);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param warehouseWarn
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("warehouseWarn.update")
     @ResponseBody
@@ -134,29 +149,12 @@ public class WarehouseWarnController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("warehouseWarn.query")
-    @ResponseBody
-    public JsonResult<WarehouseWarn>queryInfo(Long warningId) {
-        WarehouseWarn warehouseWarn = warehouseWarnService.queryById( warningId);
-        return  JsonResult.success(warehouseWarn);
-    }
-
-    @PostMapping(MODEL + "/delete.json")
-    @Function("warehouseWarn.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-        if (ids.endsWith(",")) {
-            ids = StringUtils.substringBeforeLast(ids, ",");
-        }
-        List<String> idList = ConvertUtil.str2Strings(ids);
-        warehouseWarnService.batchDelWarehouseWarn(idList);
-        return JsonResult.success();
-    }
-    
-    
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("warehouseWarn.exportDocument")
     @ResponseBody
@@ -189,8 +187,50 @@ public class WarehouseWarnController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("warehouseWarn.query")
+    @ResponseBody
+    public JsonResult<WarehouseWarn> queryById(Object id){
+        WarehouseWarn data = warehouseWarnService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("warehouseWarn.query")
+    @ResponseBody
+    public JsonResult<WarehouseWarn>queryInfo(Long warningId) {
+        WarehouseWarn warehouseWarn = warehouseWarnService.queryById( warningId);
+        return  JsonResult.success(warehouseWarn);
+    }
+
+    @PostMapping(MODEL + "/delete.json")
+    @Function("warehouseWarn.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        if (ids.endsWith(",")) {
+            ids = StringUtils.substringBeforeLast(ids, ",");
+        }
+        List<String> idList = ConvertUtil.str2Strings(ids);
+        warehouseWarnService.batchDelWarehouseWarn(idList);
+        return JsonResult.success();
+    }
+    
+    
+
     
     @PostMapping(MODEL + "/excel/import.do")
     @Function("warehouseWarn.importDocument")

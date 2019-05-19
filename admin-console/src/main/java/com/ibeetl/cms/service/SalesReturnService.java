@@ -46,43 +46,21 @@ public class SalesReturnService extends BaseService<SalesReturn>{
         return ret;
     }
 
-    public void batchDelSalesReturn(List<String> ids){
-        try {
-            salesReturnDao.batchDelSalesReturnByIds(ids);
-        } catch (Exception e) {
-            throw new PlatformException("批量删除SalesReturn失败", e);
-        }
-    }
-
     /**
-     * 根据主键更新，属性为null的不会更新
+     * 根据主键更新，所有值参与更新
      */
-    @Override
-    public boolean updateTemplate(SalesReturn model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateTemplateById(model) > 0;
-    }
-
-     /**
-      * 根据主键更新，所有值参与更新
-      */
     @Override
     public boolean update(SalesReturn model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
-     }
-
-    /**
-     * 自定义更新
-      */
-    public boolean updateCustom(SalesReturn model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return salesReturnDao.updateCustom(model) > 0;
     }
 
+    /**
+     * 保存
+     * @param model 实体类
+     * @return
+     */
     @Override
     public boolean save(SalesReturn model) {
         model.setCreatedBy(platformService.getCurrentUser().getId());
@@ -92,17 +70,10 @@ public class SalesReturnService extends BaseService<SalesReturn>{
         return sqlManager.insertTemplate(model, true) > 0;
     }
 
-    public SalesReturn getById(Object id){
-        return salesReturnDao.getById(id);
-    }
-
     /**
-     * 按条件查找全部数据
+     * 修改小搜订单状态
+     * @param datas
      */
-    public List<SalesReturn> findListByCustom(SalesReturn model) {
-        return salesReturnDao.findListByCustom(model);
-    }
-
     public void saveImport(List<SalesReturn> datas) {
         for (SalesReturn model : datas) {
             model.setReturnId(null);
@@ -199,4 +170,53 @@ public class SalesReturnService extends BaseService<SalesReturn>{
         }
         return false;
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    public void batchDelSalesReturn(List<String> ids){
+        try {
+            salesReturnDao.batchDelSalesReturnByIds(ids);
+        } catch (Exception e) {
+            throw new PlatformException("批量删除SalesReturn失败", e);
+        }
+    }
+
+    /**
+     * 根据主键更新，属性为null的不会更新
+     */
+    @Override
+    public boolean updateTemplate(SalesReturn model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateTemplateById(model) > 0;
+    }
+
+
+
+    /**
+     * 自定义更新
+      */
+    public boolean updateCustom(SalesReturn model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return salesReturnDao.updateCustom(model) > 0;
+    }
+
+
+
+    public SalesReturn getById(Object id){
+        return salesReturnDao.getById(id);
+    }
+
+    /**
+     * 按条件查找全部数据
+     */
+    public List<SalesReturn> findListByCustom(SalesReturn model) {
+        return salesReturnDao.findListByCustom(model);
+    }
+
+
+
+
 }

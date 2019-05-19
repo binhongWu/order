@@ -36,6 +36,8 @@ queryByCondition
 getById
 ===
 
+* 通过ID查找
+
     select
     *
     from sales_order_bak t
@@ -44,6 +46,7 @@ getById
 
 getBySalId
 ===
+
 
     select
     *

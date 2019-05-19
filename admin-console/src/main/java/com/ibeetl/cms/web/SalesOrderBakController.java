@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * SalesOrderBak 接口
+ * 销售订单（客户联） 接口
  */
 @Controller
 public class SalesOrderBakController{
@@ -61,8 +61,11 @@ public class SalesOrderBakController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+    /**
+     * 销售订单（客户联）页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("salesOrderBak.query")
     @ResponseBody
@@ -70,6 +73,21 @@ public class SalesOrderBakController{
         ModelAndView view = new ModelAndView("/cms/salesOrderBak/index.html") ;
         view.addObject("search", SalesOrderBakQuery.class.getName());
         return view;
+    }
+
+    /**
+     * 销售订单（客户联）页面数据
+     * @param condtion
+     * @return
+     */
+    @PostMapping(MODEL + "/list.json")
+    @Function("salesOrderBak.query")
+    @ResponseBody
+    public JsonResult<PageQuery> list(SalesOrderBakQuery condtion)
+    {
+        PageQuery page = condtion.getPageQuery();
+        salesOrderBakService.queryByCondition(page);
+        return JsonResult.success(page);
     }
 
     /**
@@ -105,37 +123,6 @@ public class SalesOrderBakController{
         }
     }
 
-    @GetMapping(MODEL + "/add.do")
-    @Function("salesOrderBak.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/salesOrderBak/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
-    @PostMapping(MODEL + "/list.json")
-    @Function("salesOrderBak.query")
-    @ResponseBody
-    public JsonResult<PageQuery> list(SalesOrderBakQuery condtion)
-    {
-        PageQuery page = condtion.getPageQuery();
-        salesOrderBakService.queryByCondition(page);
-        return JsonResult.success(page);
-    }
-
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("salesOrderBak.query")
-    @ResponseBody
-    public JsonResult<SalesOrderBak> queryById(Object id){
-        SalesOrderBak data = salesOrderBakService.queryById(id);
-        return JsonResult.success(data);
-    }
-
     /**
      * 购买完成后产生临时订单
      * @param salesOrderBak
@@ -155,6 +142,44 @@ public class SalesOrderBakController{
         }
         return JsonResult.failMessage("购买失败，请检查订单信息、购买人信息重试");
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("salesOrderBak.add")
+    @ResponseBody
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/salesOrderBak/add.html");
+        return view;
+    }
+
+
+
+
+
+
+
+    /* ajax json */
+
+
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("salesOrderBak.query")
+    @ResponseBody
+    public JsonResult<SalesOrderBak> queryById(Object id){
+        SalesOrderBak data = salesOrderBakService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
 
     @PostMapping(MODEL + "/update.json")
     @Function("salesOrderBak.update")

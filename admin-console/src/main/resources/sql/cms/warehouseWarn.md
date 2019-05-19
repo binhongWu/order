@@ -21,7 +21,7 @@ queryByCondition
     
 findByCode
 ===
-
+* 通过绘本编码查询
     select
     * 
     from warehouse_warn t
@@ -31,6 +31,8 @@ findByCode
 
 findByCheck
 ===
+
+* 获取预警状态
     select
     * 
     from warehouse_warn t

@@ -7,7 +7,7 @@ import java.util.Date;
 import com.ibeetl.admin.core.util.Tool;
 import org.apache.commons.lang3.StringUtils;
 /**
- *ProductInfor查询
+ *中英文绘本信息搜索条件
  */
 public class ProductInforQuery extends PageParam {
     @Query(name = "绘本编码isbn", display = true)        

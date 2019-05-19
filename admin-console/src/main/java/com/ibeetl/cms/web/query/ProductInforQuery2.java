@@ -4,7 +4,7 @@ import com.ibeetl.admin.core.annotation.Query;
 import com.ibeetl.admin.core.web.query.PageParam;
 
 /**
- *ProductInfor查询
+ *中英文绘本购买信息查询条件
  */
 public class ProductInforQuery2 extends PageParam {
     @Query(name = "绘本编码", display = true)

@@ -32,6 +32,11 @@ public class PurchaseWarehouseService extends BaseService<PurchaseWarehouse>{
         return ret;
     }
 
+
+    /**
+     * 批量删除
+     * @param ids
+     */
     public void batchDelPurchaseWarehouse(List<String> ids){
         try {
             purchaseWarehouseDao.batchDelPurchaseWarehouseByIds(ids);
@@ -39,6 +44,39 @@ public class PurchaseWarehouseService extends BaseService<PurchaseWarehouse>{
             throw new PlatformException("批量删除PurchaseWarehouse失败", e);
         }
     }
+
+    /**
+     * 根据主键更新，所有值参与更新
+     */
+    @Override
+    public boolean update(PurchaseWarehouse model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateById(model) > 0;
+    }
+
+    /**
+     * 保存
+     * @param model 实体类
+     * @return
+     */
+    @Override
+    public boolean save(PurchaseWarehouse model) {
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setCreatedTime(new Date());
+        model.setUpdatedTime(new Date());
+        return sqlManager.insertTemplate(model, true) > 0;
+    }
+
+    /**
+     * 按条件查找全部数据
+     */
+    public List<PurchaseWarehouse> findListByCustom(PurchaseWarehouse model) {
+        return purchaseWarehouseDao.findListByCustom(model);
+    }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
 
     /**
      * 根据主键更新，属性为null的不会更新
@@ -50,15 +88,7 @@ public class PurchaseWarehouseService extends BaseService<PurchaseWarehouse>{
         return sqlManager.updateTemplateById(model) > 0;
     }
 
-     /**
-      * 根据主键更新，所有值参与更新
-      */
-    @Override
-    public boolean update(PurchaseWarehouse model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateById(model) > 0;
-     }
+
 
     /**
      * 自定义更新
@@ -69,23 +99,11 @@ public class PurchaseWarehouseService extends BaseService<PurchaseWarehouse>{
         return purchaseWarehouseDao.updateCustom(model) > 0;
     }
 
-    @Override
-    public boolean save(PurchaseWarehouse model) {
-        model.setCreatedBy(platformService.getCurrentUser().getId());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        model.setCreatedTime(new Date());
-        model.setUpdatedTime(new Date());
-        return sqlManager.insertTemplate(model, true) > 0;
-    }
+
 
     public PurchaseWarehouse getById(Object id){
         return purchaseWarehouseDao.getById(id);
     }
 
-    /**
-     * 按条件查找全部数据
-     */
-    public List<PurchaseWarehouse> findListByCustom(PurchaseWarehouse model) {
-        return purchaseWarehouseDao.findListByCustom(model);
-    }
+
 }

@@ -32,6 +32,35 @@ public class PurchaseReturnsService extends BaseService<PurchaseReturns>{
         return ret;
     }
 
+    /**
+     * 根据主键更新，所有值参与更新
+     */
+    @Override
+    public boolean update(PurchaseReturns model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateById(model) > 0;
+    }
+
+    /**
+     * 保存
+     * @param model 实体类
+     * @return
+     */
+    @Override
+    public boolean save(PurchaseReturns model) {
+        return sqlManager.insertTemplate(model, true) > 0;
+    }
+
+    /**
+     * 按条件查找全部数据
+     */
+    public List<PurchaseReturns> findListByCustom(PurchaseReturns model) {
+        return purchaseReturnsDao.findListByCustom(model);
+    }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
     public void batchDelPurchaseReturns(List<String> ids){
         try {
             purchaseReturnsDao.batchDelPurchaseReturnsByIds(ids);
@@ -50,15 +79,7 @@ public class PurchaseReturnsService extends BaseService<PurchaseReturns>{
         return sqlManager.updateTemplateById(model) > 0;
     }
 
-     /**
-      * 根据主键更新，所有值参与更新
-      */
-    @Override
-    public boolean update(PurchaseReturns model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateById(model) > 0;
-     }
+
 
     /**
      * 自定义更新
@@ -69,19 +90,11 @@ public class PurchaseReturnsService extends BaseService<PurchaseReturns>{
         return purchaseReturnsDao.updateCustom(model) > 0;
     }
 
-    @Override
-    public boolean save(PurchaseReturns model) {
-        return sqlManager.insertTemplate(model, true) > 0;
-    }
+
 
     public PurchaseReturns getById(Object id){
         return purchaseReturnsDao.getById(id);
     }
 
-    /**
-     * 按条件查找全部数据
-     */
-    public List<PurchaseReturns> findListByCustom(PurchaseReturns model) {
-        return purchaseReturnsDao.findListByCustom(model);
-    }
+
 }

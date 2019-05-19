@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * IncomingRegist 接口
+ * 入库登记接口
  */
 @Controller
 public class IncomingRegistController{
@@ -63,6 +63,10 @@ public class IncomingRegistController{
     FileService fileService;
     /* 页面 */
 
+    /**
+     * 入库登记信息页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("incomingRegist.query")
     @ResponseBody
@@ -72,26 +76,11 @@ public class IncomingRegistController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("incomingRegist.edit")
-    @ResponseBody
-    public ModelAndView edit(Long inRegistId) {
-        ModelAndView view = new ModelAndView("/cms/incomingRegist/edit.html");
-        IncomingRegist incomingRegist = incomingRegistService.queryById(inRegistId);
-        view.addObject("incomingRegist", incomingRegist);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("incomingRegist.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/incomingRegist/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 入库登记信息页面数据（含搜索条件）
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("incomingRegist.query")
     @ResponseBody
@@ -102,17 +91,23 @@ public class IncomingRegistController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("incomingRegist.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("incomingRegist.add")
     @ResponseBody
-    public JsonResult<IncomingRegist> queryById(Object id){
-        IncomingRegist data = incomingRegistService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/incomingRegist/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param incomingRegist
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("incomingRegist.add")
     @ResponseBody
@@ -122,6 +117,26 @@ public class IncomingRegistController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param inRegistId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("incomingRegist.edit")
+    @ResponseBody
+    public ModelAndView edit(Long inRegistId) {
+        ModelAndView view = new ModelAndView("/cms/incomingRegist/edit.html");
+        IncomingRegist incomingRegist = incomingRegistService.queryById(inRegistId);
+        view.addObject("incomingRegist", incomingRegist);
+        return view;
+    }
+
+    /**
+     * 编辑页面保存
+     * @param incomingRegist
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("incomingRegist.update")
     @ResponseBody
@@ -135,28 +150,14 @@ public class IncomingRegistController{
     }
 
 
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("incomingRegist.query")
-    @ResponseBody
-    public JsonResult<IncomingRegist>queryInfo(Long inRegistId) {
-        IncomingRegist incomingRegist = incomingRegistService.queryById( inRegistId);
-        return  JsonResult.success(incomingRegist);
-    }
 
-    @PostMapping(MODEL + "/delete.json")
-    @Function("incomingRegist.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-        if (ids.endsWith(",")) {
-            ids = StringUtils.substringBeforeLast(ids, ",");
-        }
-        List<String> idList = ConvertUtil.str2Strings(ids);
-        incomingRegistService.batchDelIncomingRegist(idList);
-        return JsonResult.success();
-    }
-    
-    
+
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("incomingRegist.exportDocument")
     @ResponseBody
@@ -189,22 +190,72 @@ public class IncomingRegistController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
-    
+
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    /**
+     * 根据id 可批量删除
+     * @param ids
+     * @return
+     */
+    @PostMapping(MODEL + "/delete.json")
+    @Function("incomingRegist.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        if (ids.endsWith(",")) {
+            ids = StringUtils.substringBeforeLast(ids, ",");
+        }
+        List<String> idList = ConvertUtil.str2Strings(ids);
+        incomingRegistService.batchDelIncomingRegist(idList);
+        return JsonResult.success();
+    }
+
+    /**
+     * 导入数据
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @PostMapping(MODEL + "/excel/import.do")
     @Function("incomingRegist.importDocument")
     @ResponseBody
     public JsonResult importExcel(@RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
-           return JsonResult.fail();
+            return JsonResult.fail();
         }
         InputStream ins = file.getInputStream();
         /*解析模板并导入到数据库里,参考DictConsoleContorller，使用jxls reader读取excel数据*/
         ins.close();
         return JsonResult.success();
     }
+
+    /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("incomingRegist.query")
+    @ResponseBody
+    public JsonResult<IncomingRegist> queryById(Object id){
+        IncomingRegist data = incomingRegistService.queryById(id);
+        return JsonResult.success(data);
+    }
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("incomingRegist.query")
+    @ResponseBody
+    public JsonResult<IncomingRegist>queryInfo(Long inRegistId) {
+        IncomingRegist incomingRegist = incomingRegistService.queryById( inRegistId);
+        return  JsonResult.success(incomingRegist);
+    }
+
+
     
+    
+
     
 
 }

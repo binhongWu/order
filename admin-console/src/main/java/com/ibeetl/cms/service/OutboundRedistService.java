@@ -33,6 +33,31 @@ public class OutboundRedistService extends BaseService<OutboundRedist>{
         return ret;
     }
 
+    /**
+     * 保存
+     * @param model 实体类
+     * @return
+     */
+    @Override
+    public boolean save(OutboundRedist model) {
+        model.setCreatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        model.setUpdatedTime(new Date());
+        model.setCreatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.insertTemplate(model, true) > 0;
+    }
+
+    /**
+     * 根据出库单号查询
+     * @param outorderId
+     * @return
+     */
+    public OutboundRedist getByOutId(String outorderId) {
+        return outboundRedistDao.getByOutId(outorderId);
+    }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
     public void batchDelOutboundRedist(List<String> ids){
         try {
             outboundRedistDao.batchDelOutboundRedistByIds(ids);
@@ -70,14 +95,7 @@ public class OutboundRedistService extends BaseService<OutboundRedist>{
         return outboundRedistDao.updateCustom(model) > 0;
     }
 
-    @Override
-    public boolean save(OutboundRedist model) {
-        model.setCreatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        model.setUpdatedTime(new Date());
-        model.setCreatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.insertTemplate(model, true) > 0;
-    }
+
 
     public OutboundRedist getById(Object id){
         return outboundRedistDao.getById(id);
@@ -91,7 +109,5 @@ public class OutboundRedistService extends BaseService<OutboundRedist>{
     }
 
 
-    public OutboundRedist getByOutId(String outorderId) {
-        return outboundRedistDao.getByOutId(outorderId);
-    }
+
 }

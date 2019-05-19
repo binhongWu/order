@@ -54,6 +54,10 @@ public class ProductInforController{
     FileService fileService;
     /* 页面 */
 
+    /**
+     * 中英文绘本信息页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("productInfor.query")
     @ResponseBody
@@ -64,27 +68,14 @@ public class ProductInforController{
     }
 
     /**
-     * 购买首页 展示所有绘本信息
-     * @return
-     */
-    @GetMapping(MODEL + "/productInforIndex.do")
-    @Function("productInfor.purchase")
-    @ResponseBody
-    public ModelAndView productInforIndex() {
-        ModelAndView view = new ModelAndView("/cms/productInfor/productInforIndex.html") ;
-        view.addObject("search", ProductInforQuery.class.getName());
-        return view;
-    }
-
-    /**
-     * 购买首页 数据
+     * 中英文绘本信息页面数据（含搜索条件）
      * @param condtion
      * @return
      */
-    @PostMapping(MODEL + "/productInforIndexList.json")
-    @Function("productInfor.purchase")
+    @PostMapping(MODEL + "/list.json")
+    @Function("productInfor.query")
     @ResponseBody
-    public JsonResult<PageQuery> productInforIndexList(ProductInforQuery condtion)
+    public JsonResult<PageQuery> list(ProductInforQuery condtion)
     {
         PageQuery page = condtion.getPageQuery();
         productInforService.queryByCondition(page);
@@ -92,45 +83,36 @@ public class ProductInforController{
     }
 
     /**
-     * 获取详情  页面+数据
-     * @param id
+     * 添加页面
      * @return
      */
-    @GetMapping(MODEL + "/getInfo.do")
-    @Function("productInfor.purchase")
+    @GetMapping(MODEL + "/add.do")
+    @Function("productInfor.add")
     @ResponseBody
-    public ModelAndView getInfo(Long id) {
-        ModelAndView view = new ModelAndView("/cms/productInfor/getInfo.html");
-        ProductInfor productInfor = productInforService.queryById(id);
-        List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
-        if(fileItems.size() > 0){
-            FileItem fileItem = fileItems.get(0);
-            productInfor.setPictureUrl(fileItem.getPath());
-        }
-        view.addObject("productInfor", productInfor);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/productInfor/add.html");
         return view;
     }
+
     /**
-     * 购买  页面+数据
+     * 添加数据保存
+     * @param productInfor
+     * @return
+     */
+    @PostMapping(MODEL + "/add.json")
+    @Function("productInfor.add")
+    @ResponseBody
+    public JsonResult add(@Validated(ValidateConfig.ADD.class)ProductInfor productInfor)
+    {
+        productInforService.save(productInfor);
+        return JsonResult.success();
+    }
+
+    /**
+     * 编辑页面
      * @param id
      * @return
      */
-    @GetMapping(MODEL + "/purchase.do")
-    @Function("productInfor.purchase")
-    @ResponseBody
-    public ModelAndView purchase(Long id) {
-        ModelAndView view = new ModelAndView("/cms/productInfor/purchase.html");
-        ProductInfor productInfor = productInforService.queryById(id);
-        List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
-        if(fileItems.size() > 0){
-            FileItem fileItem = fileItems.get(0);
-            productInfor.setPictureUrl(fileItem.getPath());
-        }
-        view.addObject("productInfor", productInfor);
-        return view;
-    }
-
-
     @GetMapping(MODEL + "/edit.do")
     @Function("productInfor.edit")
     @ResponseBody
@@ -146,73 +128,11 @@ public class ProductInforController{
         return view;
     }
 
-    @GetMapping(MODEL + "/add.do")
-    @Function("productInfor.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/productInfor/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
-    @PostMapping(MODEL + "/list.json")
-    @Function("productInfor.query")
-    @ResponseBody
-    public JsonResult<PageQuery> list(ProductInforQuery condtion)
-    {
-        PageQuery page = condtion.getPageQuery();
-        productInforService.queryByCondition(page);
-        return JsonResult.success(page);
-    }
-
     /**
-     * 仓库盘点页面
+     * 编辑页面保存
+     * @param productInfor
      * @return
      */
-    @GetMapping(MODEL + "/statistics.do")
-    @Function("productInfor.query")
-    @ResponseBody
-    public ModelAndView statisticsIndex() {
-        ModelAndView view = new ModelAndView("/cms/wareHouse/statisticsIndex.html") ;
-        view.addObject("search", ProductInforQuery2.class.getName());
-        return view;
-    }
-
-    /**
-     * 仓库盘点数据
-     * @return
-     */
-    @PostMapping(MODEL + "/statistics.json")
-    @Function("productInfor.query")
-    @ResponseBody
-    public JsonResult<PageQuery> statistics(ProductInforQuery2 condtion){
-        PageQuery page = condtion.getPageQuery();
-        productInforService.statistics(page);
-        return JsonResult.success(page);
-    }
-
-
-    /**
-     * 根据ID查找
-     */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("productInfor.query")
-    @ResponseBody
-    public JsonResult<ProductInfor> queryById(Object id){
-        ProductInfor data = productInforService.queryById(id);
-        return JsonResult.success(data);
-    }
-
-    @PostMapping(MODEL + "/add.json")
-    @Function("productInfor.add")
-    @ResponseBody
-    public JsonResult add(@Validated(ValidateConfig.ADD.class)ProductInfor productInfor)
-    {
-        productInforService.save(productInfor);
-        return JsonResult.success();
-    }
-
     @PostMapping(MODEL + "/update.json")
     @Function("productInfor.update")
     @ResponseBody
@@ -225,16 +145,11 @@ public class ProductInforController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("productInfor.query")
-    @ResponseBody
-    public JsonResult<ProductInfor>queryInfo(Long id) {
-        ProductInfor productInfor = productInforService.queryById( id);
-        return  JsonResult.success(productInfor);
-    }
-
+    /**
+     * 根据id 可批量删除
+     * @param ids
+     * @return
+     */
     @PostMapping(MODEL + "/delete.json")
     @Function("productInfor.delete")
     @ResponseBody
@@ -246,8 +161,13 @@ public class ProductInforController{
         productInforService.batchDelProductInfor(idList);
         return JsonResult.success();
     }
-    
-    
+
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("productInfor.exportDocument")
     @ResponseBody
@@ -280,9 +200,15 @@ public class ProductInforController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
-    
+
+    /**
+     * 导入数据
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @PostMapping(MODEL + "/excel/import.do")
     @Function("productInfor.importDocument")
     @ResponseBody
@@ -317,12 +243,148 @@ public class ProductInforController{
         }
     }
 
+    /**
+     * 导入数据错误地方的定位
+     * @param msg
+     * @return
+     */
     private String parseXLSReadMessage(XLSReadMessage msg) {
         String str = msg.getMessage();
         int start = "Can't read cell ".length();
         int end = str.indexOf("on");
         return str.substring(start, end);
     }
+
+    /**
+     * 中英文绘本信息购买页面
+     * @return
+     */
+    @GetMapping(MODEL + "/productInforIndex.do")
+    @Function("productInfor.purchase")
+    @ResponseBody
+    public ModelAndView productInforIndex() {
+        ModelAndView view = new ModelAndView("/cms/productInfor/productInforIndex.html") ;
+        view.addObject("search", ProductInforQuery.class.getName());
+        return view;
+    }
+
+    /**
+     *中英文绘本信息购买页面数据（含搜索条件）
+     * @param condtion
+     * @return
+     */
+    @PostMapping(MODEL + "/productInforIndexList.json")
+    @Function("productInfor.purchase")
+    @ResponseBody
+    public JsonResult<PageQuery> productInforIndexList(ProductInforQuery condtion)
+    {
+        PageQuery page = condtion.getPageQuery();
+        productInforService.queryByCondition(page);
+        return JsonResult.success(page);
+    }
+
+    /**
+     * 中英文绘本信息购买页面查看详情 页面+数据
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/getInfo.do")
+    @Function("productInfor.purchase")
+    @ResponseBody
+    public ModelAndView getInfo(Long id) {
+        ModelAndView view = new ModelAndView("/cms/productInfor/getInfo.html");
+        ProductInfor productInfor = productInforService.queryById(id);
+        List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
+        if(fileItems.size() > 0){
+            FileItem fileItem = fileItems.get(0);
+            productInfor.setPictureUrl(fileItem.getPath());
+        }
+        view.addObject("productInfor", productInfor);
+        return view;
+    }
+
+    /**
+     * 中英文绘本信息购买页面购买 页面+数据
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/purchase.do")
+    @Function("productInfor.purchase")
+    @ResponseBody
+    public ModelAndView purchase(Long id) {
+        ModelAndView view = new ModelAndView("/cms/productInfor/purchase.html");
+        ProductInfor productInfor = productInforService.queryById(id);
+        List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
+        if(fileItems.size() > 0){
+            FileItem fileItem = fileItems.get(0);
+            productInfor.setPictureUrl(fileItem.getPath());
+        }
+        view.addObject("productInfor", productInfor);
+        return view;
+    }
+
+    /**
+     * 仓库盘点页面
+     * @return
+     */
+    @GetMapping(MODEL + "/statistics.do")
+    @Function("productInfor.query")
+    @ResponseBody
+    public ModelAndView statisticsIndex() {
+        ModelAndView view = new ModelAndView("/cms/wareHouse/statisticsIndex.html") ;
+        view.addObject("search", ProductInforQuery2.class.getName());
+        return view;
+    }
+
+    /**
+     * 仓库盘点数据
+     * @return
+     */
+    @PostMapping(MODEL + "/statistics.json")
+    @Function("productInfor.query")
+    @ResponseBody
+    public JsonResult<PageQuery> statistics(ProductInforQuery2 condtion){
+        PageQuery page = condtion.getPageQuery();
+        productInforService.statistics(page);
+        return JsonResult.success(page);
+    }
+
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+
+
+
+    /**
+     * 根据ID查找
+     */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("productInfor.query")
+    @ResponseBody
+    public JsonResult<ProductInfor> queryById(Object id){
+        ProductInfor data = productInforService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("productInfor.query")
+    @ResponseBody
+    public JsonResult<ProductInfor>queryInfo(Long id) {
+        ProductInfor productInfor = productInforService.queryById( id);
+        return  JsonResult.success(productInfor);
+    }
+
+
+    
+    
+
 
     
 

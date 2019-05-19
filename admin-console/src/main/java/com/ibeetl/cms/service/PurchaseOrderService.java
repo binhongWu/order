@@ -42,43 +42,21 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
         return ret;
     }
 
-    public void batchDelPurchaseOrder(List<String> ids){
-        try {
-            purchaseOrderDao.batchDelPurchaseOrderByIds(ids);
-        } catch (Exception e) {
-            throw new PlatformException("批量删除PurchaseOrder失败", e);
-        }
-    }
-
     /**
-     * 根据主键更新，属性为null的不会更新
+     * 根据主键更新，所有值参与更新
      */
-    @Override
-    public boolean updateTemplate(PurchaseOrder model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateTemplateById(model) > 0;
-    }
-
-     /**
-      * 根据主键更新，所有值参与更新
-      */
     @Override
     public boolean update(PurchaseOrder model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
-     }
-
-    /**
-     * 自定义更新
-      */
-    public boolean updateCustom(PurchaseOrder model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return purchaseOrderDao.updateCustom(model) > 0;
     }
 
+    /**
+     * 保存
+     * @param model 实体类
+     * @return
+     */
     @Override
     public boolean save(PurchaseOrder model) {
         model.setCreatedTime(new Date());
@@ -86,10 +64,6 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.insertTemplate(model, true) > 0;
-    }
-
-    public PurchaseOrder getById(Object id){
-        return purchaseOrderDao.getById(id);
     }
 
     /**
@@ -181,10 +155,20 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
         }
     }
 
+    /**
+     * 查找满足订单单号的数据
+     * @param orderId
+     * @return
+     */
     private PurchaseOrder queryOrderId(Long orderId) {
         return purchaseOrderDao.queryOrderId(orderId);
     }
 
+    /**
+     * 查找状态为完成的数据
+     * @param status
+     * @return
+     */
     private List<PurchaseOrder> findByFinishCondition(String status) {
         return purchaseOrderDao.findByFinishCondition(status);
     }
@@ -226,4 +210,43 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
         }
         return true;
     }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    public void batchDelPurchaseOrder(List<String> ids){
+        try {
+            purchaseOrderDao.batchDelPurchaseOrderByIds(ids);
+        } catch (Exception e) {
+            throw new PlatformException("批量删除PurchaseOrder失败", e);
+        }
+    }
+
+    /**
+     * 根据主键更新，属性为null的不会更新
+     */
+    @Override
+    public boolean updateTemplate(PurchaseOrder model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateTemplateById(model) > 0;
+    }
+
+
+
+    /**
+     * 自定义更新
+      */
+    public boolean updateCustom(PurchaseOrder model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return purchaseOrderDao.updateCustom(model) > 0;
+    }
+
+
+
+    public PurchaseOrder getById(Object id){
+        return purchaseOrderDao.getById(id);
+    }
+
+
 }

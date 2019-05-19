@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * SalesReturn 接口
+ * 销售退回接口
  */
 @Controller
 public class SalesReturnController{
@@ -63,6 +63,10 @@ public class SalesReturnController{
     FileService fileService;
     /* 页面 */
 
+    /**
+     * 销售退回页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("salesReturn.query")
     @ResponseBody
@@ -72,6 +76,53 @@ public class SalesReturnController{
         return view;
     }
 
+    /**
+     * 销售退回页面数据
+     * @param condtion
+     * @return
+     */
+    @PostMapping(MODEL + "/list.json")
+    @Function("salesReturn.query")
+    @ResponseBody
+    public JsonResult<PageQuery> list(SalesReturnQuery condtion)
+    {
+        PageQuery page = condtion.getPageQuery();
+        salesReturnService.queryByCondition(page);
+        return JsonResult.success(page);
+    }
+
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("salesReturn.add")
+    @ResponseBody
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/salesReturn/add.html");
+        return view;
+    }
+
+    /**
+     * 添加数据保存
+     * @param salesReturn
+     * @return
+     */
+    @PostMapping(MODEL + "/add.json")
+    @Function("salesReturn.add")
+    @ResponseBody
+    public JsonResult add(@Validated(ValidateConfig.ADD.class)SalesReturn salesReturn)
+    {
+        salesReturnService.save(salesReturn);
+        return JsonResult.success();
+    }
+
+
+    /**
+     * 编辑页面
+     * @param returnId
+     * @return
+     */
     @GetMapping(MODEL + "/edit.do")
     @Function("salesReturn.edit")
     @ResponseBody
@@ -80,6 +131,23 @@ public class SalesReturnController{
         SalesReturn salesReturn = salesReturnService.queryById(returnId);
         view.addObject("salesReturn", salesReturn);
         return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param salesReturn
+     * @return
+     */
+    @PostMapping(MODEL + "/update.json")
+    @Function("salesReturn.update")
+    @ResponseBody
+    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class)  SalesReturn salesReturn) {
+        boolean success = salesReturnService.update(salesReturn);
+        if (success) {
+            return JsonResult.success();
+        } else {
+            return JsonResult.failMessage("保存失败");
+        }
     }
 
     /**
@@ -114,81 +182,13 @@ public class SalesReturnController{
         }
     }
 
-    @GetMapping(MODEL + "/add.do")
-    @Function("salesReturn.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/salesReturn/add.html");
-        return view;
-    }
 
-    /* ajax json */
-
-    @PostMapping(MODEL + "/list.json")
-    @Function("salesReturn.query")
-    @ResponseBody
-    public JsonResult<PageQuery> list(SalesReturnQuery condtion)
-    {
-        PageQuery page = condtion.getPageQuery();
-        salesReturnService.queryByCondition(page);
-        return JsonResult.success(page);
-    }
-
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("salesReturn.query")
-    @ResponseBody
-    public JsonResult<SalesReturn> queryById(Object id){
-        SalesReturn data = salesReturnService.queryById(id);
-        return JsonResult.success(data);
-    }
-
-    @PostMapping(MODEL + "/add.json")
-    @Function("salesReturn.add")
-    @ResponseBody
-    public JsonResult add(@Validated(ValidateConfig.ADD.class)SalesReturn salesReturn)
-    {
-        salesReturnService.save(salesReturn);
-        return JsonResult.success();
-    }
-
-    @PostMapping(MODEL + "/update.json")
-    @Function("salesReturn.update")
-    @ResponseBody
-    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class)  SalesReturn salesReturn) {
-        boolean success = salesReturnService.update(salesReturn);
-        if (success) {
-            return JsonResult.success();
-        } else {
-            return JsonResult.failMessage("保存失败");
-        }
-    }
-
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("salesReturn.query")
-    @ResponseBody
-    public JsonResult<SalesReturn>queryInfo(Long returnId) {
-        SalesReturn salesReturn = salesReturnService.queryById( returnId);
-        return  JsonResult.success(salesReturn);
-    }
-
-    @PostMapping(MODEL + "/delete.json")
-    @Function("salesReturn.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-        if (ids.endsWith(",")) {
-            ids = StringUtils.substringBeforeLast(ids, ",");
-        }
-        List<String> idList = ConvertUtil.str2Strings(ids);
-        salesReturnService.batchDelSalesReturn(idList);
-        return JsonResult.success();
-    }
-    
-    
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("salesReturn.exportDocument")
     @ResponseBody
@@ -221,8 +221,54 @@ public class SalesReturnController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+    /* ajax json */
+
+
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("salesReturn.query")
+    @ResponseBody
+    public JsonResult<SalesReturn> queryById(Object id){
+        SalesReturn data = salesReturnService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("salesReturn.query")
+    @ResponseBody
+    public JsonResult<SalesReturn>queryInfo(Long returnId) {
+        SalesReturn salesReturn = salesReturnService.queryById( returnId);
+        return  JsonResult.success(salesReturn);
+    }
+
+    @PostMapping(MODEL + "/delete.json")
+    @Function("salesReturn.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        if (ids.endsWith(",")) {
+            ids = StringUtils.substringBeforeLast(ids, ",");
+        }
+        List<String> idList = ConvertUtil.str2Strings(ids);
+        salesReturnService.batchDelSalesReturn(idList);
+        return JsonResult.success();
+    }
+    
+    
+
     
     @PostMapping(MODEL + "/excel/import.do")
     @Function("salesReturn.importDocument")

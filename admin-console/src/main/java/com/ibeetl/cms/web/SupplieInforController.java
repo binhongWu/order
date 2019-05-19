@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * SupplieInfor 接口
+ * 供应商信息接口
  */
 @Controller
 public class SupplieInforController{
@@ -61,8 +61,11 @@ public class SupplieInforController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+    /**
+     * 供应商信息页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("supplieInfor.query")
     @ResponseBody
@@ -72,26 +75,11 @@ public class SupplieInforController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("supplieInfor.edit")
-    @ResponseBody
-    public ModelAndView edit(Long supplierId) {
-        ModelAndView view = new ModelAndView("/cms/supplieInfor/edit.html");
-        SupplieInfor supplieInfor = supplieInforService.queryById(supplierId);
-        view.addObject("supplieInfor", supplieInfor);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("supplieInfor.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/supplieInfor/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 供应商信息页面数据
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("supplieInfor.query")
     @ResponseBody
@@ -102,17 +90,23 @@ public class SupplieInforController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("supplieInfor.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("supplieInfor.add")
     @ResponseBody
-    public JsonResult<SupplieInfor> queryById(Object id){
-        SupplieInfor data = supplieInforService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/supplieInfor/add.html");
+        return view;
     }
 
+    /**
+     * 添加页面数据
+     * @param supplieInfor
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("supplieInfor.add")
     @ResponseBody
@@ -122,6 +116,26 @@ public class SupplieInforController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param supplierId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("supplieInfor.edit")
+    @ResponseBody
+    public ModelAndView edit(Long supplierId) {
+        ModelAndView view = new ModelAndView("/cms/supplieInfor/edit.html");
+        SupplieInfor supplieInfor = supplieInforService.queryById(supplierId);
+        view.addObject("supplieInfor", supplieInfor);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param supplieInfor
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("supplieInfor.update")
     @ResponseBody
@@ -134,16 +148,11 @@ public class SupplieInforController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("supplieInfor.query")
-    @ResponseBody
-    public JsonResult<SupplieInfor>queryInfo(Long supplierId) {
-        SupplieInfor supplieInfor = supplieInforService.queryById( supplierId);
-        return  JsonResult.success(supplieInfor);
-    }
-
+    /**
+     * 根据ID批量删除
+     * @param ids
+     * @return
+     */
     @PostMapping(MODEL + "/delete.json")
     @Function("supplieInfor.delete")
     @ResponseBody
@@ -155,8 +164,13 @@ public class SupplieInforController{
         supplieInforService.batchDelSupplieInfor(idList);
         return JsonResult.success();
     }
-    
-    
+
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("supplieInfor.exportDocument")
     @ResponseBody
@@ -189,8 +203,39 @@ public class SupplieInforController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("supplieInfor.query")
+    @ResponseBody
+    public JsonResult<SupplieInfor> queryById(Object id){
+        SupplieInfor data = supplieInforService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("supplieInfor.query")
+    @ResponseBody
+    public JsonResult<SupplieInfor>queryInfo(Long supplierId) {
+        SupplieInfor supplieInfor = supplieInforService.queryById( supplierId);
+        return  JsonResult.success(supplieInfor);
+    }
+
+
+    
+    
+
     
     @PostMapping(MODEL + "/excel/import.do")
     @Function("supplieInfor.importDocument")

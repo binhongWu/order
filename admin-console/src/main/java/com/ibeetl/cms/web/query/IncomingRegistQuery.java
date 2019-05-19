@@ -7,7 +7,7 @@ import java.util.Date;
 import com.ibeetl.admin.core.util.Tool;
 import org.apache.commons.lang3.StringUtils;
 /**
- *IncomingRegist查询
+ *入库登记信息搜索条件
  */
 public class IncomingRegistQuery extends PageParam {
     @Query(name = "入库单号", display = true)        

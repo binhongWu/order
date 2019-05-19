@@ -7,7 +7,7 @@ import java.util.Date;
 import com.ibeetl.admin.core.util.Tool;
 import org.apache.commons.lang3.StringUtils;
 /**
- *OutboundRedist查询
+ *出库登记信息搜索条件
  */
 public class OutboundRedistQuery extends PageParam {
     @Query(name = "出库单号", display = true)        

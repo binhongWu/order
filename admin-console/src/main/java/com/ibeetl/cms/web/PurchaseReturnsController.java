@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * PurchaseReturns 接口
+ * 采购退回 接口
  */
 @Controller
 public class PurchaseReturnsController{
@@ -61,8 +61,12 @@ public class PurchaseReturnsController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+
+    /**
+     * 采购退回页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("purchaseReturns.query")
     @ResponseBody
@@ -72,26 +76,11 @@ public class PurchaseReturnsController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("purchaseReturns.edit")
-    @ResponseBody
-    public ModelAndView edit(Long returnedId) {
-        ModelAndView view = new ModelAndView("/cms/purchaseReturns/edit.html");
-        PurchaseReturns purchaseReturns = purchaseReturnsService.queryById(returnedId);
-        view.addObject("purchaseReturns", purchaseReturns);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("purchaseReturns.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/purchaseReturns/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 采购退回页面数据（含搜索条件）
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("purchaseReturns.query")
     @ResponseBody
@@ -102,17 +91,23 @@ public class PurchaseReturnsController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("purchaseReturns.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("purchaseReturns.add")
     @ResponseBody
-    public JsonResult<PurchaseReturns> queryById(Object id){
-        PurchaseReturns data = purchaseReturnsService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/purchaseReturns/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param purchaseReturns
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("purchaseReturns.add")
     @ResponseBody
@@ -122,6 +117,26 @@ public class PurchaseReturnsController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param returnedId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("purchaseReturns.edit")
+    @ResponseBody
+    public ModelAndView edit(Long returnedId) {
+        ModelAndView view = new ModelAndView("/cms/purchaseReturns/edit.html");
+        PurchaseReturns purchaseReturns = purchaseReturnsService.queryById(returnedId);
+        view.addObject("purchaseReturns", purchaseReturns);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param purchaseReturns
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("purchaseReturns.update")
     @ResponseBody
@@ -134,16 +149,11 @@ public class PurchaseReturnsController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("purchaseReturns.query")
-    @ResponseBody
-    public JsonResult<PurchaseReturns>queryInfo(Long returnedId) {
-        PurchaseReturns purchaseReturns = purchaseReturnsService.queryById( returnedId);
-        return  JsonResult.success(purchaseReturns);
-    }
-
+    /**
+     * 根据ID批量删除
+     * @param ids
+     * @return
+     */
     @PostMapping(MODEL + "/delete.json")
     @Function("purchaseReturns.delete")
     @ResponseBody
@@ -155,8 +165,13 @@ public class PurchaseReturnsController{
         purchaseReturnsService.batchDelPurchaseReturns(idList);
         return JsonResult.success();
     }
-    
-    
+
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("purchaseReturns.exportDocument")
     @ResponseBody
@@ -189,8 +204,39 @@ public class PurchaseReturnsController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
+
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("purchaseReturns.query")
+    @ResponseBody
+    public JsonResult<PurchaseReturns> queryById(Object id){
+        PurchaseReturns data = purchaseReturnsService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("purchaseReturns.query")
+    @ResponseBody
+    public JsonResult<PurchaseReturns>queryInfo(Long returnedId) {
+        PurchaseReturns purchaseReturns = purchaseReturnsService.queryById( returnedId);
+        return  JsonResult.success(purchaseReturns);
+    }
+
+
+    
+    
+
     
     @PostMapping(MODEL + "/excel/import.do")
     @Function("purchaseReturns.importDocument")

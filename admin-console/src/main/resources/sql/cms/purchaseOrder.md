@@ -28,6 +28,8 @@ queryByCondition
 findByFinishCondition
 ===
 
+* 查找状态为完成的数据
+
     select
     *
     from purchase_order t
@@ -36,6 +38,8 @@ findByFinishCondition
 
 queryOrderId
 ===
+
+* 查找满足订单单号的数据
 
        select
        *
@@ -96,7 +100,7 @@ updateCustom
 findListByCustom
 ===
 
-* 自定义查询
+* 按条件查找全部数据
 
 
     select 

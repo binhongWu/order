@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * WareHouse 接口
+ * 仓库信息接口
  */
 @Controller
 public class WareHouseController{
@@ -63,6 +63,10 @@ public class WareHouseController{
     FileService fileService;
     /* 页面 */
 
+    /**
+     * 仓库信息页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("wareHouse.query")
     @ResponseBody
@@ -72,26 +76,11 @@ public class WareHouseController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("wareHouse.edit")
-    @ResponseBody
-    public ModelAndView edit(Long id) {
-        ModelAndView view = new ModelAndView("/cms/wareHouse/edit.html");
-        WareHouse wareHouse = wareHouseService.queryById(id);
-        view.addObject("wareHouse", wareHouse);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("wareHouse.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/wareHouse/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 仓库信息页面数据
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("wareHouse.query")
     @ResponseBody
@@ -102,17 +91,23 @@ public class WareHouseController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("wareHouse.query")
+    /**
+     * 添加数据
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("wareHouse.add")
     @ResponseBody
-    public JsonResult<WareHouse> queryById(Object id){
-        WareHouse data = wareHouseService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/wareHouse/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param wareHouse
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("wareHouse.add")
     @ResponseBody
@@ -122,6 +117,26 @@ public class WareHouseController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("wareHouse.edit")
+    @ResponseBody
+    public ModelAndView edit(Long id) {
+        ModelAndView view = new ModelAndView("/cms/wareHouse/edit.html");
+        WareHouse wareHouse = wareHouseService.queryById(id);
+        view.addObject("wareHouse", wareHouse);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param wareHouse
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("wareHouse.update")
     @ResponseBody
@@ -134,16 +149,11 @@ public class WareHouseController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("wareHouse.query")
-    @ResponseBody
-    public JsonResult<WareHouse>queryInfo(Long id) {
-        WareHouse wareHouse = wareHouseService.queryById( id);
-        return  JsonResult.success(wareHouse);
-    }
-
+    /**
+     * 根据ID批量删除
+     * @param ids
+     * @return
+     */
     @PostMapping(MODEL + "/delete.json")
     @Function("wareHouse.delete")
     @ResponseBody
@@ -155,6 +165,37 @@ public class WareHouseController{
         wareHouseService.batchDelWareHouse(idList);
         return JsonResult.success();
     }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("wareHouse.query")
+    @ResponseBody
+    public JsonResult<WareHouse> queryById(Object id){
+        WareHouse data = wareHouseService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("wareHouse.query")
+    @ResponseBody
+    public JsonResult<WareHouse>queryInfo(Long id) {
+        WareHouse wareHouse = wareHouseService.queryById( id);
+        return  JsonResult.success(wareHouse);
+    }
+
+
     
     
     @PostMapping(MODEL + "/excel/export.json")

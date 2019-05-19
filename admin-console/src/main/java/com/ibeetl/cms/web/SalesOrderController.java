@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * SalesOrder 接口
+ * 销售订单 接口
  */
 @Controller
 public class SalesOrderController{
@@ -61,8 +61,12 @@ public class SalesOrderController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+
+    /**
+     * 销售订单页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("salesOrder.query")
     @ResponseBody
@@ -72,26 +76,11 @@ public class SalesOrderController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("salesOrder.edit")
-    @ResponseBody
-    public ModelAndView edit(Long salesId) {
-        ModelAndView view = new ModelAndView("/cms/salesOrder/edit.html");
-        SalesOrder salesOrder = salesOrderService.queryById(salesId);
-        view.addObject("salesOrder", salesOrder);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("salesOrder.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/salesOrder/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 销售订单页面数据
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("salesOrder.query")
     @ResponseBody
@@ -102,17 +91,23 @@ public class SalesOrderController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("salesOrder.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("salesOrder.add")
     @ResponseBody
-    public JsonResult<SalesOrder> queryById(Object id){
-        SalesOrder data = salesOrderService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/salesOrder/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param salesOrder
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("salesOrder.add")
     @ResponseBody
@@ -122,6 +117,27 @@ public class SalesOrderController{
         return JsonResult.success();
     }
 
+
+    /**
+     * 编辑页面
+     * @param salesId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("salesOrder.edit")
+    @ResponseBody
+    public ModelAndView edit(Long salesId) {
+        ModelAndView view = new ModelAndView("/cms/salesOrder/edit.html");
+        SalesOrder salesOrder = salesOrderService.queryById(salesId);
+        view.addObject("salesOrder", salesOrder);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param salesOrder
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("salesOrder.update")
     @ResponseBody
@@ -134,29 +150,12 @@ public class SalesOrderController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("salesOrder.query")
-    @ResponseBody
-    public JsonResult<SalesOrder>queryInfo(Long salesId) {
-        SalesOrder salesOrder = salesOrderService.queryById( salesId);
-        return  JsonResult.success(salesOrder);
-    }
-
-    @PostMapping(MODEL + "/delete.json")
-    @Function("salesOrder.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-        if (ids.endsWith(",")) {
-            ids = StringUtils.substringBeforeLast(ids, ",");
-        }
-        List<String> idList = ConvertUtil.str2Strings(ids);
-        salesOrderService.batchDelSalesOrder(idList);
-        return JsonResult.success();
-    }
-    
-    
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("salesOrder.exportDocument")
     @ResponseBody
@@ -189,8 +188,52 @@ public class SalesOrderController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("salesOrder.query")
+    @ResponseBody
+    public JsonResult<SalesOrder> queryById(Object id){
+        SalesOrder data = salesOrderService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("salesOrder.query")
+    @ResponseBody
+    public JsonResult<SalesOrder>queryInfo(Long salesId) {
+        SalesOrder salesOrder = salesOrderService.queryById( salesId);
+        return  JsonResult.success(salesOrder);
+    }
+
+    @PostMapping(MODEL + "/delete.json")
+    @Function("salesOrder.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        if (ids.endsWith(",")) {
+            ids = StringUtils.substringBeforeLast(ids, ",");
+        }
+        List<String> idList = ConvertUtil.str2Strings(ids);
+        salesOrderService.batchDelSalesOrder(idList);
+        return JsonResult.success();
+    }
+    
+    
+
     
     @PostMapping(MODEL + "/excel/import.do")
     @Function("salesOrder.importDocument")

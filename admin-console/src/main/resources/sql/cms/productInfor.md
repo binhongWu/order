@@ -32,6 +32,9 @@ queryByCondition
 
 findByCode
 ===
+
+* 根据编码查找
+
     select
     *
     from product_infor t
@@ -40,6 +43,8 @@ findByCode
  
 queryWarehouseWarn
 ===
+
+* 检索现有库存 < 最小库存
 
     select 
     * 
@@ -108,7 +113,7 @@ updateCustom
 findListByCustom
 ===
 
-* 自定义查询
+* 按条件查找全部数据
 
 
     select 
@@ -193,7 +198,7 @@ findAll
     
 statistics
 ===
-*每个仓库的绘本信息 --> 盘点
+* 每个仓库的绘本信息 --> 盘点
       
     select 
     @pageTag(){

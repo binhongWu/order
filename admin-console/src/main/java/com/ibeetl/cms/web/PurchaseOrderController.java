@@ -61,8 +61,11 @@ public class PurchaseOrderController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+    /**
+     * 采购订单页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("purchaseOrder.query")
     @ResponseBody
@@ -72,26 +75,11 @@ public class PurchaseOrderController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("purchaseOrder.edit")
-    @ResponseBody
-    public ModelAndView edit(Long orderId) {
-        ModelAndView view = new ModelAndView("/cms/purchaseOrder/edit.html");
-        PurchaseOrder purchaseOrder = purchaseOrderService.queryById(orderId);
-        view.addObject("purchaseOrder", purchaseOrder);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("purchaseOrder.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/purchaseOrder/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 采购订单页面数据（含搜索条件）
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("purchaseOrder.query")
     @ResponseBody
@@ -102,17 +90,23 @@ public class PurchaseOrderController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("purchaseOrder.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("purchaseOrder.add")
     @ResponseBody
-    public JsonResult<PurchaseOrder> queryById(Object id){
-        PurchaseOrder data = purchaseOrderService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/purchaseOrder/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据页面
+     * @param purchaseOrder
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("purchaseOrder.add")
     @ResponseBody
@@ -122,6 +116,26 @@ public class PurchaseOrderController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param orderId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("purchaseOrder.edit")
+    @ResponseBody
+    public ModelAndView edit(Long orderId) {
+        ModelAndView view = new ModelAndView("/cms/purchaseOrder/edit.html");
+        PurchaseOrder purchaseOrder = purchaseOrderService.queryById(orderId);
+        view.addObject("purchaseOrder", purchaseOrder);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param purchaseOrder
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("purchaseOrder.update")
     @ResponseBody
@@ -134,16 +148,11 @@ public class PurchaseOrderController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("purchaseOrder.query")
-    @ResponseBody
-    public JsonResult<PurchaseOrder>queryInfo(Long orderId) {
-        PurchaseOrder purchaseOrder = purchaseOrderService.queryById( orderId);
-        return  JsonResult.success(purchaseOrder);
-    }
-
+    /**
+     * 根据id 可批量删除
+     * @param ids
+     * @return
+     */
     @PostMapping(MODEL + "/delete.json")
     @Function("purchaseOrder.delete")
     @ResponseBody
@@ -155,8 +164,13 @@ public class PurchaseOrderController{
         purchaseOrderService.batchDelPurchaseOrder(idList);
         return JsonResult.success();
     }
-    
-    
+
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("purchaseOrder.exportDocument")
     @ResponseBody
@@ -189,7 +203,7 @@ public class PurchaseOrderController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
 
     /**
@@ -232,6 +246,11 @@ public class PurchaseOrderController{
         }
     }
 
+    /**
+     * 导入数据错误地方的定位
+     * @param msg
+     * @return
+     */
     private String parseXLSReadMessage(XLSReadMessage msg) {
         String str = msg.getMessage();
         int start = "Can't read cell ".length();
@@ -279,12 +298,45 @@ public class PurchaseOrderController{
         }
     }
 
+    /**
+     * ?
+     * @param id
+     * @return
+     */
     @PostMapping(MODEL + "/purchase.do")
     @ResponseBody
     public JsonResult purchase(Long id){
         System.out.println("进入购买！");
         return JsonResult.success();
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("purchaseOrder.query")
+    @ResponseBody
+    public JsonResult<PurchaseOrder> queryById(Object id){
+        PurchaseOrder data = purchaseOrderService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("purchaseOrder.query")
+    @ResponseBody
+    public JsonResult<PurchaseOrder>queryInfo(Long orderId) {
+        PurchaseOrder purchaseOrder = purchaseOrderService.queryById( orderId);
+        return  JsonResult.success(purchaseOrder);
+    }
+
+
+    
+    
+
     
 
 }

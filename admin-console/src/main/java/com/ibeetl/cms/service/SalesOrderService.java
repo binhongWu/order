@@ -38,43 +38,21 @@ public class SalesOrderService extends BaseService<SalesOrder>{
         return ret;
     }
 
-    public void batchDelSalesOrder(List<String> ids){
-        try {
-            salesOrderDao.batchDelSalesOrderByIds(ids);
-        } catch (Exception e) {
-            throw new PlatformException("批量删除SalesOrder失败", e);
-        }
-    }
-
     /**
-     * 根据主键更新，属性为null的不会更新
+     * 根据主键更新，所有值参与更新
      */
-    @Override
-    public boolean updateTemplate(SalesOrder model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return sqlManager.updateTemplateById(model) > 0;
-    }
-
-     /**
-      * 根据主键更新，所有值参与更新
-      */
     @Override
     public boolean update(SalesOrder model) {
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
-     }
-
-    /**
-     * 自定义更新
-      */
-    public boolean updateCustom(SalesOrder model) {
-        model.setUpdatedTime(new Date());
-        model.setUpdatedBy(platformService.getCurrentUser().getId());
-        return salesOrderDao.updateCustom(model) > 0;
     }
 
+    /**
+     * 保存
+     * @param model 实体类
+     * @return
+     */
     @Override
     public boolean save(SalesOrder model) {
         model.setCreatedBy(platformService.getCurrentUser().getId());
@@ -82,17 +60,6 @@ public class SalesOrderService extends BaseService<SalesOrder>{
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         model.setUpdatedTime(new Date());
         return sqlManager.insertTemplate(model, true) > 0;
-    }
-
-    public SalesOrder getById(Object id){
-        return salesOrderDao.getById(id);
-    }
-
-    /**
-     * 按条件查找全部数据
-     */
-    public List<SalesOrder> findListByCustom(SalesOrder model) {
-        return salesOrderDao.findListByCustom(model);
     }
 
     /**
@@ -155,6 +122,11 @@ public class SalesOrderService extends BaseService<SalesOrder>{
 
     }
 
+    /**
+     * 根据订单完成状态查找
+     * @param status
+     * @return
+     */
     private List<SalesOrder> findOrderForO(String status) {
         return salesOrderDao.findOrderForO(status);
     }
@@ -167,4 +139,51 @@ public class SalesOrderService extends BaseService<SalesOrder>{
     public SalesOrder getBySalId(Long salesId) {
         return salesOrderDao.getBySalId(salesId);
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    public void batchDelSalesOrder(List<String> ids){
+        try {
+            salesOrderDao.batchDelSalesOrderByIds(ids);
+        } catch (Exception e) {
+            throw new PlatformException("批量删除SalesOrder失败", e);
+        }
+    }
+
+    /**
+     * 根据主键更新，属性为null的不会更新
+     */
+    @Override
+    public boolean updateTemplate(SalesOrder model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return sqlManager.updateTemplateById(model) > 0;
+    }
+
+
+
+    /**
+     * 自定义更新
+      */
+    public boolean updateCustom(SalesOrder model) {
+        model.setUpdatedTime(new Date());
+        model.setUpdatedBy(platformService.getCurrentUser().getId());
+        return salesOrderDao.updateCustom(model) > 0;
+    }
+
+
+
+    public SalesOrder getById(Object id){
+        return salesOrderDao.getById(id);
+    }
+
+    /**
+     * 按条件查找全部数据
+     */
+    public List<SalesOrder> findListByCustom(SalesOrder model) {
+        return salesOrderDao.findListByCustom(model);
+    }
+
+
 }

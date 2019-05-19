@@ -48,7 +48,7 @@ import com.ibeetl.cms.service.*;
 import com.ibeetl.cms.web.query.*;
 
 /**
- * SalesOutStack 接口
+ * 销售出库 接口
  */
 @Controller
 public class SalesOutStackController{
@@ -61,8 +61,11 @@ public class SalesOutStackController{
     
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+    /**
+     * 销售出库页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("salesOutStack.query")
     @ResponseBody
@@ -72,36 +75,11 @@ public class SalesOutStackController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("salesOutStack.edit")
-    @ResponseBody
-    public ModelAndView edit(Long salesOutStackId) {
-        ModelAndView view = new ModelAndView("/cms/salesOutStack/edit.html");
-        SalesOutStack salesOutStack = salesOutStackService.queryById(salesOutStackId);
-        view.addObject("salesOutStack", salesOutStack);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/audio.do")
-    @Function("salesOutStack.audio")
-    @ResponseBody
-    public ModelAndView audio(Long salesOutStackId) {
-        ModelAndView view = new ModelAndView("/cms/salesOutStack/audio.html");
-        SalesOutStack salesOutStack = salesOutStackService.queryById(salesOutStackId);
-        view.addObject("salesOutStack", salesOutStack);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("salesOutStack.add")
-    @ResponseBody
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/cms/salesOutStack/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 销售出库页面数据
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("salesOutStack.query")
     @ResponseBody
@@ -112,17 +90,23 @@ public class SalesOutStackController{
         return JsonResult.success(page);
     }
 
-        /**
-         * 根据ID查找
-         */
-    @PostMapping(MODEL + "/queryById.json")
-    @Function("salesOutStack.query")
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("salesOutStack.add")
     @ResponseBody
-    public JsonResult<SalesOutStack> queryById(Object id){
-        SalesOutStack data = salesOutStackService.queryById(id);
-        return JsonResult.success(data);
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/cms/salesOutStack/add.html");
+        return view;
     }
 
+    /**
+     * 添加数据保存
+     * @param salesOutStack
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("salesOutStack.add")
     @ResponseBody
@@ -132,6 +116,26 @@ public class SalesOutStackController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param salesOutStackId
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("salesOutStack.edit")
+    @ResponseBody
+    public ModelAndView edit(Long salesOutStackId) {
+        ModelAndView view = new ModelAndView("/cms/salesOutStack/edit.html");
+        SalesOutStack salesOutStack = salesOutStackService.queryById(salesOutStackId);
+        view.addObject("salesOutStack", salesOutStack);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param salesOutStack
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("salesOutStack.update")
     @ResponseBody
@@ -144,6 +148,27 @@ public class SalesOutStackController{
         }
     }
 
+
+    /**
+     * 审核页面
+     * @param salesOutStackId
+     * @return
+     */
+    @GetMapping(MODEL + "/audio.do")
+    @Function("salesOutStack.audio")
+    @ResponseBody
+    public ModelAndView audio(Long salesOutStackId) {
+        ModelAndView view = new ModelAndView("/cms/salesOutStack/audio.html");
+        SalesOutStack salesOutStack = salesOutStackService.queryById(salesOutStackId);
+        view.addObject("salesOutStack", salesOutStack);
+        return view;
+    }
+
+    /**
+     * 审核状态
+     * @param salesOutStack
+     * @return
+     */
     @PostMapping(MODEL + "/audio.json")
     @Function("salesOutStack.audio")
     @ResponseBody
@@ -156,29 +181,12 @@ public class SalesOutStackController{
         }
     }
 
-
-   
-    @GetMapping(MODEL + "/view.json")
-    @Function("salesOutStack.query")
-    @ResponseBody
-    public JsonResult<SalesOutStack>queryInfo(Long salesOutStackId) {
-        SalesOutStack salesOutStack = salesOutStackService.queryById( salesOutStackId);
-        return  JsonResult.success(salesOutStack);
-    }
-
-    @PostMapping(MODEL + "/delete.json")
-    @Function("salesOutStack.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-        if (ids.endsWith(",")) {
-            ids = StringUtils.substringBeforeLast(ids, ",");
-        }
-        List<String> idList = ConvertUtil.str2Strings(ids);
-        salesOutStackService.batchDelSalesOutStack(idList);
-        return JsonResult.success();
-    }
-    
-    
+    /**
+     * 导出数据
+     * @param response
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/excel/export.json")
     @Function("salesOutStack.exportDocument")
     @ResponseBody
@@ -211,8 +219,56 @@ public class SalesOutStackController{
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
         }
-        
+
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+    /* ajax json */
+
+
+
+        /**
+         * 根据ID查找
+         */
+    @PostMapping(MODEL + "/queryById.json")
+    @Function("salesOutStack.query")
+    @ResponseBody
+    public JsonResult<SalesOutStack> queryById(Object id){
+        SalesOutStack data = salesOutStackService.queryById(id);
+        return JsonResult.success(data);
+    }
+
+
+
+
+
+
+
+
+   
+    @GetMapping(MODEL + "/view.json")
+    @Function("salesOutStack.query")
+    @ResponseBody
+    public JsonResult<SalesOutStack>queryInfo(Long salesOutStackId) {
+        SalesOutStack salesOutStack = salesOutStackService.queryById( salesOutStackId);
+        return  JsonResult.success(salesOutStack);
+    }
+
+    @PostMapping(MODEL + "/delete.json")
+    @Function("salesOutStack.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        if (ids.endsWith(",")) {
+            ids = StringUtils.substringBeforeLast(ids, ",");
+        }
+        List<String> idList = ConvertUtil.str2Strings(ids);
+        salesOutStackService.batchDelSalesOutStack(idList);
+        return JsonResult.success();
+    }
+    
+    
+
     
     @PostMapping(MODEL + "/excel/import.do")
     @Function("salesOutStack.importDocument")
