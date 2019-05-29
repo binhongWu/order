@@ -74,16 +74,16 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'deliveryAddress', 
                 title : '送货地址',
                 },
-                // {
-                // field : 'checkBy',
-                // title : '审核人',
-                //     width : 100
-                // },
-                // {
-                // field : 'checkDate',
-                // title : '审核时间',
-                //     width : 100
-                // },
+                {
+                field : 'checkBy',
+                title : '审核人',
+                    width : 100
+                },
+                {
+                field : 'checkDate',
+                title : '审核时间',
+                    width : 100
+                },
                 {
                 field : 'checkStatusText',
                 title : '审核状态'

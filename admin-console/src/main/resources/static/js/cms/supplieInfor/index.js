@@ -34,10 +34,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'supplierName', 
                 title : '供货商名称',
                 }, 
-                {
-                field : 'books', 
-                title : '供应图书种类',
-                }, 
+                // {
+                // field : 'books',
+                // title : '供应图书种类',
+                // },
                 {
                 field : 'position', 
                 title : '职务',

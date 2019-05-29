@@ -66,10 +66,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 // field : 'checkmanBy',
                 // title : '验收人',
                 // },
-                // {
-                // field : 'stats',
-                // title : '审核人',
-                // },
+                {
+                field : 'stats',
+                title : '审核人',
+                },
                 {
                 field : 'checkDate', 
                 title : '审核时间',

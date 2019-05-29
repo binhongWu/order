@@ -62,18 +62,18 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'buyerBy', 
                 title : '采购人',
                 }, 
-                {
-                field : 'checkBy', 
-                title : '审核人',
-                }, 
-                {
-                field : 'checkDate', 
-                title : '审核时间',
-                }, 
-                {
-                field : 'checkStatus', 
-                title : '审核状态（0：待审核 1：通过 2：拒绝）',
-                },
+                // {
+                // field : 'checkBy',
+                // title : '审核人',
+                // },
+                // {
+                // field : 'checkDate',
+                // title : '审核时间',
+                // },
+                // {
+                // field : 'checkStatus',
+                // title : '审核状态（0：待审核 1：通过 2：拒绝）',
+                // },
                 {
                 field : 'remarks', 
                 title : '备注',
