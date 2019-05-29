@@ -57,7 +57,7 @@ batchDeleteRoleFunction
 	
 batchDeleteRoleMenu
 ===
-	delete from core_role_menu  where role_id in( #join(ids)#);
+	delete from CORE_ROLE_MENU  where role_id in( #join(ids)#);
 	
 batchDeleteUserRole
 ===

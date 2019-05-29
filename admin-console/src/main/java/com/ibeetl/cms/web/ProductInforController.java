@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ProductInfor 接口
+ * 中英文绘本信息 接口
  */
 @Controller
 public class ProductInforController{
@@ -61,8 +61,12 @@ public class ProductInforController{
     @GetMapping(MODEL + "/index.do")
     @Function("productInfor.query")
     @ResponseBody
+    /*ModelAndView指模型和视图的集合*/
     public ModelAndView index() {
         ModelAndView view = new ModelAndView("/cms/productInfor/index.html") ;
+        /*
+        设置modle，其中第一个参数是name，第二个参数是对象。
+         */
         view.addObject("search", ProductInforQuery.class.getName());
         return view;
     }
@@ -179,23 +183,27 @@ public class ProductInforController{
          */
         String excelTemplate ="excelTemplates/cms/productInfor/product_info_export.xls";
         PageQuery<ProductInfor> page = condtion.getPageQuery();
-        //取出全部符合条件的
+        //取出全部符合条件的  设置page对象的第一页就要取出全部数据
         page.setPageSize(Integer.MAX_VALUE);
         page.setPageNumber(1);
         page.setTotalRow(Integer.MAX_VALUE);
         //本次导出需要的数据
         List<ProductInfor> list =productInforService.queryByCondition(page).getList();
+        //System.out.println(list);
+        // 使用JXLS 语法来把数据弄到execl模板，然后下载文件
         try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
             if(is==null) {
                 throw new PlatformException("模板资源不存在："+excelTemplate);
             }
             FileItem item = fileService.createFileTemp("绘本信息_"+DateUtil.now("yyyyMMddHHmmss")+".xls");
+            // 使用流的方式读取文件内容 并下载
             OutputStream os = item.openOutpuStream();
             Context context = new Context();
             context.putVar("list", list);
             JxlsHelper.getInstance().processTemplate(is, os, context);
             os.close();
             //下载参考FileSystemContorller
+            // 得到文件路径，然后前端会进行下载
             return  JsonResult.success(item.getPath());
         } catch (IOException e) {
             throw new PlatformException(e.getMessage());
@@ -216,6 +224,7 @@ public class ProductInforController{
         if (file.isEmpty()) {
             return JsonResult.fail();
         }
+        //根据文件流的方式来获取导入的文件
         InputStream ins = file.getInputStream();
         InputStream inputXML = Thread.currentThread().getContextClassLoader().getResourceAsStream("excelTemplates/cms/productInfor/product_info_import.xml");
         XLSReader mainReader = ReaderBuilder.buildFromXML(inputXML);
@@ -224,6 +233,7 @@ public class ProductInforController{
         Map beans = new HashMap();
         beans.put("list", datas);
         ReaderConfig.getInstance().setSkipErrors(true);
+        //JXLS 读取上传文件，然后和导入的XML文件相呼应
         XLSReadStatus readStatus = mainReader.read(inputXLS, beans);
         List<XLSReadMessage> errors = readStatus.getReadMessages();
         if (!errors.isEmpty()) {
@@ -236,6 +246,7 @@ public class ProductInforController{
             return JsonResult.failMessage("解析excel出错:" + sb.toString());
         }
         try {
+            //读取后的数据进行保存
             this.productInforService.saveImport(datas);
             return JsonResult.success();
         } catch (Exception ex) {
@@ -294,6 +305,7 @@ public class ProductInforController{
     public ModelAndView getInfo(Long id) {
         ModelAndView view = new ModelAndView("/cms/productInfor/getInfo.html");
         ProductInfor productInfor = productInforService.queryById(id);
+        //System.out.println(productInfor);
         List<FileItem> fileItems = fileService.queryByBiz("ProductInfo",productInfor.getPicture());
         if(fileItems.size() > 0){
             FileItem fileItem = fileItems.get(0);

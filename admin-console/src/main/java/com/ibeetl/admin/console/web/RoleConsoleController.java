@@ -36,7 +36,7 @@ import com.ibeetl.admin.core.util.ValidateConfig;
 import com.ibeetl.admin.core.web.JsonResult;
 
 /**
- * 角色
+ * 角色 --->  岗位
  */
 @Controller
 public class RoleConsoleController {
@@ -56,8 +56,11 @@ public class RoleConsoleController {
     @Autowired
     private OrgConsoleService orgConsoleService;
 
-    /* 页面 */
 
+    /**
+     * 岗位管理页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("role")
     public ModelAndView index() {
@@ -65,49 +68,9 @@ public class RoleConsoleController {
         view.addObject("search", RoleQuery.class.getName());
         return view;
     }
-
-    @GetMapping(MODEL + "/edit.do")
-    @Function("role.edit")
-    public ModelAndView edit(String id) {
-        ModelAndView view = new ModelAndView("/admin/role/edit.html");
-        CoreRole role = roleConsoleService.queryById(id);
-        view.addObject("role", role);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("role.add")
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/admin/role/add.html");
-        return view;
-    }
-
-    @GetMapping(MODEL + "/user/list.do")
-    @Function("role.user.query")
-    public ModelAndView users(Long roleId) {
-        CoreRole role = roleConsoleService.queryById(roleId);
-        ModelAndView view = new ModelAndView("/admin/role/roleUser.html");
-        view.addObject("role", role);
-        view.addObject("search", RoleUserQuery.class.getName());
-        return view;
-    }
-
-    @GetMapping(MODEL + "/function.do")
-    @Function("role.function.query")
-    public ModelAndView functions() {
-        ModelAndView view = new ModelAndView("/admin/role/function.html");
-        return view;
-    }
-    @GetMapping(MODEL + "/data.do")
-    @Function("role.function.query")
-    public ModelAndView  data() {
-        ModelAndView view = new ModelAndView("/admin/role/data.html");
-        return view;
-    }
-
     /**
      * 列表页、 分页数据
-     * 
+     *岗位管理页面数据
      * @param condtion
      * @return
      */
@@ -119,6 +82,196 @@ public class RoleConsoleController {
         roleConsoleService.queryByCondtion(page);
         return JsonResult.success(page);
     }
+
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("role.add")
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/admin/role/add.html");
+        return view;
+    }
+    /**
+     * 添加页面数据保存
+     *
+     * @return
+     */
+    @PostMapping(MODEL + "/add.json")
+    @Function("role.add")
+    @ResponseBody
+    public JsonResult addRole(@Validated(ValidateConfig.ADD.class) CoreRole role) {
+        CoreRole role1 = roleConsoleService.queryByCode(role.getCode());
+        if (role1 != null) {
+            return JsonResult.failMessage("用户编号已存在");
+        }
+        JsonResult result = new JsonResult();
+        role.setCreateTime(new Date());
+        roleConsoleService.save(role);
+        platformService.clearFunctionCache();
+        return result.success();
+    }
+
+    /**
+     * 编辑页面
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("role.edit")
+    public ModelAndView edit(String id) {
+        ModelAndView view = new ModelAndView("/admin/role/edit.html");
+        CoreRole role = roleConsoleService.queryById(id);
+        view.addObject("role", role);
+        return view;
+    }
+    /**
+     * 编辑保存
+     *
+     * @param role
+     * @return
+     */
+    @PostMapping(MODEL + "/update.json")
+    @Function("role.update")
+    @ResponseBody
+
+    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class) CoreRole role) {
+
+        boolean success = roleConsoleService.update(role);
+
+        if (success) {
+            platformService.clearFunctionCache();
+            return new JsonResult().success();
+        } else {
+            return JsonResult.failMessage("保存失败");
+        }
+    }
+    /**
+     * (批量)删除
+     *
+     * @param ids
+     *            角色id
+     * @return
+     */
+    @PostMapping(MODEL + "/delete.json")
+    @Function("role.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        if (ids.endsWith(",")) {
+            ids = StringUtils.substringBeforeLast(ids, ",");
+        }
+
+        List<Long> idList = ConvertUtil.str2longs(ids);
+        roleConsoleService.deleteById(idList);
+        return new JsonResult().success();
+    }
+
+    /**
+     * 岗位管理-》查看用户页面
+     * @param roleId
+     * @return
+     */
+    @GetMapping(MODEL + "/user/list.do")
+    @Function("role.user.query")
+    public ModelAndView users(Long roleId) {
+        CoreRole role = roleConsoleService.queryById(roleId);
+        ModelAndView view = new ModelAndView("/admin/role/roleUser.html");
+        view.addObject("role", role);
+        view.addObject("search", RoleUserQuery.class.getName());
+        return view;
+    }
+    /**
+     * 岗位管理-》查看用户页面数据
+     *
+     * @param queryCondtion
+     *            查询条件
+     * @return
+     */
+    @PostMapping(MODEL + "/user/list.json")
+    @Function("role.user.query")
+    @ResponseBody
+    public JsonResult<PageQuery<CoreUser>> userList(RoleUserQuery query) {
+        PageQuery page = query.getPageQuery();
+        PageQuery<CoreUser> pageQuery = roleConsoleService.queryRoleUser(page);
+        return JsonResult.success(page);
+    }
+
+
+
+
+    /**
+     * 岗位功能授权页面
+     * @return
+     */
+    @GetMapping(MODEL + "/function.do")
+    @Function("role.function.query")
+    public ModelAndView functions() {
+        ModelAndView view = new ModelAndView("/admin/role/function.html");
+        return view;
+    }
+
+    /**
+     * 岗位功能授权页面数据（加载当前角色以及被授权的功能点）
+     * @param roleId
+     * @return
+     */
+    @PostMapping(MODEL + "/function/ids.json")
+    @Function("role.function.list")
+    @ResponseBody
+    public JsonResult<List<Long>> getFunctionIdByRole(Long roleId) {
+        List<Long> list = functionConsoleService.getFunctionByRole(roleId);
+        return JsonResult.success(list);
+    }
+
+    /**
+     * 岗位功能授权保存
+     * @param roleId
+     * @param ids
+     * @return
+     */
+    @PostMapping(MODEL + "/function/update.json")
+    @Function("role.function.update")
+    @ResponseBody
+    public JsonResult updateFunction(Long roleId, String ids) {
+        List<Long> all = ConvertUtil.str2longs(ids);
+        List<Long> addIds = new ArrayList<Long>();
+        List<Long> delIds = new ArrayList<Long>();
+        List<Long> dbs = functionConsoleService.getFunctionByRole(roleId);
+        Iterator<Long> it = all.iterator();
+        for(Long id:all) {
+            if(!dbs.contains(id)) {
+                addIds.add(id);
+            }
+        }
+
+        for(Long id:dbs) {
+            if(!all.contains(id)) {
+                delIds.add(id);
+            }
+        }
+        functionConsoleService.updateSysRoleFunction(roleId, addIds, delIds);
+        return JsonResult.success();
+    }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    @GetMapping(MODEL + "/data.do")
+    @Function("role.function.query")
+    public ModelAndView  data() {
+        ModelAndView view = new ModelAndView("/admin/role/data.html");
+        return view;
+    }
+
+    @GetMapping(MODEL + "/function/queryFunction.json")
+    @Function("role.function.list")
+    @ResponseBody
+    public JsonResult<List<RoleDataAccessFunction>> getQueryFunctionByRole(Long roleId) {
+        List<RoleDataAccessFunction> list = functionConsoleService.getQueryFunctionByRole(roleId);
+        return JsonResult.success(list);
+    }
+
+
 
     @GetMapping(MODEL + "/all.json")
     @Function("role.query")
@@ -141,47 +294,9 @@ public class RoleConsoleController {
         return JsonResult.success(list);
     }
 
-    /**
-     * 保存
-     * 
-     * @return
-     */
-    @PostMapping(MODEL + "/add.json")
-    @Function("role.add")
-    @ResponseBody
-    public JsonResult addRole(@Validated(ValidateConfig.ADD.class) CoreRole role) {
-        CoreRole role1 = roleConsoleService.queryByCode(role.getCode());
-        if (role1 != null) {
-            return JsonResult.failMessage("用户编号已存在");
-        }
-        JsonResult result = new JsonResult();
-        role.setCreateTime(new Date());
-        roleConsoleService.save(role);
-        platformService.clearFunctionCache();
-        return result.success();
-    }
 
-    /**
-     * 更新
-     * 
-     * @param role
-     * @return
-     */
-    @PostMapping(MODEL + "/update.json")
-    @Function("role.update")
-    @ResponseBody
 
-    public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class) CoreRole role) {
 
-        boolean success = roleConsoleService.update(role);
-
-        if (success) {
-            platformService.clearFunctionCache();
-            return new JsonResult().success();
-        } else {
-            return JsonResult.failMessage("保存失败");
-        }
-    }
 
     /**
      * 查询角色信息
@@ -197,41 +312,9 @@ public class RoleConsoleController {
         return JsonResult.success(role);
     }
 
-    /**
-     * (批量)删除
-     * 
-     * @param ids
-     *            角色id
-     * @return
-     */
-    @PostMapping(MODEL + "/delete.json")
-    @Function("role.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-        if (ids.endsWith(",")) {
-            ids = StringUtils.substringBeforeLast(ids, ",");
-        }
 
-        List<Long> idList = ConvertUtil.str2longs(ids);
-        roleConsoleService.deleteById(idList);
-        return new JsonResult().success();
-    }
 
-    /**
-     * 查询角色下授权用户列表
-     * 
-     * @param queryCondtion
-     *            查询条件
-     * @return
-     */
-    @PostMapping(MODEL + "/user/list.json")
-    @Function("role.user.query")
-    @ResponseBody
-    public JsonResult<PageQuery<CoreUser>> userList(RoleUserQuery query) {
-        PageQuery page = query.getPageQuery();
-        PageQuery<CoreUser> pageQuery = roleConsoleService.queryRoleUser(page);
-        return JsonResult.success(page);
-    }
+
 
     // /**
     // * 给角色添加用户
@@ -264,45 +347,8 @@ public class RoleConsoleController {
     // return JsonResult.success();
     // }
 
-    @PostMapping(MODEL + "/function/ids.json")
-    @Function("role.function.list")
-    @ResponseBody
-    public JsonResult<List<Long>> getFunctionIdByRole(Long roleId) {
-        List<Long> list = functionConsoleService.getFunctionByRole(roleId);
-        return JsonResult.success(list);
-    }
 
-    @GetMapping(MODEL + "/function/queryFunction.json")
-    @Function("role.function.list")
-    @ResponseBody
-    public JsonResult<List<RoleDataAccessFunction>> getQueryFunctionByRole(Long roleId) {
-        List<RoleDataAccessFunction> list = functionConsoleService.getQueryFunctionByRole(roleId);
-        return JsonResult.success(list);
-    }
 
-    @PostMapping(MODEL + "/function/update.json")
-    @Function("role.function.update")
-    @ResponseBody
-    public JsonResult updateFunction(Long roleId, String ids) {
-        List<Long> all = ConvertUtil.str2longs(ids);
-        List<Long> addIds = new ArrayList<Long>();
-        List<Long> delIds = new ArrayList<Long>();
-        List<Long> dbs = functionConsoleService.getFunctionByRole(roleId);
-        Iterator<Long> it = all.iterator();
-        for(Long id:all) {
-            if(!dbs.contains(id)) {
-                addIds.add(id);
-            }
-        }
-        
-        for(Long id:dbs) {
-            if(!all.contains(id)) {
-                delIds.add(id);
-            }
-        }
-        functionConsoleService.updateSysRoleFunction(roleId, addIds, delIds);
-        return JsonResult.success();
-    }
 
     @PostMapping(MODEL + "/function/updateDataAccess.json")
     @Function("role.function.updateDataAccess")

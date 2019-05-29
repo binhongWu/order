@@ -104,10 +104,12 @@ public class FileUploadController {
         String bizId = batchFileID.toString();
         CoreUser user = platformService.getCurrentUser();
         CoreOrg org = platformService.getCurrentOrg();
+        // 得到上传图片对象创建文件元素存好后返回文件元素
         FileItem fileItem = fileService.createImgItem(file.getOriginalFilename(), bizType, bizId, user.getId(), org.getId(), bizId,null);
         OutputStream os = fileItem.openOutpuStream();
         FileUtil.copy(file.getInputStream(), os);
         fileItem.setBizId(bizId);
+        //返回图片对象（包含有路径可以让前端回显图片）
         return JsonResult.success(fileItem);
     }
     public class LibraryFile {

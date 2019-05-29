@@ -66,10 +66,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'salesBy', 
                 title : '销售人',
                 },
-                {
-                field : 'shipBy', 
-                title : '发货人',
-                },
+                // {
+                // field : 'shipBy',
+                // title : '发货人',
+                // },
                 {
                 field : 'deliveryAddress', 
                 title : '送货地址',

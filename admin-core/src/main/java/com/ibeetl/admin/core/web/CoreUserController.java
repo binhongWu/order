@@ -40,34 +40,11 @@ public class CoreUserController {
 	@Autowired
 	HttpRequestLocal httpRequestLocal;
 
-
-
 	
 	@Autowired
 	PasswordEncryptService passwordEncryptService ;
 
-	@PostMapping(MODEL + "/login.json")
-	@ResponseBody
-	public JsonResult<UserLoginInfo> login(String code, String password) {
-		UserLoginInfo info = userService.login(code, password);
-		if (info == null) {
-			
-			return JsonResult.failMessage("用户名密码错误");
-		}
-		CoreUser user = info.getUser();
-		CoreOrg currentOrg = info.getOrgs().get(0);
-		for (CoreOrg org : info.getOrgs()) {
-			if (org.getId() == user.getOrgId()) {
-				currentOrg = org;
-				break;
-			}
-		}
 
-		info.setCurrentOrg(currentOrg);
-		// 记录登录信息到session
-		this.platformService.setLoginUser(info.getUser(), info.getCurrentOrg(), info.getOrgs());
-		return JsonResult.success(info);
-	}
 
 	/**
 	 * 用户所在部门
@@ -258,5 +235,28 @@ public class CoreUserController {
       	}
       	return views;
      }
+
+	@PostMapping(MODEL + "/login.json")
+	@ResponseBody
+	public JsonResult<UserLoginInfo> login(String code, String password) {
+		UserLoginInfo info = userService.login(code, password);
+		if (info == null) {
+
+			return JsonResult.failMessage("用户名密码错误");
+		}
+		CoreUser user = info.getUser();
+		CoreOrg currentOrg = info.getOrgs().get(0);
+		for (CoreOrg org : info.getOrgs()) {
+			if (org.getId() == user.getOrgId()) {
+				currentOrg = org;
+				break;
+			}
+		}
+
+		info.setCurrentOrg(currentOrg);
+		// 记录登录信息到session
+		this.platformService.setLoginUser(info.getUser(), info.getCurrentOrg(), info.getOrgs());
+		return JsonResult.success(info);
+	}
 
 }

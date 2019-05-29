@@ -48,7 +48,7 @@ public class FunctionConsoleService  extends BaseService<CoreFunction>{
 		functionDao.queryByCondtion(query);
 		List<CoreFunction> list = query.getList();
 		this.queryListAfter(list);
-		//处理父功能名称显示
+		//处理父功能名称显示（根据父功能id获得名称）
 		FunctionItem root = platformService.buildFunction();
         for(CoreFunction function:list) {
         	Long parentId = function.getParentId();

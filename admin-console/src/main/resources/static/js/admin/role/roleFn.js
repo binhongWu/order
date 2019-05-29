@@ -12,6 +12,7 @@ layui.define([ 'form', 'laydate', 'table','roleApi'], function(exports) {
 			this.initSaveFunction();
 			
 		},
+		/*加载功能点树*/
 		initFunctionTree:function(){
 			var that = this;
 			$.post(Common.ctxPath + "/admin/function/tree.json", {}, function(response) {
@@ -24,23 +25,17 @@ layui.define([ 'form', 'laydate', 'table','roleApi'], function(exports) {
 			
 			})
 		},
+        /*保存授权配置*/
 		initSaveFunction:function(){
-			
 			$("#save").click(function(){
+                console.log(456);
 				var nodes = zTreeObj.getCheckedNodes(true);
 				var ids = Common.concatBatchId(nodes,"id")
 				roleApi.saveFunctions(checkedRoleId,ids)
 				
 			});
 		},
-		initRoles:function(){
-			var that = this;
-			form.on('radio(roleId)', function(data){
-				 checkedRoleId = data.value; //被点击的radio的value值
-				 that.loadFunctionByRole(checkedRoleId);
-			})
-			
-		},
+        /*初始加载默认获取列表的第一个角色的被授权的功能点（可为全空）*/
 		initFirstRole:function(){
 			var firstRole=$(".layui-form").find(":radio")[0]
 			checkedRoleId= $(firstRole).val();
@@ -49,6 +44,16 @@ layui.define([ 'form', 'laydate', 'table','roleApi'], function(exports) {
 			form.render();
 			
 		},
+        /*监听表单的操作，即角色的选择，加载这个角色被授权的功能（可为全空）*/
+        initRoles:function(){
+            var that = this;
+            form.on('radio(roleId)', function(data){
+                checkedRoleId = data.value; //被点击的radio的value值
+                that.loadFunctionByRole(checkedRoleId);
+            })
+
+        },
+		/*传递给后台选中的角色被授权了哪些功能，回显再也页面（页面的对应功能被选中）*/
 		loadFunctionByRole:function(roleId){
 //			debugger;
 			var nodes = zTreeObj.getCheckedNodes(true);

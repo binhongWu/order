@@ -218,7 +218,7 @@ statistics
             where del='0' and finish_condition = '1'
             and order_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
             group by `code`)t4 on t4.`code`= t.`code`
-    where t2.TYPE = 'product_infor_kinds'
+    where t.del = 0 and t2.TYPE = 'product_infor_kinds'
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}

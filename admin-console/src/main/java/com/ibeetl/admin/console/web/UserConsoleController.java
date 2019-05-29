@@ -72,6 +72,10 @@ public class UserConsoleController {
 
 	/* 页面 */
 
+	/**
+	 * 用户管理页面
+	 * @return
+	 */
 	@GetMapping(MODEL + "/index.do")
 	@Function("user")
 	public ModelAndView index() {
@@ -80,6 +84,53 @@ public class UserConsoleController {
 		return view;
 	}
 
+	/**
+	 * 用户管理页面数据
+	 * @param condtion
+	 * @return
+	 */
+	@PostMapping(MODEL + "/list.json")
+	@Function("user.query")
+	@ResponseBody
+	public JsonResult<PageQuery<CoreUser>> index(UserQuery condtion) {
+
+		PageQuery<CoreUser> page = condtion.getPageQuery();
+		userConsoleService.queryByCondtion(page);
+		return JsonResult.success(page);
+	}
+	/**
+	 * 添加页面
+	 * @return
+	 */
+	@GetMapping(MODEL + "/add.do")
+	@Function("user.add")
+	public ModelAndView add() {
+		ModelAndView view = new ModelAndView("/admin/user/add.html");
+		return view;
+	}
+
+	/**
+	 * 添加数据保存
+	 * @param user
+	 * @return
+	 */
+	@PostMapping(MODEL + "/add.json")
+	@Function("user.add")
+	@ResponseBody
+	public JsonResult<Long> add(@Validated(ValidateConfig.ADD.class) CoreUser user) {
+		if (!platformService.isAllowUserName(user.getCode())) {
+			return JsonResult.failMessage("不允许的注册名字 " + user.getCode());
+		}
+		user.setCreateTime(new Date());
+		userConsoleService.saveUser(user);
+		return JsonResult.success(user.getId());
+	}
+
+	/**
+	 * 编辑页面
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(MODEL + "/edit.do")
 	@Function("user.edit")
 	public ModelAndView edit(String id) {
@@ -89,52 +140,11 @@ public class UserConsoleController {
 		return view;
 	}
 
-	@GetMapping(MODEL + "/add.do")
-	@Function("user.add")
-	public ModelAndView add() {
-		ModelAndView view = new ModelAndView("/admin/user/add.html");
-		return view;
-	}
-
-	@GetMapping(MODEL + "/changePassword.do")
-	@Function("user.add")
-	public ModelAndView changePassword(Long id) {
-		CoreUser user = userConsoleService.queryById(id);
-		ModelAndView view = new ModelAndView("/admin/user/changePassword.html");
-		view.addObject("user", user);
-		return view;
-	}
-
-	@GetMapping(MODEL + "/role/list.do")
-	@Function("user.role")
-	public ModelAndView userRoleIndex(Long id) {
-		CoreUser user = userConsoleService.queryById(id);
-		ModelAndView view = new ModelAndView("/admin/user/userRole.html");
-		view.addObject("search", UserRoleQuery.class.getName());
-		view.addObject("user", user);
-		return view;
-	}
-
-	@GetMapping(MODEL + "/role/add.do")
-	@Function("user.role")
-	public ModelAndView userRoleAdd(Long id) {
-		CoreUser user = userConsoleService.queryById(id);
-		ModelAndView view = new ModelAndView("/admin/user/userRoleAdd.html");
-		view.addObject("user", user);
-		return view;
-	}
-
-	/* Json */
-
-	@PostMapping(MODEL + "/delete.json")
-	@Function("user.delete")
-	@ResponseBody
-	public JsonResult delete(String ids) {
-		List<Long> dels = ConvertUtil.str2longs(ids);
-		userConsoleService.batchDelSysUser(dels);
-		return JsonResult.success();
-	}
-
+	/**
+	 * 编辑页面保存
+	 * @param user
+	 * @return
+	 */
 	@PostMapping(MODEL + "/update.json")
 	@Function("user.update")
 	@ResponseBody
@@ -148,17 +158,176 @@ public class UserConsoleController {
 		}
 	}
 
-	@PostMapping(MODEL + "/add.json")
-	@Function("user.add")
+	/**
+	 * 根据ID批量删除
+	 * @param ids
+	 * @return
+	 */
+	@PostMapping(MODEL + "/delete.json")
+	@Function("user.delete")
 	@ResponseBody
-	public JsonResult<Long> add(@Validated(ValidateConfig.ADD.class) CoreUser user) {
-		if (!platformService.isAllowUserName(user.getCode())) {
-			return JsonResult.failMessage("不允许的注册名字 " + user.getCode());
-		}
-		user.setCreateTime(new Date());
-		userConsoleService.saveUser(user);
-		return JsonResult.success(user.getId());
+	public JsonResult delete(String ids) {
+		List<Long> dels = ConvertUtil.str2longs(ids);
+		userConsoleService.batchDelSysUser(dels);
+		return JsonResult.success();
 	}
+
+	/**
+	 *用户管理-》操作角色页面
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(MODEL + "/role/list.do")
+	@Function("user.role")
+	public ModelAndView userRoleIndex(Long id) {
+		CoreUser user = userConsoleService.queryById(id);
+		ModelAndView view = new ModelAndView("/admin/user/userRole.html");
+		view.addObject("search", UserRoleQuery.class.getName());
+		view.addObject("user", user);
+		return view;
+	}
+	/**
+	 * 用户所有授权角色列表
+	 *用户管理-》操作角色页面数据
+	 * @param id
+	 *            用户id
+	 * @return
+	 */
+	@PostMapping(MODEL + "/role/list.json")
+	@Function("user.role")
+	@ResponseBody
+	public JsonResult<List<CoreUserRole>> getRoleList(UserRoleQuery roleQuery) {
+		List<CoreUserRole> list = userConsoleService.getUserRoles(roleQuery);
+		return JsonResult.success(list);
+	}
+	/**
+	 *用户管理-》操作角色-》添加页面
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(MODEL + "/role/add.do")
+	@Function("user.role")
+	public ModelAndView userRoleAdd(Long id) {
+		CoreUser user = userConsoleService.queryById(id);
+		ModelAndView view = new ModelAndView("/admin/user/userRoleAdd.html");
+		view.addObject("user", user);
+		return view;
+	}
+
+
+	/**
+	 * 用户管理-》操作角色-》添加数据
+	 *
+	 * @return
+	 */
+	@PostMapping(MODEL + "/role/add.json")
+	@Function("user.role")
+	@ResponseBody
+	public JsonResult saveUserRole(@Validated CoreUserRole userRole) {
+		userRole.setCreateTime(new Date());
+		this.userConsoleService.saveUserRole(userRole);
+		this.platformService.clearFunctionCache();
+		return JsonResult.success(userRole.getId());
+
+	}
+
+	/**
+	 * 用户管理-》操作角色-》删除数据
+	 *
+	 * @return
+	 */
+	@PostMapping(MODEL + "/role/delete.json")
+	@Function("user.role")
+	@ResponseBody
+	public JsonResult delUserRole(String ids) {
+		List<Long> dels = ConvertUtil.str2longs(ids);
+
+		userConsoleService.deleteUserRoles(dels);
+		this.platformService.clearFunctionCache();
+		return JsonResult.success();
+	}
+
+	/**
+	 * 用户管理-》修改密码页面
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(MODEL + "/changePassword.do")
+	@Function("user.add")
+	public ModelAndView changePassword(Long id) {
+		CoreUser user = userConsoleService.queryById(id);
+		ModelAndView view = new ModelAndView("/admin/user/changePassword.html");
+		view.addObject("user", user);
+		return view;
+	}
+	/**
+	 * 管理员重置用户密码
+	 *用户管理-》修改密码数据保存
+	 * @return
+	 */
+	@PostMapping(MODEL + "/changePassword.json")
+	@Function("user.reset")
+	@ResponseBody
+	public JsonResult changePassword(Long id, String password) {
+
+		userConsoleService.resetPassword(id, password);
+		return new JsonResult().success();
+	}
+
+	/**
+	 * 导出数据
+	 * @param response
+	 * @param condtion
+	 * @return
+	 */
+	@PostMapping(MODEL + "/excel/export.json")
+	@Function("user.export")
+	@ResponseBody
+	public JsonResult<String> export(HttpServletResponse response,UserQuery condtion) {
+		String excelTemplate ="excelTemplates/admin/user/user_collection_template.xls";
+		PageQuery<CoreUser> page = condtion.getPageQuery();
+		//取出全部符合条件的
+		page.setPageSize(Integer.MAX_VALUE);
+		page.setPageNumber(1);
+		page.setTotalRow(Integer.MAX_VALUE);
+		List<UserExcelExportData> users =userConsoleService.queryExcel(page);
+		try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
+			if(is==null) {
+				throw new PlatformException("模板资源不存在："+excelTemplate);
+			}
+			FileItem item = fileService.createFileTemp("user_collection.xls");
+			OutputStream os = item.openOutpuStream();
+			Context context = new Context();
+			context.putVar("users", users);
+			JxlsHelper.getInstance().processTemplate(is, os, context);
+			//下载参考FileSystemContorller
+			return  JsonResult.success(item.getPath());
+		} catch (IOException e) {
+			throw new PlatformException(e.getMessage());
+		}
+
+	}
+
+/** -------------------------   暂时没有用到的方法   -------------------------**/
+
+	/**
+	 * 启用用户操作
+	 *
+	 * @return
+	 */
+	@PostMapping(MODEL + "/enable.json")
+	@Function("user.enable")
+	@ResponseBody
+	public JsonResult enableUser(String ids) {
+
+		List<Long> enables = ConvertUtil.str2longs(ids);
+		userConsoleService.batchUpdateUserState(enables, GeneralStateEnum.ENABLE);
+		return JsonResult.success();
+
+	}
+
+
+
 
 	@PostMapping(MODEL + "/view.json")
 	@ResponseBody
@@ -168,15 +337,7 @@ public class UserConsoleController {
 		return JsonResult.success(user);
 	}
 
-	@PostMapping(MODEL + "/list.json")
-	@Function("user.query")
-	@ResponseBody
-	public JsonResult<PageQuery<CoreUser>> index(UserQuery condtion) {
 
-		PageQuery<CoreUser> page = condtion.getPageQuery();
-		userConsoleService.queryByCondtion(page);
-		return JsonResult.success(page);
-	}
 
 	@PostMapping(MODEL + "/list/condition.json")
 	@Function("user.query")
@@ -202,112 +363,18 @@ public class UserConsoleController {
 
 	}
 
-	/**
-	 * 启用用户操作
-	 * 
-	 * @return
-	 */
-	@PostMapping(MODEL + "/enable.json")
-	@Function("user.enable")
-	@ResponseBody
-	public JsonResult enableUser(String ids) {
 
-		List<Long> enables = ConvertUtil.str2longs(ids);
-		userConsoleService.batchUpdateUserState(enables, GeneralStateEnum.ENABLE);
-		return JsonResult.success();
 
-	}
 
-	/**
-	 * 管理员重置用户密码
-	 * 
-	 * @return
-	 */
-	@PostMapping(MODEL + "/changePassword.json")
-	@Function("user.reset")
-	@ResponseBody
-	public JsonResult changePassword(Long id, String password) {
 
-		userConsoleService.resetPassword(id, password);
-		return new JsonResult().success();
-	}
 
-	/**
-	 * 用户所有授权角色列表
-	 * 
-	 * @param id
-	 *            用户id
-	 * @return
-	 */
-	@PostMapping(MODEL + "/role/list.json")
-	@Function("user.role")
-	@ResponseBody
-	public JsonResult<List<CoreUserRole>> getRoleList(UserRoleQuery roleQuery) {
-		List<CoreUserRole> list = userConsoleService.getUserRoles(roleQuery);
-		return JsonResult.success(list);
-	}
 
-	/**
-	 * 用户添加授权角色页
-	 * 
-	 * @return
-	 */
-	@PostMapping(MODEL + "/role/add.json")
-	@Function("user.role")
-	@ResponseBody
-	public JsonResult saveUserRole(@Validated CoreUserRole userRole) {
-		userRole.setCreateTime(new Date());
-		this.userConsoleService.saveUserRole(userRole);
-		this.platformService.clearFunctionCache();
-		return JsonResult.success(userRole.getId());
 
-	}
 
-	/**
-	 * 删除用户角色授权
-	 * 
-	 * @return
-	 */
-	@PostMapping(MODEL + "/role/delete.json")
-	@Function("user.role")
-	@ResponseBody
-	public JsonResult delUserRole(String ids) {
-		List<Long> dels = ConvertUtil.str2longs(ids);
 
-		userConsoleService.deleteUserRoles(dels);
-		this.platformService.clearFunctionCache();
-		return JsonResult.success();
-	}
 	
 	
-	@PostMapping(MODEL + "/excel/export.json")
-	@Function("user.export")
-	@ResponseBody
-	public JsonResult<String> export(HttpServletResponse response,UserQuery condtion) {
-		String excelTemplate ="excelTemplates/admin/user/user_collection_template.xls";
-		PageQuery<CoreUser> page = condtion.getPageQuery();
-		//取出全部符合条件的
-		page.setPageSize(Integer.MAX_VALUE);
-		page.setPageNumber(1);
-		page.setTotalRow(Integer.MAX_VALUE);
-		List<UserExcelExportData> users =userConsoleService.queryExcel(page);
-		try(InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(excelTemplate)) {
-	        if(is==null) {
-	        	throw new PlatformException("模板资源不存在："+excelTemplate);
-	        }
-	        FileItem item = fileService.createFileTemp("user_collection.xls");
-	        OutputStream os = item.openOutpuStream();
-	        Context context = new Context();
-            context.putVar("users", users);
-            JxlsHelper.getInstance().processTemplate(is, os, context);
-            //下载参考FileSystemContorller
-            return  JsonResult.success(item.getPath());
-	    } catch (IOException e) {
-			throw new PlatformException(e.getMessage());
-		}
-		
-	}
-	
+
 	
 	
 	

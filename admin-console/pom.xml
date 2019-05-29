@@ -66,6 +66,7 @@
         </dependency>
     </dependencies>
 
+	<!--JPA（java将普通对象通过对象关系映射持久化到数据库）和MySQL依赖配置-->
 	<build>
 		<plugins>
 			<plugin>

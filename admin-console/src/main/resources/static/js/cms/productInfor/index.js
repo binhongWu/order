@@ -16,6 +16,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
             productInforTable = table.render({
                 elem : '#productInforTable',
                 height : Lib.getTableHeight(1),
+                cellMinWidth : 100,
                 method : 'post',
                 url : Common.ctxPath + '/cms/productInfor/list.json' // 数据接口
                 ,page : Lib.tablePage // 开启分页
@@ -64,10 +65,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'introduction', 
                 title : '简介'
                 }, 
-                {
-                field : 'brand',
-                title : '品牌'
-                },
+                // {
+                // field : 'brand',
+                // title : '品牌'
+                // },
                 {
                 field : 'scoreText', //数据字典类型为 product_infor_score
                 title : '是否是套装'
@@ -76,10 +77,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'productNum', 
                 title : '套装册数'
                 }, 
-                {
-                field : 'rank', 
-                title : '热销商品排名'
-                }, 
+                // {
+                // field : 'rank',
+                // title : '热销商品排名'
+                // },
                 {
                 field : 'wareId', 
                 title : '仓库系统编码'
@@ -157,10 +158,11 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                     });
                 },
                 importDocument:function(){
+                    /*导入数据请求的接口*/
                     var uploadUrl = Common.ctxPath+"/cms/productInfor/excel/import.do";
-                    //模板,
+                    //模板, 不懂，忽略
                     var templatePath= "/cms/productInfor/productInfor_upload_template.xls";
-                    //公共的简单上传文件处理
+                    //公共的简单上传文件处理  上传到 application-test.properties 中设置的系统文件上传的文件夹里localFile.root=/data（文件夹在项目的根盘符下）
                     var url = "/core/file/simpleUpload.do?uploadUrl="+uploadUrl+"&templatePath="+templatePath;
                     Common.openDlg(url, "ProductInfor管理>上传");
                 }

@@ -47,7 +47,7 @@ import com.ibeetl.admin.core.util.ValidateConfig;
 import com.ibeetl.admin.core.web.JsonResult;
 
 /**
- * CoreDict 接口
+ * 字典表 接口
  */
 @Controller
 public class DictConsoleController{
@@ -59,8 +59,11 @@ public class DictConsoleController{
     @Autowired private DictConsoleService dictService;
     @Autowired
     FileService fileService;
-    /* 页面 */
 
+    /**
+     * 字典表页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("dict.query")
     public ModelAndView index() {
@@ -69,24 +72,11 @@ public class DictConsoleController{
         return view;
     }
 
-    @GetMapping(MODEL + "/edit.do")
-    @Function("dict.edit")
-    public ModelAndView edit(Long id) {
-        ModelAndView view = new ModelAndView("/admin/dict/edit.html");
-        CoreDict dict = dictService.queryById(id);
-        view.addObject("dict", dict);
-        return view;
-    }
-
-    @GetMapping(MODEL + "/add.do")
-    @Function("dict.add")
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("/admin/dict/add.html");
-        return view;
-    }
-
-    /* ajax json */
-
+    /**
+     * 字典表页面数据
+     * @param condtion
+     * @return
+     */
     @PostMapping(MODEL + "/list.json")
     @Function("dict.query")
     @ResponseBody
@@ -97,6 +87,22 @@ public class DictConsoleController{
         return JsonResult.success(page);
     }
 
+    /**
+     * 添加页面
+     * @return
+     */
+    @GetMapping(MODEL + "/add.do")
+    @Function("dict.add")
+    public ModelAndView add() {
+        ModelAndView view = new ModelAndView("/admin/dict/add.html");
+        return view;
+    }
+
+    /**
+     * 添加页面数据
+     * @param dict
+     * @return
+     */
     @PostMapping(MODEL + "/add.json")
     @Function("dict.add")
     @ResponseBody
@@ -108,6 +114,25 @@ public class DictConsoleController{
         return JsonResult.success();
     }
 
+    /**
+     * 编辑页面
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("dict.edit")
+    public ModelAndView edit(Long id) {
+        ModelAndView view = new ModelAndView("/admin/dict/edit.html");
+        CoreDict dict = dictService.queryById(id);
+        view.addObject("dict", dict);
+        return view;
+    }
+
+    /**
+     * 编辑保存
+     * @param dict
+     * @return
+     */
     @PostMapping(MODEL + "/update.json")
     @Function("dict.update")
     @ResponseBody
@@ -121,6 +146,25 @@ public class DictConsoleController{
         }
     }
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @PostMapping(MODEL + "/delete.json")
+    @Function("dict.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        List<Long> dels = ConvertUtil.str2longs(ids);
+        dictService.batchDelCoreDict(dels);
+        corePlatformService.clearDictCache();
+        return new JsonResult().success();
+    }
+
+
+
+
+
 
    
     @GetMapping(MODEL + "/view.json")
@@ -132,15 +176,7 @@ public class DictConsoleController{
     }
     
 
-    @PostMapping(MODEL + "/delete.json")
-    @Function("dict.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-    	List<Long> dels = ConvertUtil.str2longs(ids);
-        dictService.batchDelCoreDict(dels);
-        corePlatformService.clearDictCache();
-        return new JsonResult().success();
-    }
+
     
     @PostMapping(MODEL + "/excel/export.json")
     @Function("dict.export")

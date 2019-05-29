@@ -32,8 +32,8 @@ import com.ibeetl.admin.core.util.ValidateConfig;
 import com.ibeetl.admin.core.web.JsonResult;
 
 /**
- * 描述: 组织机构 controller
- * @author : xiandafu
+ * 描述: 部门 controller
+ * @author : pei
  */
 @Controller
 public class OrgConsoleController {
@@ -48,11 +48,12 @@ public class OrgConsoleController {
 
     @Autowired
     CorePlatformService platformService;
-    
-    
-    
-    /*页面*/
-    
+
+
+    /**
+     * 部门管理页面
+      * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("org.query")
     public ModelAndView index() {
@@ -60,28 +61,8 @@ public class OrgConsoleController {
 		view.addObject("search", OrgQuery.class.getName());
         return view;
     }
-    
-    @GetMapping(MODEL + "/edit.do")
-    @Function("org.edit")
-    public ModelAndView edit(String id) {
-    	ModelAndView view = new ModelAndView("/admin/org/edit.html");
-        CoreOrg org = orgConsoleService.queryById(id);
-        view.addObject("org", org);
-        return view;
-    }
-    
-    
-    @GetMapping(MODEL + "/user/list.do")
-    @Function("org.query")
-    public ModelAndView  getUsers(Long orgId) {
-    	ModelAndView view = new ModelAndView("/admin/org/orgUser.html");
-        CoreOrg org = orgConsoleService.queryById(orgId);
-        view.addObject("org", org);
-        view.addObject("search",OrgUserQuery.class.getName());
-        return view;
-    }
-    
     /**
+     * 部门管理页面数据
      * 组织机构列表  分页
      * @param condtion 查询条件
      * @return
@@ -96,19 +77,7 @@ public class OrgConsoleController {
     }
 
     /**
-     * 获取列表查询条件
-     * @return
-     */
-    @PostMapping(MODEL + "/list/condition.json")
-    @Function("org.query")
-    @ResponseBody
-    public JsonResult<List<Map<String, Object>>> listCondtion() {
-        List<Map<String, Object>> list = AnnotationUtil.getInstance().getAnnotations(Query.class, OrgQuery.class);
-        return JsonResult.success(list);
-    }
-
-    /**
-     * 保存数据
+     * 添加页面数据保存
      * @param org
      * @return
      */
@@ -117,8 +86,8 @@ public class OrgConsoleController {
     @ResponseBody
     public JsonResult<Long> save(@Validated(ValidateConfig.ADD.class) CoreOrg org, BindingResult result) {
         if (result.hasErrors()) {
-        		return JsonResult.failMessage(result.toString());
-           
+            return JsonResult.failMessage(result.toString());
+
         }
 
         org.setCreateTime(new Date());
@@ -126,9 +95,21 @@ public class OrgConsoleController {
         platformService.clearOrgCache();
         return JsonResult.success(org.getId());
     }
-
-
     /**
+     * 部门管理编辑
+     * @param id
+     * @return
+     */
+    @GetMapping(MODEL + "/edit.do")
+    @Function("org.edit")
+    public ModelAndView edit(String id) {
+    	ModelAndView view = new ModelAndView("/admin/org/edit.html");
+        CoreOrg org = orgConsoleService.queryById(id);
+        view.addObject("org", org);
+        return view;
+    }
+    /**
+     * 部门管理编辑保存
      * 更新数据
      * @param org
      * @return
@@ -139,17 +120,12 @@ public class OrgConsoleController {
     public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class) CoreOrg org) {
         boolean success = orgConsoleService.updateTemplate(org);
         if (success) {
-        	platformService.clearOrgCache();
-        		return JsonResult.successMessage("保存成功");
+            platformService.clearOrgCache();
+            return JsonResult.successMessage("保存成功");
         } else {
             return JsonResult.failMessage("保存失败");
         }
     }
-
-
-   
-
-
     /**
      * 删除组织机构
      * @param ids 组织id，多个用“,”隔开
@@ -168,15 +144,57 @@ public class OrgConsoleController {
 
         return new JsonResult().success();
     }
+    /**
+     * 部门管理的查看用户功能页面
+     * @param orgId
+     * @return
+     */
+    @GetMapping(MODEL + "/user/list.do")
+    @Function("org.query")
+    public ModelAndView  getUsers(Long orgId) {
+    	ModelAndView view = new ModelAndView("/admin/org/orgUser.html");
+        CoreOrg org = orgConsoleService.queryById(orgId);
+        view.addObject("org", org);
+        view.addObject("search",OrgUserQuery.class.getName());
+        return view;
+    }
 
-    
+    /**
+     * 部门管理的查看用户功能页面数据
+     * @param userQuery
+     * @return
+     */
     @PostMapping(MODEL + "/user/list.json")
     @Function("org.query")
     @ResponseBody
     public JsonResult<PageQuery<CoreUser>> getUsers(OrgUserQuery userQuery) {
-    	 PageQuery<CoreUser> page = userQuery.getPageQuery();
-         userConsoleService.queryByCondtion(page);
-         return JsonResult.success(page);
+        PageQuery<CoreUser> page = userQuery.getPageQuery();
+        userConsoleService.queryByCondtion(page);
+        return JsonResult.success(page);
     }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    /**
+     * 获取列表查询条件
+     * @return
+     */
+    @PostMapping(MODEL + "/list/condition.json")
+    @Function("org.query")
+    @ResponseBody
+    public JsonResult<List<Map<String, Object>>> listCondtion() {
+        List<Map<String, Object>> list = AnnotationUtil.getInstance().getAnnotations(Query.class, OrgQuery.class);
+        return JsonResult.success(list);
+    }
+
+
+   
+
+
+
+
+    
+
    
 }

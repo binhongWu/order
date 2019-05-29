@@ -29,6 +29,7 @@ import com.ibeetl.admin.core.util.ConvertUtil;
 import com.ibeetl.admin.core.web.JsonResult;
 
 /**
+ * 菜单
  * @author lijiazhi
  */
 @Controller
@@ -45,8 +46,11 @@ public class MenuController {
     @Autowired
     CorePlatformService platformService;
 
-    /*页面*/
-    
+
+    /**
+     * 菜单页面
+     * @return
+     */
     @GetMapping(MODEL + "/index.do")
     @Function("menu")
     public ModelAndView index() {
@@ -54,13 +58,47 @@ public class MenuController {
 		view.addObject("search", MenuQuery.class.getName());
         return view;
     }
-    
+    /**
+     *菜单页面数据
+     * @param condtion
+     * @return
+     */
+    @PostMapping(MODEL + "/list.json")
+    @Function("menu.query")
+    @ResponseBody
+    public JsonResult<PageQuery> list(MenuQuery condtion) {
+        PageQuery page = condtion.getPageQuery();
+        menuService.queryByCondtion(page);
+        return JsonResult.success(page);
+    }
+    /**
+     *添加页面
+     * @return
+     */
     @GetMapping(MODEL + "/add.do")
     @Function("menu.add")
     public ModelAndView add() {
    	 ModelAndView view = new ModelAndView("/admin/menu/add.html");
    	 return view;
     }
+    /**
+     * 添加页面数据
+     * @param menu
+     * @return
+     */
+    @PostMapping(MODEL + "/save.json")
+    @Function("menu.save")
+    @ResponseBody
+    public JsonResult save(@Validated CoreMenu menu) {
+        menu.setCreateTime(new Date());
+        Long id = menuService.saveMenu(menu);
+        return JsonResult.success(id);
+    }
+    /**
+     *编辑页面
+     * @param id
+     * @return
+     */
     @GetMapping(MODEL + "/edit.do")
     @Function("menu.edit")
     public ModelAndView edit(Integer id) {
@@ -69,9 +107,35 @@ public class MenuController {
      view.addObject("menu", menu);
    	 return view;
     }
-    
+    /**
+     * 编辑保存
+     * @param fun
+     * @return
+     */
+    @PostMapping(MODEL + "/update.json")
+    @Function("menu.update")
+    @ResponseBody
+    public JsonResult update(CoreMenu fun) {
+        menuService.updateMenu(fun);
+        return new JsonResult().success();
+    }
     /*Json*/
-    
+    /**
+     * 批量删除
+     * @param ids 菜单id集合
+     * @return
+     */
+    @PostMapping(MODEL + "/batchDel.json")
+    @Function("menu.delete")
+    @ResponseBody
+    public JsonResult delete(String ids) {
+        List<Long> dels = ConvertUtil.str2longs(ids);
+        menuService.batchDeleteMenuId(dels);
+        return new JsonResult().success();
+    }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
     /**
      * 查询
      * @param menu
@@ -84,44 +148,13 @@ public class MenuController {
     	   List<Map<String, Object>> list = AnnotationUtil.getInstance().getAnnotations(Query.class, MenuQuery.class);
        return JsonResult.success(list);
     }
-    
-    
-    @PostMapping(MODEL + "/list.json")
-    @Function("menu.query")
-    @ResponseBody
-    public JsonResult<PageQuery> list(MenuQuery condtion) {
-        PageQuery page = condtion.getPageQuery();
-        menuService.queryByCondtion(page);
-        return JsonResult.success(page);
-    }
+
+
     
 
-    /**
-     * 添加
-     * @param menu
-     * @return
-     */
-    @PostMapping(MODEL + "/save.json")
-    @Function("menu.save")
-    @ResponseBody
-    public JsonResult save(@Validated CoreMenu menu) {
-        menu.setCreateTime(new Date());
-        Long id = menuService.saveMenu(menu);
-        return JsonResult.success(id);
-    }
 
-    /**
-     * 更新
-     * @param fun
-     * @return
-     */
-    @PostMapping(MODEL + "/update.json")
-    @Function("menu.update")
-    @ResponseBody
-    public JsonResult update(CoreMenu fun) {
-        menuService.updateMenu(fun);
-        return new JsonResult().success();
-    }
+
+
 
     /**
      * 根据id查询菜单信息
@@ -153,19 +186,7 @@ public class MenuController {
         return new JsonResult().success();
     }
     
-    /**
-     * 批量删除
-     * @param ids 菜单id集合
-     * @return
-     */
-    @PostMapping(MODEL + "/batchDel.json")
-    @Function("menu.delete")
-    @ResponseBody
-    public JsonResult delete(String ids) {
-    	List<Long> dels = ConvertUtil.str2longs(ids);
-    	menuService.batchDeleteMenuId(dels);
-    	return new JsonResult().success();
-    }
+
     
     
 

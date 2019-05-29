@@ -23,7 +23,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 cols : [ [ // 表头
                     {
                         type : 'checkbox',
-                        fixed:'left',
+                        // fixed:'left',
                     },
                     {
                         field : 'name',
@@ -40,23 +40,23 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                     },
                     {
                         field : 'author',
-                        title : '作者'
+                        title : '作者',
                     },
                     {
                         field : 'languageText', //数据字典类型为 product_infor_language
-                        title : '语种'
+                        title : '语种',
                     },
                     {
                         field : 'kindsText', //数据字典类型为 product_infor_kinds
-                        title : '推荐读者对象'
+                        title : '推荐读者对象',
                     },
                     {
                         field : 'bookKind',
-                        title : '图书分类'
+                        title : '图书分类',
                     },
                     {
                         field : 'publishHouse',
-                        title : '出版社'
+                        title : '出版社',
                     },
                     {
                         field : 'publishDate',

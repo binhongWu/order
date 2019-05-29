@@ -67,6 +67,10 @@ public class ProductInforService extends BaseService<ProductInfor>{
         return productInforDao.findListByCustom(model);
     }
 
+    /**
+     * 保存导入的数据
+     * @param datas 上传文件中解析后的数据
+     */
     public void saveImport(List<ProductInfor> datas) {
         for (ProductInfor model : datas) {
             ProductInfor productInfor = findByCode(model.getCode());
@@ -129,9 +133,10 @@ public class ProductInforService extends BaseService<ProductInfor>{
         return productInforDao.findByCode(code);
     }
 
-
-    /** -------------------------   暂时没有用到的方法   -------------------------**/
-
+    /**
+     * 根据ID批量删除
+     * @param ids
+     */
     public void batchDelProductInfor(List<String> ids){
         try {
             productInforDao.batchDelProductInforByIds(ids);
@@ -139,6 +144,8 @@ public class ProductInforService extends BaseService<ProductInfor>{
             throw new PlatformException("批量删除ProductInfor失败", e);
         }
     }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
 
     /**
      * 根据主键更新，属性为null的不会更新

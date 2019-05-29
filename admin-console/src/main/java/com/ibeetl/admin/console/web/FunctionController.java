@@ -51,7 +51,11 @@ public class FunctionController {
 
     
     /*页面*/
-     
+
+    /**
+     * 功能点页面
+     * @return
+     */
      @GetMapping(MODEL + "/index.do")
      @Function("function")
      public ModelAndView index() {
@@ -59,13 +63,62 @@ public class FunctionController {
  		view.addObject("search", FunctionQuery.class.getName());
          return view;
      }
-     
+    /**
+     * 字典列表  分页
+     *功能点页面数据
+     * @param condtion
+     * @return
+     */
+    @RequestMapping(MODEL + "/list.json")
+    @Function("function.query")
+    @ResponseBody
+    public JsonResult<PageQuery<CoreFunction>> list(FunctionQuery condtion) {
+
+        PageQuery page = condtion.getPageQuery();
+        functionConsoleService.queryByCondtion(page);
+        return JsonResult.success(page);
+
+    }
+
+    /**
+     * 添加页面
+     * @return
+     */
      @GetMapping(MODEL + "/add.do")
      @Function("function.add")
      public ModelAndView add() {
     	 ModelAndView view = new ModelAndView("/admin/function/add.html");
     	 return view;
      }
+
+    /**
+     * 添加页面数据
+     * @param function
+     * @return
+     */
+    @RequestMapping(MODEL + "/add.json")
+    @Function("function.add")
+    @ResponseBody
+    public JsonResult<CoreFunction> addFunction(@Validated(ValidateConfig.ADD.class) CoreFunction function) {
+        String code = function.getCode();
+        CoreFunction dbFunction = functionConsoleService.getFunction(code);
+        if(dbFunction!=null){
+            throw new FormFieldException(CoreFunction.class.getName(),"code","已经存在");
+        }
+
+        if(function.getParentId()==null){
+            function.setParentId(0l);
+        }
+        function.setCreateTime(new Date());
+        functionConsoleService.saveFunction(function);
+        return JsonResult.success(function);
+    }
+
+    /**
+     * 编辑页面
+     * @param id
+     * @return
+     */
      @GetMapping(MODEL + "/edit.do")
      @Function("function.edit")
      public ModelAndView edit(Integer id) {
@@ -74,28 +127,12 @@ public class FunctionController {
          view.addObject("function", function);
     	 return view;
      }
-     
-     /*Json*/
-     
-    @RequestMapping(MODEL + "/add.json")
-    @Function("function.add")
-    @ResponseBody
-    public JsonResult<CoreFunction> addFunction(@Validated(ValidateConfig.ADD.class) CoreFunction function) {
-		String code = function.getCode();
-		CoreFunction dbFunction = functionConsoleService.getFunction(code);
-		if(dbFunction!=null){
-			throw new FormFieldException(CoreFunction.class.getName(),"code","已经存在");
-		}
-		
-		if(function.getParentId()==null){
-			function.setParentId(0l);
-		}
-		function.setCreateTime(new Date());
-		functionConsoleService.saveFunction(function);
-		return JsonResult.success(function);
-    }
-    
-    
+
+    /**
+     * 编辑页面保存
+     * @param function
+     * @return
+     */
     @RequestMapping(MODEL + "/update.json")
     @Function("function.update")
     @ResponseBody
@@ -112,56 +149,90 @@ public class FunctionController {
 		functionConsoleService.updateFunction(function);
     	return JsonResult.success();
     }
-    
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(MODEL + "/batchDel.json")
+    @Function("function.delete")
+    @ResponseBody
+    public JsonResult batchDel(String ids) {
+        List<Long> dels = ConvertUtil.str2longs(ids);
+        functionConsoleService.batchDeleteFunction(dels);
+        return new JsonResult().success();
+
+    }
+
+
+
+    /**
+     * 显示岗位授权的所有功能点
+     * @return
+     */
+    @PostMapping(MODEL + "/tree.json")
+    @Function("function.query")
+    @ResponseBody
+    public JsonResult<List<FunctionNodeView> > tree() {
+        FunctionItem root = this.platformService.buildFunction();
+        List<FunctionNodeView> tree = buildFunctionTree(root);
+        return JsonResult.success(tree);
+
+    }
+    private List<FunctionNodeView> buildFunctionTree(FunctionItem node){
+        List<FunctionItem> list = node.getChildren();
+        if(list.size()==0){
+            return Collections.EMPTY_LIST;
+        }
+        List<FunctionNodeView> views = new ArrayList<FunctionNodeView>(list.size());
+        for(FunctionItem item :list){
+            FunctionNodeView view = new FunctionNodeView();
+            view.setCode(item.getData().getCode());
+            view.setName(item.getData().getName());
+            view.setId(item.getData().getId());
+            view.setAccessUrl(item.getData().getAccessUrl());
+            List<FunctionNodeView> children = this.buildFunctionTree(item);
+            view.setChildren(children);
+            views.add(view);
+        }
+        return views;
+    }
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+
     @RequestMapping(MODEL + "/view.json")
     @Function("function.query")
     @ResponseBody
     public JsonResult<CoreFunction> getFunction(Long id) {
-    		CoreFunction function =  functionConsoleService.getFunction(id);
+        CoreFunction function =  functionConsoleService.getFunction(id);
 
-    		if (function.hasParent()){
-    			CoreFunction parent = functionConsoleService.getFunction(function.getParentId());
-    			function.set("parentName",parent.getName());
-			}else {
-				function.set("parentName","");
-			}
-			functionConsoleService.queryEntityAfter(function);
-    		return JsonResult.success(function);
+        if (function.hasParent()){
+            CoreFunction parent = functionConsoleService.getFunction(function.getParentId());
+            function.set("parentName",parent.getName());
+        }else {
+            function.set("parentName","");
+        }
+        functionConsoleService.queryEntityAfter(function);
+        return JsonResult.success(function);
     }
-    
+
 
     @RequestMapping(MODEL + "/delete.json")
     @Function("function.delete")
     @ResponseBody
     public JsonResult deleteFunction(Long id) {
-     	CoreFunction fun = functionConsoleService.queryById(id);
-        if (fun == null) {        	
+        CoreFunction fun = functionConsoleService.queryById(id);
+        if (fun == null) {
             throw new PlatformException("删除失败,没有找到Function "+id+"!");
         }
-       //删除功能和所有子功能
-       functionConsoleService.deleteFunction(id);
-       return new JsonResult().success();
+        //删除功能和所有子功能
+        functionConsoleService.deleteFunction(id);
+        return new JsonResult().success();
     }
-    
-    
-    /**
-     * 字典列表  分页
-     *
-     * @param condtion
-     * @return
-     */
-    @RequestMapping(MODEL + "/list.json")
-    @Function("function.query")
-    @ResponseBody
-    public JsonResult<PageQuery<CoreFunction>> list(FunctionQuery condtion) {
-     
-        PageQuery page = condtion.getPageQuery();
-        functionConsoleService.queryByCondtion(page);
-        return JsonResult.success(page);
-     
-    }
-    
-    
+
+
     @PostMapping(MODEL + "/list/condition.json")
     @Function("function.query")
     @ResponseBody
@@ -182,45 +253,9 @@ public class FunctionController {
  
 
 
-    @RequestMapping(MODEL + "/batchDel.json")
-    @Function("function.delete")
-    @ResponseBody
-    public JsonResult batchDel(String ids) {
-    		List<Long> dels = ConvertUtil.str2longs(ids);
-        functionConsoleService.batchDeleteFunction(dels);
-        return new JsonResult().success();
-       
-    }
-    
-    @PostMapping(MODEL + "/tree.json")
-    @Function("function.query")
-    @ResponseBody
-    public JsonResult<List<FunctionNodeView> > tree() {
-    		FunctionItem root = this.platformService.buildFunction();
-    		List<FunctionNodeView> tree = buildFunctionTree(root);
-    		return JsonResult.success(tree);
-       
-    }
     
     
-    private List<FunctionNodeView> buildFunctionTree(FunctionItem node){
-  		List<FunctionItem> list = node.getChildren();
-      	if(list.size()==0){
-      		return Collections.EMPTY_LIST;
-      	}
-      	List<FunctionNodeView> views = new ArrayList<FunctionNodeView>(list.size());
-      	for(FunctionItem item :list){
-      		FunctionNodeView view = new FunctionNodeView();
-      		view.setCode(item.getData().getCode());
-      		view.setName(item.getData().getName());
-      		view.setId(item.getData().getId());
-      		view.setAccessUrl(item.getData().getAccessUrl());
-      		List<FunctionNodeView> children = this.buildFunctionTree(item);
-      		view.setChildren(children);
-      		views.add(view);
-      	}
-      	return views;
-     }
+
     
 
     
