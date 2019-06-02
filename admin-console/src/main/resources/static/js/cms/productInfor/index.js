@@ -21,6 +21,8 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 url : Common.ctxPath + '/cms/productInfor/list.json' // 数据接口
                 ,page : Lib.tablePage // 开启分页
                 ,limit : 10,
+                toolbar: true,
+                defaultToolbar: ['filter'],
                 cols : [ [ // 表头
                 {
                 type : 'checkbox',
@@ -64,11 +66,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'introduction', 
                 title : '简介'
-                }, 
-                // {
-                // field : 'brand',
-                // title : '品牌'
-                // },
+                },
                 {
                 field : 'scoreText', //数据字典类型为 product_infor_score
                 title : '是否是套装'
@@ -76,7 +74,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'productNum', 
                 title : '套装册数'
-                }, 
+                },
                 // {
                 // field : 'rank',
                 // title : '热销商品排名'

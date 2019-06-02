@@ -109,7 +109,7 @@ public class SalesOrderService extends BaseService<SalesOrder>{
 //                    outboundRedist.setSupplierId(salesOrder.getS);
                     outboundRedist.setPrice(salesOrder.getPrice());
                     outboundRedist.setNumber(salesOrder.getNumber());
-                    outboundRedist.setTotal(String.valueOf(Integer.parseInt(salesOrder.getPrice()) * Integer.parseInt(salesOrder.getNumber())));
+                    outboundRedist.setTotal(String.valueOf(Double.valueOf(salesOrder.getPrice()) * Integer.parseInt(salesOrder.getNumber())));
                     outboundRedist.setStatus("0");
                     outboundRedistService.save(outboundRedist);
                     // 修改库存

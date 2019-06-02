@@ -361,7 +361,7 @@ public class CorePlatformService {
     	//TODO
     }
 
-
+//{value:删除哪个命名空间的缓存,allEntries：标记是否删除命名空间下所有缓存}
     @CacheEvict(cacheNames = {FUNCTION_CACHE, FUNCTION_TREE_CACHE, /*功能点本身缓存*/
             MENU_TREE_CACHE, USER_MENU_CACHE,/*功能点关联菜单缓存*/
             USER_FUNCTION_ACCESS_CACHE, USER_FUNCTION_CHIDREN_CACHE, USER_DATA_ACCESS_CACHE,/*功能点相关权限缓存*/}, allEntries = true)

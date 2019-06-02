@@ -103,7 +103,7 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak> {
         //临时表关联销售订单号
         model.setSalesOrderId(salesOrder.getSalesId());
         sqlManager.updateTemplateById(model);
-        //判断直销的保存到销售出库 --> 保存到出库登记  （此时应该要有一个审核，审核通过了才能发货然后修改库存量，暂时未实现） --> 修改库存
+        //判断直销的保存到销售出库
         if ("0".equals(model.getOrderFor())) {
             SalesOutStack salesOutStack = new SalesOutStack();
             salesOutStack.setSalesId(salesOrder.getSalesId().toString());
@@ -123,10 +123,6 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak> {
             salesOutStack.setUpdatedTime(new Date());
             salesOutStack.setUpdatedBy(platformService.getCurrentUser().getId());
             salesOutStackService.save(salesOutStack);
-            // 修改库存
-            ProductInfor productInfor = productInforService.findByCode(model.getCode());
-            productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(model.getNumber())));
-            productInforService.update(productInfor);
         }
         return true;
     }

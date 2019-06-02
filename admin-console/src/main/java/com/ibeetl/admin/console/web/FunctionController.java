@@ -36,7 +36,7 @@ import com.ibeetl.admin.core.web.dto.FunctionNodeView;
 /**
  * 描述:  功能点管理
  *
- * @author : lijiazhi
+ *
  */
 @Controller
 public class FunctionController {
@@ -101,6 +101,7 @@ public class FunctionController {
     @ResponseBody
     public JsonResult<CoreFunction> addFunction(@Validated(ValidateConfig.ADD.class) CoreFunction function) {
         String code = function.getCode();
+        //查看添加的数据是否已经存在
         CoreFunction dbFunction = functionConsoleService.getFunction(code);
         if(dbFunction!=null){
             throw new FormFieldException(CoreFunction.class.getName(),"code","已经存在");
@@ -180,6 +181,8 @@ public class FunctionController {
         return JsonResult.success(tree);
 
     }
+
+
     private List<FunctionNodeView> buildFunctionTree(FunctionItem node){
         List<FunctionItem> list = node.getChildren();
         if(list.size()==0){

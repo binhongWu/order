@@ -62,10 +62,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'returnedDate', 
                 title : '退货日期',
                 }, 
-                {
-                field : 'sender', 
-                title : '发货人',
-                },
+                // {
+                // field : 'sender',
+                // title : '发货人',
+                // },
                 {
                 field : 'remarks', 
                 title : '备注',

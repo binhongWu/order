@@ -48,6 +48,8 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
      */
     @Override
     public boolean update(SalesOutStack model) {
+        model.setCheckBy(platformService.getCurrentUser().getName());
+        model.setCheckDate(new Date());
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
@@ -112,6 +114,10 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
                 outboundRedist.setUpdatedTime(new Date());
                 outboundRedist.setUpdatedBy(platformService.getCurrentUser().getId());
                 outboundRedistService.save(outboundRedist);
+                // 修改库存
+                ProductInfor productInfor = productInforService.findByCode(salesOutStack.getCode());
+                productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(salesOutStack.getNumber())));
+                productInforService.update(productInfor);
                 // 修改客户积分
                 // 0-5000 初级  5001-10000中级  10000以上高级
                 int count = Integer.parseInt(salesOutStack.getPaymentAmount().substring(0, salesOutStack.getPaymentAmount().contains(".") ? salesOutStack.getPaymentAmount().indexOf(".") : salesOutStack.getPaymentAmount().length()));
@@ -137,11 +143,7 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
                 SalesOrderBak salesOrderBak = salesOrderBakService.getBySalId(salesOutStack.getSalesId());
                 salesOrderBak.setFinishedStatus("1");
                 salesOrderBakService.update(salesOrderBak);
-                // 修改库存、客户积分
-                // 修改库存
-                ProductInfor productInfor = productInforService.findByCode(salesOutStack.getCode());
-                productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(salesOutStack.getNumber())));
-                productInforService.update(productInfor);
+                // 客户积分
                 // 0-5000 初级  5001-10000中级  10000以上高级
                 int count = Integer.parseInt(salesOutStack.getPaymentAmount().substring(0, salesOutStack.getPaymentAmount().contains(".") ? salesOutStack.getPaymentAmount().indexOf(".") : salesOutStack.getPaymentAmount().length()));
                 if (Integer.valueOf(customerInfor.getIntergral()) - count < 0) {

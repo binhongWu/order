@@ -113,8 +113,7 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
                     purchaseWarehouse.setSupplierId(purchaseOrder.getSupplierId());
                     purchaseWarehouse.setPaymentAmount(purchaseOrder.getPaymentAmount());
                     purchaseWarehouse.setPurchaseDate(purchaseOrder.getDeliverDate());
-                    // 采购人 ---> 创建人还是审核人？
-                    purchaseWarehouse.setBuyerBy(purchaseOrder.getCheckBy());
+                    purchaseWarehouse.setBuyerBy(platformService.getCurrentUser().getName());
                     purchaseWarehouseService.save(purchaseWarehouse);
                     // 3 录入到仓库管理的入库登记中
                     IncomingRegist incomingRegist = new IncomingRegist();
@@ -124,12 +123,12 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
                     incomingRegist.setSupplierId(purchaseOrder.getSupplierId());
                     incomingRegist.setPrice(purchaseOrder.getPrice());
                     incomingRegist.setNumber(purchaseOrder.getNumber());
-                    incomingRegist.setTotal(String.valueOf(Integer.parseInt(purchaseOrder.getPrice())*Integer.parseInt(purchaseOrder.getNumber())));
+                    incomingRegist.setTotal(String.valueOf(Double.valueOf(purchaseOrder.getPrice())*Integer.valueOf(purchaseOrder.getNumber())));
                     incomingRegist.setStatus("0");
                     incomingRegistService.save(incomingRegist);
                     // 4 修改绘本的库存量
                     ProductInfor productInfor = productInforService.findByCode(purchaseOrder.getCode());
-                    productInfor.setExistStocks(productInfor.getExistStocks()+purchaseOrder.getNumber());
+                    productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks())+Integer.valueOf(purchaseOrder.getNumber())));
                     sqlManager.updateTemplateById(productInfor);
                 }
             }

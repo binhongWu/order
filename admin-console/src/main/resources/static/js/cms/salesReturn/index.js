@@ -67,7 +67,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 // title : '验收人',
                 // },
                 {
-                field : 'stats',
+                field : 'checkBy',
                 title : '审核人',
                 },
                 {

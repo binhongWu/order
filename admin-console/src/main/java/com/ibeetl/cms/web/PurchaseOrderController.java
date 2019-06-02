@@ -298,6 +298,11 @@ public class PurchaseOrderController{
         }
     }
 
+
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
     /**
      * ?
      * @param id
@@ -309,10 +314,6 @@ public class PurchaseOrderController{
         System.out.println("进入购买！");
         return JsonResult.success();
     }
-
-
-    /** -------------------------   暂时没有用到的方法   -------------------------**/
-
         /**
          * 根据ID查找
          */

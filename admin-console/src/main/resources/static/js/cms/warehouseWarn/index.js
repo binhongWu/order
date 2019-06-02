@@ -44,7 +44,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 }, 
                 {
                 field : 'stock', 
-                title : '现有库存',
+                title : '缺少数量',
                 }, 
                 {
                 field : 'checkText', //数据字典类型为 warehouse_warn_check

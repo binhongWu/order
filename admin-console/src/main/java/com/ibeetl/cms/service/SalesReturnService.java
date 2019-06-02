@@ -51,6 +51,8 @@ public class SalesReturnService extends BaseService<SalesReturn>{
      */
     @Override
     public boolean update(SalesReturn model) {
+        model.setCheckBy(platformService.getCurrentUser().getName());
+        model.setCheckDate(new Date());
         model.setUpdatedTime(new Date());
         model.setUpdatedBy(platformService.getCurrentUser().getId());
         return sqlManager.updateById(model) > 0;
@@ -71,7 +73,7 @@ public class SalesReturnService extends BaseService<SalesReturn>{
     }
 
     /**
-     * 修改小搜订单状态
+     * 修改销售订单状态
      * @param datas
      */
     public void saveImport(List<SalesReturn> datas) {
@@ -92,7 +94,7 @@ public class SalesReturnService extends BaseService<SalesReturn>{
 //            incomingRegist.setSupplierId(salesOrder.getSupplierId());
             incomingRegist.setPrice(salesOrder.getPrice());
             incomingRegist.setNumber(salesOrder.getNumber());
-            incomingRegist.setTotal(String.valueOf(Integer.parseInt(salesOrder.getPrice())*Integer.parseInt(salesOrder.getNumber())));
+            incomingRegist.setTotal(String.valueOf(Double.valueOf(salesOrder.getPrice())*Integer.parseInt(salesOrder.getNumber())));
             incomingRegist.setStatus("1");
             incomingRegistService.save(incomingRegist);
         }

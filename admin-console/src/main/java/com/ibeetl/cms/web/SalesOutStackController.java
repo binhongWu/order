@@ -165,7 +165,7 @@ public class SalesOutStackController{
     }
 
     /**
-     * 审核状态
+     * 审核页面数据
      * @param salesOutStack
      * @return
      */

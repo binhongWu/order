@@ -16,8 +16,8 @@ public class WarehouseWarnJob {
     @Autowired
     private WarehouseWarnService warehouseWarnService;
 
-    @Scheduled(cron = "0 30 9 * * ?")
-//    @Scheduled(cron = "0 */1 * * * ?")
+//    @Scheduled(cron = "0 30 9 * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     public void queryWarehouseWarn(){
 
         log.info("开始进入预警检测");
