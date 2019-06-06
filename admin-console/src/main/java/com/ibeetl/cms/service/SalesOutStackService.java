@@ -36,7 +36,8 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
     private SalesOrderBakService salesOrderBakService;
     @Autowired
     private ProductInforService productInforService;
-
+    @Autowired
+    private  WarehouseWarnService warehouseWarnService;
     public PageQuery<SalesOutStack>queryByCondition(PageQuery query){
         PageQuery ret =  salesOutStackDao.queryByCondition(query);
         queryListAfter(ret.getList());
@@ -117,7 +118,11 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
                 // 修改库存
                 ProductInfor productInfor = productInforService.findByCode(salesOutStack.getCode());
                 productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) - Integer.valueOf(salesOutStack.getNumber())));
-                productInforService.update(productInfor);
+                boolean success = productInforService.update(productInfor);
+                if(success){
+                    // 触发仓库预警
+                    warehouseWarnService.queryWarehouseWarn(salesOutStack.getCode());
+                }
                 // 修改客户积分
                 // 0-5000 初级  5001-10000中级  10000以上高级
                 int count = Integer.parseInt(salesOutStack.getPaymentAmount().substring(0, salesOutStack.getPaymentAmount().contains(".") ? salesOutStack.getPaymentAmount().indexOf(".") : salesOutStack.getPaymentAmount().length()));
@@ -145,22 +150,22 @@ public class SalesOutStackService extends BaseService<SalesOutStack>{
                 salesOrderBakService.update(salesOrderBak);
                 // 客户积分
                 // 0-5000 初级  5001-10000中级  10000以上高级
-                int count = Integer.parseInt(salesOutStack.getPaymentAmount().substring(0, salesOutStack.getPaymentAmount().contains(".") ? salesOutStack.getPaymentAmount().indexOf(".") : salesOutStack.getPaymentAmount().length()));
-                if (Integer.valueOf(customerInfor.getIntergral()) - count < 0) {
-                    customerInfor.setIntergral("0");
-                }else{
-                    customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())-count));
-                }
-                if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
-                    customerInfor.setLevel("0");
-                }
-                if (Integer.valueOf(customerInfor.getIntergral()) > 5000 && Integer.valueOf(customerInfor.getIntergral()) <= 10000) {
-                    customerInfor.setLevel("1");
-                }
-                if(Integer.valueOf(customerInfor.getIntergral()) > 10000){
-                    customerInfor.setLevel("2");
-                }
-                customerInforService.update(customerInfor);
+//                int count = Integer.parseInt(salesOutStack.getPaymentAmount().substring(0, salesOutStack.getPaymentAmount().contains(".") ? salesOutStack.getPaymentAmount().indexOf(".") : salesOutStack.getPaymentAmount().length()));
+//                if (Integer.valueOf(customerInfor.getIntergral()) - count < 0) {
+//                    customerInfor.setIntergral("0");
+//                }else{
+//                    customerInfor.setIntergral(String.valueOf(Integer.valueOf(customerInfor.getIntergral())-count));
+//                }
+//                if(Integer.valueOf(customerInfor.getIntergral()) <= 5000){
+//                    customerInfor.setLevel("0");
+//                }
+//                if (Integer.valueOf(customerInfor.getIntergral()) > 5000 && Integer.valueOf(customerInfor.getIntergral()) <= 10000) {
+//                    customerInfor.setLevel("1");
+//                }
+//                if(Integer.valueOf(customerInfor.getIntergral()) > 10000){
+//                    customerInfor.setLevel("2");
+//                }
+//                customerInforService.update(customerInfor);
             }
             return true;
         } catch (Exception e) {

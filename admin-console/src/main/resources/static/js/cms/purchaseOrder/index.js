@@ -33,7 +33,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'code', 
                 title : '绘本编码',
-                }, 
+                },
                 {
                 field : 'number', 
                 title : '绘本数量',
@@ -49,11 +49,11 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'orderDate', 
                 title : '订单日期',
-                }, 
-                {
-                field : 'deliverDate', 
-                title : '交货日期',
-                }, 
+                },
+                // {
+                // field : 'deliverDate',
+                // title : '交货日期',
+                // },
                 {
                 field : 'paymentMethodText', //数据字典类型为 purchase_order_paymentmethod
                 title : '付款方式',
@@ -62,22 +62,19 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'paymentAmount', 
                 title : '付款金额',
                 }, 
+
                 {
-                field : 'tradeLocal', 
-                title : '交货地点',
-                }, 
-                // {
-                // field : 'checkBy',
-                // title : '审核人',
-                // },
-                // {
-                // field : 'checkDate',
-                // title : '审核时间',
-                // },
-                // {
-                // field : 'chenkStatusText',//purchase_warehouse_checkstatus
-                // title : '审核状态',
-                // },
+                field : 'checkBy',
+                title : '审核人',
+                },
+                {
+                field : 'checkDate',
+                title : '审核时间',
+                },
+                {
+                field : 'chenkStatusText',//purchase_warehouse_checkstatus
+                title : '审核状态',
+                },
                 {
                 field : 'finishConditionText', //数据字典类型为 purchase_order_finishcondition
                 title : '完成状态',

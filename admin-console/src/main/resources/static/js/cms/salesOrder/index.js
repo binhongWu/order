@@ -20,6 +20,8 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 url : Common.ctxPath + '/cms/salesOrder/list.json' // 数据接口
                 ,page : Lib.tablePage // 开启分页
                 ,limit : 10,
+                toolbar: true,
+                defaultToolbar: ['filter'],
                 cols : [ [ // 表头
                 {
                 type : 'checkbox',
@@ -70,19 +72,15 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'tradeLocations', 
                 title : '交货地点',
                 },
-                {
-                field : 'orderForText', //数据字典类型为 sales_order_orderfor
-                title : '销售方式',
-                },
+                // {
+                // field : 'orderForText', //数据字典类型为 sales_order_orderfor
+                // title : '销售方式',
+                // },
                 {
                 field : 'finishedStatusText', //数据字典类型为 sales_order_finishedstatus
                 title : '完成状态（0：完成 1：未完成）',
                 },
-                // {
-                // field : 'checkBy',
-                // title : '审核人',
-                //     width : 100
-                // },
+
 
                 // {
                 // field : 'checkDate',

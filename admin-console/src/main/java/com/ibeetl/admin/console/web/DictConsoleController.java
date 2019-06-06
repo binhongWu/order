@@ -137,6 +137,7 @@ public class DictConsoleController{
     @Function("dict.update")
     @ResponseBody
     public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class)  CoreDict dict) {
+        dict.setCreateTime(new Date());
         boolean success = dictService.update(dict);
         if (success) {
             corePlatformService.clearDictCache();

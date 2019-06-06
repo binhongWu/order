@@ -6,13 +6,7 @@
             <div class="layui-inline">
             <label class="layui-form-label" title="预警时间">预警时间</label>
             <div class="layui-input-inline">
-                <input type="text" id="alarmt" name="alarmt"  value="${warehouseWarn.alarmt,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="下一次预警时间">下一次预警时间</label>
-            <div class="layui-input-inline">
-                <input type="text" id="nextAlarmt" name="nextAlarmt"  value="${warehouseWarn.nextAlarmt,"yyyy-MM-dd"}"   class="layui-input input-date" >
+                <input type="text" id="alarmt" name="alarmt"  value="${warehouseWarn.alarmt,'yyyy-MM-dd'}"   class="layui-input input-date" disabled>
             </div>
             </div>
         </div>
@@ -22,13 +16,13 @@
             <div class="layui-inline">
             <label class="layui-form-label" title="绘本编码">绘本编码</label>
             <div class="layui-input-inline">
-                <input type="text" id="code" name="code"  value="${warehouseWarn.code}"   class="layui-input" >
+                <input type="text" id="code" name="code"  value="${warehouseWarn.code}"   class="layui-input" disabled>
             </div>
             </div>
             <div class="layui-inline">
             <label class="layui-form-label" title="现有库存">现有库存</label>
             <div class="layui-input-inline">
-                <input type="text" id="stock" name="stock"  value="${warehouseWarn.stock}"   class="layui-input" >
+                <input type="text" id="stock" name="stock"  value="${warehouseWarn.stock}"   class="layui-input" disabled>
             </div>
             </div>
         </div>
@@ -36,7 +30,7 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="0:解决 1：未解决">0:解决 1：未解决</label>
+            <label class="layui-form-label" title="0:解决 1：未解决">审核状态</label>
             <div class="layui-input-inline">
                 <layui:simpleDictSelect style='layui-input-inline' type="warehouse_warn_check" 
 					id="check" name="check" value="${warehouseWarn.check}" layVerify="" />
@@ -50,7 +44,7 @@
         <div class="layui-form-item">
             <div class="layui-inline">
             <label class="layui-form-label" title="备注">备注</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-inline" style="width: 512px">
                 <input type="text" id="remarks" name="remarks"  value="${warehouseWarn.remarks}"   class="layui-input" >
             </div>
             </div>

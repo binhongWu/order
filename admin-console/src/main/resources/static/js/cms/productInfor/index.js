@@ -75,10 +75,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'productNum', 
                 title : '套装册数'
                 },
-                // {
-                // field : 'rank',
-                // title : '热销商品排名'
-                // },
+                {
+                field : 'rank',
+                title : '热销商品排名'
+                },
                 {
                 field : 'wareId', 
                 title : '仓库系统编码'

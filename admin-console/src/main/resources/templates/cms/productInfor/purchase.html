@@ -93,18 +93,18 @@
             </div>
         </div>
     </div>
-    <div class="layui-row">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">销售方式</label>
-                <div class="layui-input-inline">
-                    <input type="radio" name="orderFor" value="0" title="直销" checked lay-filter="orderFor">
-                    <input type="radio" name="orderFor" value="1" title="代销" lay-filter="orderFor">
-                </div>
-                <span style="color: red">选择代销方式优惠 5% ！（发货较慢）</span>
-            </div>
-        </div>
-    </div>
+    <!--<div class="layui-row">-->
+        <!--<div class="layui-form-item">-->
+            <!--<div class="layui-inline">-->
+                <!--<label class="layui-form-label">销售方式</label>-->
+                <!--<div class="layui-input-inline">-->
+                    <!--<input type="radio" name="orderFor" value="0" title="直销" checked lay-filter="orderFor">-->
+                    <!--<input type="radio" name="orderFor" value="1" title="代销" lay-filter="orderFor">-->
+                <!--</div>-->
+                <!--<span style="color: red">选择代销方式优惠 5% ！（发货较慢）</span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -179,24 +179,43 @@ layui.use(['purchase','jquery'], function(){
 
     })
 
-    form.on('radio(orderFor)',function (data) {
-        var value = data.value;
-        // console.log(value);
-        // var val=$('input:radio[name="orderFor"]:checked').val();
-        var realityPrice = $('#realityPrice').val();
-        // 代销方式在原实付金额上再优惠5%
-        if(value === '1'){
-            $('#realityPrice').val(realityPrice*0.95);
-        }else{
-            $('#realityPrice').val(realityPrice/0.95);
-            // var existStocks = $('#existStocks').val();
-            // var proNum = $('#proNum').val();
-            // if (existStocks < proNum) {
-            //     layer.msg("库存量不足，请选择代销方式");
-            //     $('input:radio[name="orderFor"]:checked').val("1");
-            // }
-        }
-    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // form.on('radio(orderFor)',function (data) {
+    //     var value = data.value;
+    //     // console.log(value);
+    //     // var val=$('input:radio[name="orderFor"]:checked').val();
+    //     var realityPrice = $('#realityPrice').val();
+    //     // 代销方式在原实付金额上再优惠5%
+    //     if(value === '1'){
+    //         $('#realityPrice').val(realityPrice*0.95);
+    //     }else{
+    //         $('#realityPrice').val(realityPrice/0.95);
+    //         // var existStocks = $('#existStocks').val();
+    //         // var proNum = $('#proNum').val();
+    //         // if (existStocks < proNum) {
+    //         //     layer.msg("库存量不足，请选择代销方式");
+    //         //     $('input:radio[name="orderFor"]:checked').val("1");
+    //         // }
+    //     }
+    // })
 });
 
 </script>

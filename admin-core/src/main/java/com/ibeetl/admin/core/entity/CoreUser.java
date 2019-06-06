@@ -66,6 +66,7 @@ public class CoreUser extends BaseEntity  {
 	private Date updateTime;
 	
 	/*用户的个人资料附件，保存到Core_File 表里*/
+	// 用户邮箱
 	private String attachmentId;
 
 	public String getCode() {

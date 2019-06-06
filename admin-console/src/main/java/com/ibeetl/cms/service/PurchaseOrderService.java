@@ -81,6 +81,7 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
         for (PurchaseOrder model : datas) {
             model.setOrderId(null);
             model.setFinishCondition("0");
+            model.setChenkStatus("0");
             save(model);
         }
     }

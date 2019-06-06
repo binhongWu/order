@@ -29,26 +29,27 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'warningId', 
                 title : '预警单号',
                 fixed:'left',
-                }, 
+                },
+                {
+                    field : 'code',
+                    title : '绘本编码',
+                },
+                {
+                    field : 'name',
+                    title : '绘本名称',
+                },
                 {
                 field : 'alarmt', 
                 title : '预警时间',
                 }, 
-                {
-                field : 'nextAlarmt', 
-                title : '下一次预警时间',
-                }, 
-                {
-                field : 'code', 
-                title : '绘本编码',
-                }, 
+
                 {
                 field : 'stock', 
                 title : '缺少数量',
                 }, 
                 {
                 field : 'checkText', //数据字典类型为 warehouse_warn_check
-                title : '0:解决 1：未解决',
+                title : '审核状态',
                 },
                 {
                 field : 'remarks', 

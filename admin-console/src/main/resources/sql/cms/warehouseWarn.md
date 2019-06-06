@@ -4,9 +4,10 @@ queryByCondition
 
     select 
     @pageTag(){
-    t.*
+    t.*,t1.name
     @}
     from warehouse_warn t
+    left join  product_infor t1 on t1.code = t.code
     where t.del = '0'  
     @if(!isEmpty(warningId)){
         and  t.warning_id =#warningId#
@@ -114,3 +115,12 @@ findListByCustom
         and  t.remarks =#remarks#
     @}
     order by t.created_time desc
+    
+findById
+===
+
+    select
+    *
+    from warehouse_warn t
+    where t.del = '0'
+    and t.warning_id=#warningId#

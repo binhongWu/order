@@ -118,7 +118,7 @@ public class WarehouseWarnController{
     }
 
     /**
-     * 编辑页面
+     * 编辑页面 -->  审核页面
      * @param warningId
      * @return
      */
@@ -133,7 +133,7 @@ public class WarehouseWarnController{
     }
 
     /**
-     * 编辑保存
+     * 编辑保存 ---> 审核
      * @param warehouseWarn
      * @return
      */
@@ -141,7 +141,9 @@ public class WarehouseWarnController{
     @Function("warehouseWarn.update")
     @ResponseBody
     public JsonResult<String> update(@Validated(ValidateConfig.UPDATE.class)  WarehouseWarn warehouseWarn) {
-        boolean success = warehouseWarnService.update(warehouseWarn);
+        WarehouseWarn model=warehouseWarnService.findById(warehouseWarn.getWarningId());
+        model.setCheck(warehouseWarn.getCheck());
+        boolean success = warehouseWarnService.update(model);
         if (success) {
             return JsonResult.success();
         } else {

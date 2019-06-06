@@ -50,3 +50,13 @@ findDictList
      @if(isNotEmpty(name)){
         and a.vaule = #name#
      @}
+
+findEmail
+===
+* 查找预警信息接收人员的邮箱
+
+    select
+    t.*
+    from core_dict t
+    where t.value='warehouse_warn_email'
+    

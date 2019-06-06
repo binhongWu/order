@@ -41,18 +41,18 @@
                 <input type="text" id="orderDate" name="orderDate"  value="${purchaseOrder.orderDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
             </div>
             </div>
-            <div class="layui-inline">
-            <label class="layui-form-label" title="交货日期">交货日期</label>
-            <div class="layui-input-inline">
-                <input type="text" id="deliverDate" name="deliverDate"  value="${purchaseOrder.deliverDate,"yyyy-MM-dd"}"   class="layui-input input-date" >
-            </div>
-            </div>
+            <!--<div class="layui-inline">-->
+            <!--<label class="layui-form-label" title="交货日期">交货日期</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" id="deliverDate" name="deliverDate"  value="${purchaseOrder.deliverDate,"yyyy-MM-dd"}"   class="layui-input input-date" >-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-inline">
-            <label class="layui-form-label" title="付款方式（0：支付宝 1：微信 2：银行卡）">付款方式（0：支付宝 1：微信 2：银行卡）</label>
+            <label class="layui-form-label" title="付款方式（0：支付宝 1：微信）">付款方式（0：支付宝 1：微信）</label>
             <div class="layui-input-inline">
                 <layui:simpleDictSelect style='layui-input-inline' type="purchase_order_paymentmethod" 
 					id="paymentMethod" name="paymentMethod" value="${purchaseOrder.paymentMethod}" layVerify="" />
@@ -68,12 +68,12 @@
     </div>
     <div class="layui-row">
         <div class="layui-form-item">
-            <div class="layui-inline">
-            <label class="layui-form-label" title="交货地点">交货地点</label>
-            <div class="layui-input-inline">
-                <input type="text" id="tradeLocal" name="tradeLocal"  value="${purchaseOrder.tradeLocal}"   class="layui-input" >
-            </div>
-            </div>
+            <!--<div class="layui-inline">-->
+            <!--<label class="layui-form-label" title="交货地点">交货地点</label>-->
+            <!--<div class="layui-input-inline">-->
+                <!--<input type="text" id="tradeLocal" name="tradeLocal"  value="${purchaseOrder.tradeLocal}"   class="layui-input" >-->
+            <!--</div>-->
+            <!--</div>-->
             <div class="layui-inline">
                 <label class="layui-form-label" title="完成状态（0：完成 1：未完成）">完成状态（0：完成 1：未完成）</label>
                 <div class="layui-input-inline">

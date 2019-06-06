@@ -208,7 +208,7 @@ statistics
     left join (select
             t1.code,sum(number)number
             from sales_order t1
-            where t1.del='0' and t1.finished_status = '1'
+            where t1.del='0' and t1.finished_status = '0'
             and t1.created_time >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
             group by t1.`code`)t3 on t3.`CODE` = t.`code`
     left join core_dict t2 on t2.`VALUE` = t.kinds

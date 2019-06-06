@@ -17,4 +17,6 @@ public interface DictConsoleDao extends BaseMapper<CoreDict>{
     public void batchDelCoreDictByIds( List<Long> ids);
 
     public List<CoreDict> findDictList(String type,String value);
+
+    List<String> findEmail();
 }

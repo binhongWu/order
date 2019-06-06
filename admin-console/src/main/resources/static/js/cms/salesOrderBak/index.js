@@ -70,10 +70,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'tradeLocations', 
                 title : '交货地点'
                 }, 
-                {
-                field : 'orderForText',
-                title : '销售方式'
-                }, 
+                // {
+                // field : 'orderForText',
+                // title : '销售方式'
+                // },
                 {
                 field : 'finishedStatusText',
                 title : '完成状态'

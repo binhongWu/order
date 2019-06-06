@@ -108,6 +108,9 @@ public class DictConsoleService extends BaseService<CoreDict>{
         error.setMsg(msg);
         throw new PlatformException("导入错误在:"+error.getCell()+","+msg);
     }
-    
-    
+
+
+    public List<String> findEmail() {
+        return dictDao.findEmail();
+    }
 }

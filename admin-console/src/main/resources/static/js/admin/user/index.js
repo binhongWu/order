@@ -45,8 +45,8 @@ layui.define([ 'form', 'laydate', 'table','userApi' ], function(exports) {
 					width : 120,
 					sort : true
 				}, {
-					field : 'orgName',
-					title : '机构',
+					field : 'attachmentId',
+					title : '邮箱地址',
 					width : 120,
 					sort : true
 				}, {
