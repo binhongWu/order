@@ -72,11 +72,7 @@ public class SalesOrderService extends BaseService<SalesOrder>{
             ProductInfor productInfor = productInforService.findByCode(model.getCode());
             if (productInfor != null) {
                 // 库存足 直销
-                if (Integer.parseInt(productInfor.getExistStocks()) >= Integer.parseInt(model.getNumber())) {
                     model.setOrderFor("0");
-                }else{
-                    model.setOrderFor("1");
-                }
             }
             // 保存销售订单
             save(model);
@@ -106,7 +102,7 @@ public class SalesOrderService extends BaseService<SalesOrder>{
                     outboundRedist.setOutRegistDate(new Date());
                     outboundRedist.setCode(salesOrder.getCode());
                     //供应商
-//                    outboundRedist.setSupplierId(salesOrder.getS);
+//                    outboundRedist.setSupplierId(salesOrder.getSupplierId());
                     outboundRedist.setPrice(salesOrder.getPrice());
                     outboundRedist.setNumber(salesOrder.getNumber());
                     outboundRedist.setTotal(String.valueOf(Double.valueOf(salesOrder.getPrice()) * Integer.parseInt(salesOrder.getNumber())));

@@ -4,9 +4,10 @@ queryByCondition
 
     select 
     @pageTag(){
-    t.*
+    t.*,t1.name
     @}
     from purchase_order t
+    left join product_infor t1 on t1.code = t.code
     where t.del = '0'  
     @if(!isEmpty(orderId)){
         and  t.order_id =#orderId#

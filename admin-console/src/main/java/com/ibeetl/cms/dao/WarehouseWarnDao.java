@@ -22,6 +22,4 @@ public interface WarehouseWarnDao extends BaseMapper<WarehouseWarn>{
     WarehouseWarn findByCode(String code);
 
     List<WarehouseWarn> findByCheck();
-
-    WarehouseWarn findById(Long warningId);
 }

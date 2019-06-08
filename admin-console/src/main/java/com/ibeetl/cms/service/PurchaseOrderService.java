@@ -102,54 +102,47 @@ public class PurchaseOrderService extends BaseService<PurchaseOrder>{
                     // 1
                     model.setUpdatedTime(new Date());
                     model.setUpdatedBy(platformService.getCurrentUser().getId());
-                    model.setFinishCondition("1");
                     model.setRemarks("");
                     sqlManager.updateTemplateById(model);
                     // 2
-                    PurchaseWarehouse purchaseWarehouse = new PurchaseWarehouse();
-                    purchaseWarehouse.setOrderId(purchaseOrder.getOrderId().toString());
-                    purchaseWarehouse.setCode(purchaseOrder.getCode());
-                    purchaseWarehouse.setNumber(purchaseOrder.getNumber());
-                    purchaseWarehouse.setPrice(purchaseOrder.getPrice());
-                    purchaseWarehouse.setSupplierId(purchaseOrder.getSupplierId());
-                    purchaseWarehouse.setPaymentAmount(purchaseOrder.getPaymentAmount());
-                    purchaseWarehouse.setPurchaseDate(purchaseOrder.getDeliverDate());
-                    purchaseWarehouse.setBuyerBy(platformService.getCurrentUser().getName());
-                    purchaseWarehouseService.save(purchaseWarehouse);
-                    // 3 录入到仓库管理的入库登记中
-                    IncomingRegist incomingRegist = new IncomingRegist();
-                    incomingRegist.setOrderId(purchaseOrder.getOrderId().toString());
-                    incomingRegist.setInRegistDate(new Date());
-                    incomingRegist.setCode(purchaseOrder.getCode());
-                    incomingRegist.setSupplierId(purchaseOrder.getSupplierId());
-                    incomingRegist.setPrice(purchaseOrder.getPrice());
-                    incomingRegist.setNumber(purchaseOrder.getNumber());
-                    incomingRegist.setTotal(String.valueOf(Double.valueOf(purchaseOrder.getPrice())*Integer.valueOf(purchaseOrder.getNumber())));
-                    incomingRegist.setStatus("0");
-                    incomingRegistService.save(incomingRegist);
-                    // 4 修改绘本的库存量
-                    ProductInfor productInfor = productInforService.findByCode(purchaseOrder.getCode());
-                    productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks())+Integer.valueOf(purchaseOrder.getNumber())));
-                    sqlManager.updateTemplateById(productInfor);
-                }
-            }
-            // 5 检索出所有还待完成的订单全部改为失败状态，并录入到采购退回表中
-            String status = "0";
-            List<PurchaseOrder> list = findByFinishCondition(status);
-            if (list.size() > 0) {
-                for (PurchaseOrder purchaseOrder : list) {
-                    purchaseOrder.setFinishCondition("2");
-                    update(purchaseOrder);
-                    PurchaseReturns purchaseReturns = new PurchaseReturns();
-                    purchaseReturns.setCode(purchaseOrder.getCode());
-                    purchaseReturns.setNumber(purchaseOrder.getNumber());
-                    purchaseReturns.setPrice(purchaseOrder.getPrice());
-                    purchaseReturns.setSupplierId(purchaseOrder.getSupplierId());
-                    purchaseReturns.setOrderId(purchaseOrder.getOrderId().toString());
-                    purchaseReturns.setRefundMethod(purchaseOrder.getPaymentMethod());
-                    purchaseReturns.setRefundAmount(purchaseOrder.getPaymentAmount());
-                    purchaseReturns.setReturnedDate(new Date());
-                    purchaseReturnsService.save(purchaseReturns);
+                    if (model.getFinishCondition().equals("1") ) {
+                        PurchaseWarehouse purchaseWarehouse = new PurchaseWarehouse();
+                        purchaseWarehouse.setOrderId(purchaseOrder.getOrderId().toString());
+                        purchaseWarehouse.setCode(purchaseOrder.getCode());
+                        purchaseWarehouse.setNumber(purchaseOrder.getNumber());
+                        purchaseWarehouse.setPrice(purchaseOrder.getPrice());
+                        purchaseWarehouse.setSupplierId(purchaseOrder.getSupplierId());
+                        purchaseWarehouse.setPaymentAmount(purchaseOrder.getPaymentAmount());
+                        purchaseWarehouse.setPurchaseDate(purchaseOrder.getDeliverDate());
+                        purchaseWarehouse.setBuyerBy(platformService.getCurrentUser().getName());
+                        purchaseWarehouseService.save(purchaseWarehouse);
+                        // 3 录入到仓库管理的入库登记中
+                        IncomingRegist incomingRegist = new IncomingRegist();
+                        incomingRegist.setOrderId(purchaseOrder.getOrderId().toString());
+                        incomingRegist.setInRegistDate(new Date());
+                        incomingRegist.setCode(purchaseOrder.getCode());
+                        incomingRegist.setSupplierId(purchaseOrder.getSupplierId());
+                        incomingRegist.setPrice(purchaseOrder.getPrice());
+                        incomingRegist.setNumber(purchaseOrder.getNumber());
+                        incomingRegist.setTotal(String.valueOf(Double.valueOf(purchaseOrder.getPrice()) * Integer.valueOf(purchaseOrder.getNumber())));
+                        incomingRegist.setStatus("0");
+                        incomingRegistService.save(incomingRegist);
+                        // 4 修改绘本的库存量
+                        ProductInfor productInfor = productInforService.findByCode(purchaseOrder.getCode());
+                        productInfor.setExistStocks(String.valueOf(Integer.valueOf(productInfor.getExistStocks()) + Integer.valueOf(purchaseOrder.getNumber())));
+                        sqlManager.updateTemplateById(productInfor);
+                    }else {
+                        PurchaseReturns purchaseReturns = new PurchaseReturns();
+                        purchaseReturns.setCode(purchaseOrder.getCode());
+                        purchaseReturns.setNumber(purchaseOrder.getNumber());
+                        purchaseReturns.setPrice(purchaseOrder.getPrice());
+                        purchaseReturns.setSupplierId(purchaseOrder.getSupplierId());
+                        purchaseReturns.setOrderId(purchaseOrder.getOrderId().toString());
+                        purchaseReturns.setRefundMethod(purchaseOrder.getPaymentMethod());
+                        purchaseReturns.setRefundAmount(purchaseOrder.getPaymentAmount());
+                        purchaseReturns.setReturnedDate(new Date());
+                        purchaseReturnsService.save(purchaseReturns);
+                    }
                 }
             }
         }

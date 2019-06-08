@@ -42,10 +42,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'code', 
                 title : '绘本编码',
                 }, 
-                {
-                field : 'supplierId', 
-                title : '供货商编码',
-                }, 
+                // {
+                // field : 'supplierId',
+                // title : '供货商编码',
+                // },
                 // {
                 // field : 'checkBy',
                 // title : '审核人',

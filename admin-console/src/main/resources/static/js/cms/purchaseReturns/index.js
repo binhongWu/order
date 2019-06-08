@@ -29,8 +29,12 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'returnedId', 
                 title : '退回单号',
                 fixed:'left',
-                }, 
+                },
                 {
+                    field : 'orderId',
+                    title : '采购订单单号',
+                },
+                    {
                 field : 'code', 
                 title : '绘本编码',
                 }, 
@@ -46,10 +50,7 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'supplierId', 
                 title : '供货商编号',
                 }, 
-                {
-                field : 'orderId', 
-                title : '采购订单单号',
-                }, 
+
                 {
                 field : 'refundMethodText', //数据字典类型为 purchase_returns_refundmethod
                 title : '退款方式',

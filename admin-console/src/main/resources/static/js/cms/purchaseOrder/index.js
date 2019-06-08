@@ -35,6 +35,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 title : '绘本编码',
                 },
                 {
+                    field : 'name',
+                    title : '绘本名称',
+                },
+                {
                 field : 'number', 
                 title : '绘本数量',
                 }, 
@@ -63,18 +67,18 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 title : '付款金额',
                 }, 
 
-                {
-                field : 'checkBy',
-                title : '审核人',
-                },
-                {
-                field : 'checkDate',
-                title : '审核时间',
-                },
-                {
-                field : 'chenkStatusText',//purchase_warehouse_checkstatus
-                title : '审核状态',
-                },
+                // {
+                // field : 'checkBy',
+                // title : '审核人',
+                // },
+                // {
+                // field : 'checkDate',
+                // title : '审核时间',
+                // },
+                // {
+                // field : 'chenkStatusText',//purchase_warehouse_checkstatus
+                // title : '审核状态',
+                // },
                 {
                 field : 'finishConditionText', //数据字典类型为 purchase_order_finishcondition
                 title : '完成状态',
