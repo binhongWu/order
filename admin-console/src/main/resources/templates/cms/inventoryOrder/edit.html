@@ -1,0 +1,62 @@
+<!--# layout("/common/layout.html",{"jsBase":"/js/cms/inventoryOrder/"}){ -->
+
+<form class="layui-form layui-form-pane" id="updateForm">
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" title="绘本编码">绘本编码</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="code" name="code"  value="${inventoryOrder.code}"   class="layui-input" disabled>
+                </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本名称">绘本名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name"  value="${inventoryOrder.name}"   class="layui-input" disabled>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label" title="现有库存">现有库存</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="existStocks" name="existStocks" disabled value="${inventoryOrder.existStocks}"   class="layui-input" >
+                </div>
+            </div>
+            <div class="layui-inline">
+            <label class="layui-form-label" title="盘点库存">盘点库存</label>
+            <div class="layui-input-inline">
+                <input type="text" id="inventoryStocks" name="inventoryStocks"  value="${inventoryOrder.inventoryStocks}"   class="layui-input" >
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+            <label class="layui-form-label" title="创建时间">创建时间</label>
+            <div class="layui-input-inline">
+                <input type="text" id="createdTime" name="createdTime" disabled  value="${inventoryOrder.createdTime,"yyyy-MM-dd"}"   class="layui-input input-date" >
+            </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label" title="备注">备注</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="remarks" name="remarks"  value="${inventoryOrder.remarks}"   class="layui-input" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" name="id" value=${inventoryOrder.id} />
+    <layui:submitButtons id="updateButton" />
+</form>
+<!--#} -->
+<script>
+layui.use(['edit'], function(){
+    var inventoryOrderEdit = layui.edit
+    inventoryOrderEdit.init();
+});
+</script>

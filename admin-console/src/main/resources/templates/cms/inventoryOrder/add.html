@@ -1,0 +1,144 @@
+<!--# layout("/common/layout.html",{"jsBase":"/js/cms/inventoryOrder/"}){ -->
+
+<form class="layui-form layui-form-pane" id="addForm">
+    <div class="layui-row">
+        <div class="layui-form-item">
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="盘点单号">盘点单号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="inventoryId" class="layui-input" >
+            </div>
+            </div>
+		
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="绘本编码">绘本编码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="code" class="layui-input" >
+            </div>
+            </div>
+		
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="语种">语种</label>
+            <div class="layui-input-inline">
+                <input type="text" name="language" class="layui-input" >
+            </div>
+            </div>
+		
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="读者对象">读者对象</label>
+            <div class="layui-input-inline">
+                <input type="text" name="kinds" class="layui-input" >
+            </div>
+            </div>
+		
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="图书分类">图书分类</label>
+            <div class="layui-input-inline">
+                <input type="text" name="bookKind" class="layui-input" >
+            </div>
+            </div>
+		
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="现有库存">现有库存</label>
+            <div class="layui-input-inline">
+                <input type="text" name="existStocks" class="layui-input" >
+            </div>
+            </div>
+		
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="盘点库存">盘点库存</label>
+            <div class="layui-input-inline">
+                <input type="text" name="inventoryStocks" class="layui-input" >
+            </div>
+            </div>
+		
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="创建人">创建人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="createdBy" class="layui-input" >
+            </div>
+            </div>
+		
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="创建时间">创建时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="createdTime" class="layui-input input-date" >
+            </div>
+            </div>
+		
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="修改人">修改人</label>
+            <div class="layui-input-inline">
+                <input type="text" name="updatedBy" class="layui-input" >
+            </div>
+            </div>
+		
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="修改时间">修改时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="updatedTime" class="layui-input input-date" >
+            </div>
+            </div>
+		
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="删除标志位（0：存在 1：删除）">删除标志位（0：存在 1：删除）</label>
+            <div class="layui-input-inline">
+                <input type="text" name="del" class="layui-input" >
+            </div>
+            </div>
+		
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-form-item">
+		
+            <div class="layui-inline">
+            <label class="layui-form-label" title="备注">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" name="remarks" class="layui-input" >
+            </div>
+            </div>
+		
+        </div>
+    </div>
+    <layui:submitButtons id="addButton" />
+</form>
+<!--#} -->
+<script>
+layui.use(['add'], function(){
+    var inventoryOrderAdd = layui.add
+    inventoryOrderAdd.init();
+});
+</script>

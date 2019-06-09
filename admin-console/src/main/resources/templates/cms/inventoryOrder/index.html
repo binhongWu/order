@@ -1,0 +1,19 @@
+<!--#layout("/common/layout.html",{"jsBase":"/js/cms/inventoryOrder/"}){ -->
+<layui:searchForm formId="searchForm"  condition="${search}">
+</layui:searchForm>
+
+<div class="layui-btn-group">
+    <layui:accessButton function="inventoryOrder.add"  action="add">绘本库存信息同步</layui:accessButton>
+    <layui:accessButton function="inventoryOrder.edit"  action="edit">盘点</layui:accessButton>
+</div>
+
+<table id="inventoryOrderTable" lay-filter="inventoryOrderTable"></table>
+<!--#} -->
+<script>
+
+layui.use(['index'], function(){
+    var index = layui.index
+    index.init();
+});
+
+</script>
