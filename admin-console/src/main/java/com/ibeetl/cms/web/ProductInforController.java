@@ -8,10 +8,13 @@ import com.ibeetl.admin.core.util.DateUtil;
 import com.ibeetl.admin.core.util.PlatformException;
 import com.ibeetl.admin.core.util.ValidateConfig;
 import com.ibeetl.admin.core.web.JsonResult;
+import com.ibeetl.cms.entity.OutboundRedist;
 import com.ibeetl.cms.entity.ProductInfor;
+import com.ibeetl.cms.service.OutboundRedistService;
 import com.ibeetl.cms.service.ProductInforService;
 import com.ibeetl.cms.web.query.ProductInforQuery;
 import com.ibeetl.cms.web.query.ProductInforQuery2;
+import com.ibeetl.cms.web.query.RankInfoQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,6 +52,8 @@ public class ProductInforController{
 
 
     @Autowired private ProductInforService productInforService;
+    @Autowired
+    private OutboundRedistService outboundRedistService;
     
     @Autowired
     FileService fileService;
@@ -336,6 +341,33 @@ public class ProductInforController{
     }
 
     /**
+     *
+     * @return
+     */
+    @GetMapping(MODEL + "/rankInfo.do")
+    @Function("rankInfo.query")
+    @ResponseBody
+    public ModelAndView rankInfo(){
+        ModelAndView view = new ModelAndView("/cms/productInfor/rankInfo.html");
+        view.addObject("search", RankInfoQuery.class.getName());
+        return view;
+    }
+
+    @PostMapping(MODEL + "/rankInfo.json")
+    @Function("rankInfo.query")
+    @ResponseBody
+    public JsonResult<PageQuery> rankInfoList(RankInfoQuery condtion)
+    {
+        PageQuery page = condtion.getPageQuery();
+        outboundRedistService.rankInfoList(page);
+//        productInforService.queryByCondition(page);
+        return JsonResult.success(page);
+    }
+
+
+    /** -------------------------   暂时没有用到的方法   -------------------------**/
+
+    /**
      * 仓库盘点页面
      * @return
      */
@@ -360,12 +392,6 @@ public class ProductInforController{
         productInforService.statistics(page);
         return JsonResult.success(page);
     }
-
-
-
-    /** -------------------------   暂时没有用到的方法   -------------------------**/
-
-
 
 
     /**

@@ -109,5 +109,9 @@ public class OutboundRedistService extends BaseService<OutboundRedist>{
     }
 
 
-
+    public PageQuery<OutboundRedist> rankInfoList(PageQuery query) {
+        PageQuery ret =  outboundRedistDao.rankInfoList(query);
+        queryListAfter(ret.getList());
+        return ret;
+    }
 }

@@ -1,0 +1,20 @@
+<!--#layout("/common/layout.html",{"jsBase":"/js/cms/productInfor/"}){ -->
+<layui:searchForm formId="searchForm"  condition="${search}">
+</layui:searchForm>
+
+<table id="rankInfoTable" lay-filter="rankInfoTable"></table>
+<!--#} -->
+<script>
+
+layui.use(['rankInfo'], function(){
+    var rankInfo = layui.rankInfo;
+    rankInfo.init();
+});
+
+</script>
+<style type="text/css">
+    .layui-table-cell {
+        height: auto!important;
+        white-space: normal;
+    }
+</style>

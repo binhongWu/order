@@ -20,4 +20,6 @@ public interface OutboundRedistDao extends BaseMapper<OutboundRedist>{
     public List<OutboundRedist> findListByCustom(OutboundRedist model);
 
     OutboundRedist getByOutId(String outorderId);
+
+    PageQuery<OutboundRedist> rankInfoList(PageQuery query);
 }

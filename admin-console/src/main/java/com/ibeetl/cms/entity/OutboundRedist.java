@@ -129,5 +129,18 @@ public class OutboundRedist extends BaseEntity{
 	 */
     private String remarks ;
 
+	private Integer countNumber;
+
+	/**
+	 * 语种
+	 */
+	@Dict(type="product_infor_language")
+	private String language ;
+
+	/**
+	 * 读者对象
+	 */
+	@Dict(type="product_infor_kinds")
+	private String kinds ;
 
 }

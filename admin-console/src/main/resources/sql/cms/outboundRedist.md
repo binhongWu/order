@@ -125,3 +125,36 @@ findListByCustom
         and  t.remarks =#remarks#
     @}
     order by t.created_time desc
+  
+rankInfoList
+===
+* 热销排行
+
+
+    select
+    @pageTag(){
+        aa.*
+    @}
+    from
+    (SELECT
+    	t.CODE,
+    	max( t1.NAME )NAME,
+    	max( a.path ) picture_url,
+    	max( t1.language) language,
+    	max(t1.kinds)kinds,
+    	count(1) countNumber
+    FROM
+    	outbound_redist t 
+    	LEFT JOIN product_infor t1 ON t.CODE = t1.code
+    	LEFT JOIN core_file a ON a.BIZ_ID = t1.picture
+    WHERE
+    	t.del = '0' and t1.del ='0' and t.status='0'
+        @if(!isEmpty(outRegistDateMin)){
+            and  t.out_regist_date >= #outRegistDateMin#
+        @}
+        @if(!isEmpty(outRegistDateMax)){
+            and  t.out_regist_date <=#nextDay(outRegistDateMax)#
+        @}
+    GROUP BY
+    	t.CODE)aa
+    order by aa.countNumber desc
