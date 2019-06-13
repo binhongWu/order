@@ -259,7 +259,7 @@ public class PurchaseOrderController{
     }
 
     /**
-     * 二次导入
+     * 批量审核导入
      * @param file
      * @return
      * @throws Exception

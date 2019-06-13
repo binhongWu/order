@@ -14,8 +14,10 @@ public class PurchaseOrderQuery extends PageParam {
     private Long orderId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    @Query(name = "订单日期", display = true)        
-    private Date orderDate;
+    @Query(name = "订单日期", display = true,type = Query.TYPE_DATE_BETWEEN)
+    private String orderDate;
+    private Date orderDateStart;
+    private Date orderDateEnd;
     @Query(name = "付款方式（0：支付宝 1：微信 2：银行卡）", display = true,type=Query.TYPE_DICT,dict="purchase_order_paymentmethod")
     private String paymentMethod;
     @Query(name = "完成状态（0：完成 1：未完成）", display = true,type=Query.TYPE_DICT,dict="purchase_order_finishcondition")
@@ -32,11 +34,17 @@ public class PurchaseOrderQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
-    public Date getOrderDate(){
+    public String getOrderDate(){
         return  orderDate;
     }
-    public void setOrderDate(Date orderDate ){
+    public void setOrderDate(String orderDate ){
         this.orderDate = orderDate;
+        if(StringUtils.isEmpty(orderDate)){
+            return ;
+        }
+        Date[] ds = Tool.parseDataRange(orderDate);
+        this.orderDateStart = ds[0];
+        this.orderDateEnd = ds[1];
     }
     public String getPaymentMethod(){
         return  paymentMethod;
@@ -50,5 +58,20 @@ public class PurchaseOrderQuery extends PageParam {
     public void setFinishCondition(String finishCondition ){
         this.finishCondition = finishCondition;
     }
- 
+
+    public Date getOrderDateStart() {
+        return orderDateStart;
+    }
+
+    public void setOrderDateStart(Date orderDateStart) {
+        this.orderDateStart = orderDateStart;
+    }
+
+    public Date getOrderDateEnd() {
+        return orderDateEnd;
+    }
+
+    public void setOrderDateEnd(Date orderDateEnd) {
+        this.orderDateEnd = orderDateEnd;
+    }
 }

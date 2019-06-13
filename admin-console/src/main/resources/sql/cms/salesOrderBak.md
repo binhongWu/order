@@ -17,8 +17,11 @@ queryByCondition
     @if(!isEmpty(clientId)){
         and  t.client_id =#clientId#
     @}
-    @if(!isEmpty(salesDate)){
-        and  t.sales_date =#salesDate#
+    @if(!isEmpty(orderDateStart)){
+        and  t.sales_date >=#orderDateStart#
+    @}
+    @if(!isEmpty(orderDateEnd)){
+        and  t.sales_date <#nextDay(orderDateEnd)#
     @}
     @if(!isEmpty(salesBy)){
         and  t.sales_by =#salesBy#

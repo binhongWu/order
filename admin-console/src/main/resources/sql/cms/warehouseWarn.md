@@ -12,8 +12,11 @@ queryByCondition
     @if(!isEmpty(warningId)){
         and  t.warning_id =#warningId#
     @}
-    @if(!isEmpty(alarmt)){
-        and  t.alarmt =#alarmt#
+    @if(!isEmpty(orderDateStart)){
+        and  t.alarmt >=#orderDateStart#
+    @}
+    @if(!isEmpty(orderDateEnd)){
+        and  t.alarmt <#nextDay(orderDateEnd)#
     @}
     @if(!isEmpty(code)){
         and  t.code =#code#

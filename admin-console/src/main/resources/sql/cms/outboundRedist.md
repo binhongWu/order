@@ -14,8 +14,11 @@ queryByCondition
     @if(!isEmpty(outorderId)){
         and  t.outOrder_id =#outorderId#
     @}
-    @if(!isEmpty(outRegistDate)){
-        and  t.out_regist_date =#outRegistDate#
+    @if(!isEmpty(orderDateStart)){
+        and  t.out_regist_date >=#orderDateStart#
+    @}
+    @if(!isEmpty(orderDateEnd)){
+        and  t.out_regist_date < #nextDay(orderDateEnd)#
     @}
     order by t.created_time desc
     
@@ -142,7 +145,7 @@ rankInfoList
     	max( a.path ) picture_url,
     	max( t1.language) language,
     	max(t1.kinds)kinds,
-    	count(1) countNumber
+    	sum(t.number) countNumber
     FROM
     	outbound_redist t 
     	LEFT JOIN product_infor t1 ON t.CODE = t1.code
@@ -153,7 +156,7 @@ rankInfoList
             and  t.out_regist_date >= #outRegistDateMin#
         @}
         @if(!isEmpty(outRegistDateMax)){
-            and  t.out_regist_date <=#nextDay(outRegistDateMax)#
+            and  t.out_regist_date <#nextDay(outRegistDateMax)#
         @}
     GROUP BY
     	t.CODE)aa

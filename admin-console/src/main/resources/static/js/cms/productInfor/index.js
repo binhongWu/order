@@ -51,7 +51,11 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'bookKind', 
                 title : '图书分类'
-                }, 
+                },
+                {
+                field : 'rank',
+                title : '开本'
+                },
                 {
                 field : 'publishHouse', 
                 title : '出版社'
@@ -74,10 +78,6 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 {
                 field : 'productNum', 
                 title : '套装册数'
-                },
-                {
-                field : 'rank',
-                title : '热销商品排名'
                 },
                 {
                 field : 'wareId', 
@@ -103,10 +103,10 @@ layui.define([ 'form', 'laydate', 'table' ], function(exports) {
                 field : 'minStocks', 
                 title : '最小库存'
                 }, 
-                {
-                field : 'maxStocks', 
-                title : '最大库存'
-                }
+                // {
+                // field : 'maxStocks',
+                // title : '最大库存'
+                // }
                 ] ]
         
             });

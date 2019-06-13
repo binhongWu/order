@@ -14,8 +14,11 @@ queryByCondition
     @if(!isEmpty(salesId)){
         and  t.sales_id =#salesId#
     @}
-    @if(!isEmpty(returnDate)){
-        and  t.return_date =#returnDate#
+    @if(!isEmpty(orderDateStart)){
+        and  t.return_date >=#orderDateStart#
+    @}
+    @if(!isEmpty(orderDateEnd)){
+        and  t.return_date <#nextDay(orderDateEnd)#
     @}
     @if(!isEmpty(code)){
         and  t.code =#code#

@@ -15,7 +15,7 @@ layui.define([ 'form', 'laydate', 'table','productInforApi'], function(exports) 
                 $('#shouldPrice').removeAttr("disabled");
                 $('#realityPrice').removeAttr("disabled");
                 if ($('#proNum').val() - $('#existStocks').val() > 0){
-                    Common.info("库存量不足，请选择代销方式");
+                    Common.info("库存量不足");
                     return;
                 }
                 form.on('submit(form)', function(){

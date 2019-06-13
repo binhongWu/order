@@ -16,8 +16,10 @@ public class SalesOutStackQuery extends PageParam {
     private String salesId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    @Query(name = "销售日期", display = true)        
-    private Date salesDate;
+    @Query(name = "销售日期", display = true,type = Query.TYPE_DATE_BETWEEN)
+    private String orderDate;
+    private Date orderDateStart;
+    private Date orderDateEnd;
     public Long getSalesOutStackId(){
         return  salesOutStackId;
     }
@@ -36,11 +38,32 @@ public class SalesOutStackQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
-    public Date getSalesDate(){
-        return  salesDate;
+    public String getOrderDate(){
+        return  orderDate;
     }
-    public void setSalesDate(Date salesDate ){
-        this.salesDate = salesDate;
+    public void setOrderDate(String orderDate ){
+        this.orderDate = orderDate;
+        if(StringUtils.isEmpty(orderDate)){
+            return ;
+        }
+        Date[] ds = Tool.parseDataRange(orderDate);
+        this.orderDateStart = ds[0];
+        this.orderDateEnd = ds[1];
     }
- 
+
+    public Date getOrderDateStart() {
+        return orderDateStart;
+    }
+
+    public void setOrderDateStart(Date orderDateStart) {
+        this.orderDateStart = orderDateStart;
+    }
+
+    public Date getOrderDateEnd() {
+        return orderDateEnd;
+    }
+
+    public void setOrderDateEnd(Date orderDateEnd) {
+        this.orderDateEnd = orderDateEnd;
+    }
 }

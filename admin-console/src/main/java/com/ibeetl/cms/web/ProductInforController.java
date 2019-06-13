@@ -352,7 +352,9 @@ public class ProductInforController{
         view.addObject("search", RankInfoQuery.class.getName());
         return view;
     }
-
+    /**
+     * 热销排名
+     */
     @PostMapping(MODEL + "/rankInfo.json")
     @Function("rankInfo.query")
     @ResponseBody
@@ -363,6 +365,20 @@ public class ProductInforController{
 //        productInforService.queryByCondition(page);
         return JsonResult.success(page);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /** -------------------------   暂时没有用到的方法   -------------------------**/

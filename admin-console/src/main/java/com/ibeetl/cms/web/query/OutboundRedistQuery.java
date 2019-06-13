@@ -14,8 +14,10 @@ public class OutboundRedistQuery extends PageParam {
     private Long outRegistId;
     @Query(name = "订单号", display = true)        
     private String outorderId;
-    @Query(name = "出库日期", display = true)        
-    private Date outRegistDate;
+    @Query(name = "出库日期", display = true,type = Query.TYPE_DATE_BETWEEN)
+    private String orderDate;
+    private Date orderDateStart;
+    private Date orderDateEnd;
     public Long getOutRegistId(){
         return  outRegistId;
     }
@@ -28,11 +30,34 @@ public class OutboundRedistQuery extends PageParam {
     public void setOutorderId(String outorderId ){
         this.outorderId = outorderId;
     }
-    public Date getOutRegistDate(){
-        return  outRegistDate;
+
+    public String getOrderDate() {
+        return orderDate;
     }
-    public void setOutRegistDate(Date outRegistDate ){
-        this.outRegistDate = outRegistDate;
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+        if(StringUtils.isEmpty(orderDate)){
+            return ;
+        }
+        Date[] ds = Tool.parseDataRange(orderDate);
+        this.orderDateStart = ds[0];
+        this.orderDateEnd = ds[1];
     }
- 
+
+    public Date getOrderDateStart() {
+        return orderDateStart;
+    }
+
+    public void setOrderDateStart(Date orderDateStart) {
+        this.orderDateStart = orderDateStart;
+    }
+
+    public Date getOrderDateEnd() {
+        return orderDateEnd;
+    }
+
+    public void setOrderDateEnd(Date orderDateEnd) {
+        this.orderDateEnd = orderDateEnd;
+    }
 }

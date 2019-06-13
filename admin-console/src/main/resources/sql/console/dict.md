@@ -56,7 +56,7 @@ findEmail
 * 查找预警信息接收人员的邮箱
 
     select
-    t.*
+    t.value
     from core_dict t
-    where t.value='warehouse_warn_email'
+    where t.type='warehouse_warn_email'
     

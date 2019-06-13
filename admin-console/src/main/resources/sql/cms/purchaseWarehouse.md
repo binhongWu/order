@@ -17,8 +17,11 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
-    @if(!isEmpty(purchaseDate)){
-        and  t.purchase_date =#purchaseDate#
+    @if(!isEmpty(orderDateStart)){
+        and  t.purchase_date >=#orderDateStart#
+    @}
+    @if(!isEmpty(orderDateEnd)){
+        and  t.purchase_date < #nextDay(orderDateEnd)#
     @}
     order by t.created_time desc
     

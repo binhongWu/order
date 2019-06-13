@@ -16,8 +16,10 @@ public class PurchaseWarehouseQuery extends PageParam {
     private String orderId;
     @Query(name = "绘本编码", display = true)        
     private String code;
-    @Query(name = "采购日期", display = true)        
-    private Date purchaseDate;
+    @Query(name = "采购日期", display = true,type = Query.TYPE_DATE_BETWEEN)
+    private String orderDate;
+    private Date orderDateStart;
+    private Date orderDateEnd;
     public Long getEnterId(){
         return  enterId;
     }
@@ -36,11 +38,32 @@ public class PurchaseWarehouseQuery extends PageParam {
     public void setCode(String code ){
         this.code = code;
     }
-    public Date getPurchaseDate(){
-        return  purchaseDate;
+    public String getOrderDate(){
+        return  orderDate;
     }
-    public void setPurchaseDate(Date purchaseDate ){
-        this.purchaseDate = purchaseDate;
+    public void setOrderDate(String orderDate ){
+        this.orderDate = orderDate;
+        if(StringUtils.isEmpty(orderDate)){
+            return ;
+        }
+        Date[] ds = Tool.parseDataRange(orderDate);
+        this.orderDateStart = ds[0];
+        this.orderDateEnd = ds[1];
     }
- 
+
+    public Date getOrderDateStart() {
+        return orderDateStart;
+    }
+
+    public void setOrderDateStart(Date orderDateStart) {
+        this.orderDateStart = orderDateStart;
+    }
+
+    public Date getOrderDateEnd() {
+        return orderDateEnd;
+    }
+
+    public void setOrderDateEnd(Date orderDateEnd) {
+        this.orderDateEnd = orderDateEnd;
+    }
 }

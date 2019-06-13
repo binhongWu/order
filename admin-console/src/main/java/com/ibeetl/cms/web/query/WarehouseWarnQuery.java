@@ -12,8 +12,10 @@ import org.apache.commons.lang3.StringUtils;
 public class WarehouseWarnQuery extends PageParam {
     @Query(name = "预警单号", display = true)        
     private Long warningId;
-    @Query(name = "预警时间", display = true)        
-    private Date alarmt;
+    @Query(name = "预警时间", display = true,type = Query.TYPE_DATE_BETWEEN)
+    private String orderDate;
+    private Date orderDateStart;
+    private Date orderDateEnd;
     @Query(name = "绘本编码", display = true)        
     private String code;
     public Long getWarningId(){
@@ -22,17 +24,40 @@ public class WarehouseWarnQuery extends PageParam {
     public void setWarningId(Long warningId ){
         this.warningId = warningId;
     }
-    public Date getAlarmt(){
-        return  alarmt;
-    }
-    public void setAlarmt(Date alarmt ){
-        this.alarmt = alarmt;
-    }
     public String getCode(){
         return  code;
     }
     public void setCode(String code ){
         this.code = code;
     }
- 
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+        if(StringUtils.isEmpty(orderDate)){
+            return ;
+        }
+        Date[] ds = Tool.parseDataRange(orderDate);
+        this.orderDateStart = ds[0];
+        this.orderDateEnd = ds[1];
+    }
+
+    public Date getOrderDateStart() {
+        return orderDateStart;
+    }
+
+    public void setOrderDateStart(Date orderDateStart) {
+        this.orderDateStart = orderDateStart;
+    }
+
+    public Date getOrderDateEnd() {
+        return orderDateEnd;
+    }
+
+    public void setOrderDateEnd(Date orderDateEnd) {
+        this.orderDateEnd = orderDateEnd;
+    }
 }

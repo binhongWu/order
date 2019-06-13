@@ -14,8 +14,11 @@ queryByCondition
     @if(!isEmpty(orderId)){
         and  t.order_id =#orderId#
     @}
-    @if(!isEmpty(inRegistDate)){
-        and  t.in_regist_date =#inRegistDate#
+    @if(!isEmpty(orderDateStart)){
+        and  t.in_regist_date >=#orderDateStart#
+    @}
+    @if(!isEmpty(orderDateEnd)){
+        and  t.in_regist_date <=#nextDay(orderDateEnd)#
     @}
     order by t.created_time desc
     

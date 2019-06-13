@@ -14,8 +14,10 @@ public class IncomingRegistQuery extends PageParam {
     private Long inRegistId;
     @Query(name = "关联订单号", display = true)        
     private String orderId;
-    @Query(name = "入库日期", display = true)        
-    private Date inRegistDate;
+    @Query(name = "入库日期", display = true,type = Query.TYPE_DATE_BETWEEN)
+    private String orderDate;
+    private Date orderDateStart;
+    private Date orderDateEnd;
     public Long getInRegistId(){
         return  inRegistId;
     }
@@ -28,11 +30,34 @@ public class IncomingRegistQuery extends PageParam {
     public void setOrderId(String orderId ){
         this.orderId = orderId;
     }
-    public Date getInRegistDate(){
-        return  inRegistDate;
+
+    public String getOrderDate() {
+        return orderDate;
     }
-    public void setInRegistDate(Date inRegistDate ){
-        this.inRegistDate = inRegistDate;
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+        if(StringUtils.isEmpty(orderDate)){
+            return ;
+        }
+        Date[] ds = Tool.parseDataRange(orderDate);
+        this.orderDateStart = ds[0];
+        this.orderDateEnd = ds[1];
     }
- 
+
+    public Date getOrderDateStart() {
+        return orderDateStart;
+    }
+
+    public void setOrderDateStart(Date orderDateStart) {
+        this.orderDateStart = orderDateStart;
+    }
+
+    public Date getOrderDateEnd() {
+        return orderDateEnd;
+    }
+
+    public void setOrderDateEnd(Date orderDateEnd) {
+        this.orderDateEnd = orderDateEnd;
+    }
 }

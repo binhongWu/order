@@ -84,7 +84,7 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak> {
     }
 
     /**
-     * 保存到销售订单、销售出库、出库登记、修改库存、修改用户积分以及等级
+     * 保存到销售订单、销售出库
      *
      * @param model
      */
@@ -97,33 +97,29 @@ public class SalesOrderBakService extends BaseService<SalesOrderBak> {
         SalesOrder salesOrder = new SalesOrder();
         //复制相同的属性
         BeanUtils.copyProperties(model, salesOrder);
-        //保存到销售订单
         salesOrder.setCheckStatus(model.getCheckStatus());
         salesOrderService.save(salesOrder);
         //临时表关联销售订单号
         model.setSalesOrderId(salesOrder.getSalesId());
         sqlManager.updateTemplateById(model);
-        //判断直销的保存到销售出库
-        if ("0".equals(model.getOrderFor())) {
-            SalesOutStack salesOutStack = new SalesOutStack();
-            salesOutStack.setSalesId(salesOrder.getSalesId().toString());
-            salesOutStack.setCode(model.getCode());
-            salesOutStack.setClientId(model.getClientId());
-            salesOutStack.setNumber(model.getNumber());
-            salesOutStack.setPrice(model.getPrice());
-            salesOutStack.setSalesDate(model.getSalesDate());
-            salesOutStack.setPaymentAmount(model.getCheckStatus());
-            salesOutStack.setPaymentMethod(model.getPaymentMethod());
-            salesOutStack.setSalesBy(model.getSalesBy());
-            salesOutStack.setDeliveryAddress(model.getTradeLocations());
-            //订单状态为待审核
-            salesOutStack.setCheckStatus("0");
-            salesOutStack.setCreatedTime(new Date());
-            salesOutStack.setCreatedBy(platformService.getCurrentUser().getId());
-            salesOutStack.setUpdatedTime(new Date());
-            salesOutStack.setUpdatedBy(platformService.getCurrentUser().getId());
-            salesOutStackService.save(salesOutStack);
-        }
+        SalesOutStack salesOutStack = new SalesOutStack();
+        salesOutStack.setSalesId(salesOrder.getSalesId().toString());
+        salesOutStack.setCode(model.getCode());
+        salesOutStack.setClientId(model.getClientId());
+        salesOutStack.setNumber(model.getNumber());
+        salesOutStack.setPrice(model.getPrice());
+        salesOutStack.setSalesDate(model.getSalesDate());
+        salesOutStack.setPaymentAmount(model.getCheckStatus());
+        salesOutStack.setPaymentMethod(model.getPaymentMethod());
+        salesOutStack.setSalesBy(model.getSalesBy());
+        salesOutStack.setDeliveryAddress(model.getTradeLocations());
+        //订单状态为待审核
+        salesOutStack.setCheckStatus("0");
+        salesOutStack.setCreatedTime(new Date());
+        salesOutStack.setCreatedBy(platformService.getCurrentUser().getId());
+        salesOutStack.setUpdatedTime(new Date());
+        salesOutStack.setUpdatedBy(platformService.getCurrentUser().getId());
+        salesOutStackService.save(salesOutStack);
         return true;
     }
 

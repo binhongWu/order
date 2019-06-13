@@ -15,8 +15,11 @@ queryByCondition
     @if(!isEmpty(code)){
         and  t.code =#code#
     @}
-    @if(!isEmpty(orderDate)){
-        and  t.order_date =#orderDate#
+    @if(!isEmpty(orderDateStart)){
+        and  t.order_date >=#orderDateStart#
+    @}
+    @if(!isEmpty(orderDateEnd)){
+        and  t.order_date < #nextDay(orderDateEnd)#
     @}
     @if(!isEmpty(paymentMethod)){
         and  t.payment_method =#paymentMethod#
